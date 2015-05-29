@@ -1,2 +1,3 @@
-# SfActivityCenter
-SF Activity Center aims to support enterprise activity organizing
+# SF Sports Club
+SF Sports Club aims to support enterprise activity organizing.
+Now, it is just for internal use purpose.
