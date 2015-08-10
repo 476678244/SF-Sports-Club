@@ -2,7 +2,6 @@ package teamdivider.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,13 +10,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageInputStream;
-import javax.imageio.stream.ImageInputStream;
 
 import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.geometry.Position;
 import net.coobird.thumbnailator.geometry.Positions;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,9 +176,5 @@ public class UserController {
       }
     } catch (IOException e) {
     }
-  }
-
-  @PostConstruct
-  void init() throws FileNotFoundException {
   }
 }

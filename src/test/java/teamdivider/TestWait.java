@@ -12,7 +12,6 @@ public class TestWait implements Runnable {
     this.self = self;
   }
 
-  @Override
   public void run() {
     int count = 10;
     while (count > 0) {
