@@ -1,0 +1,6 @@
+PROJECT_BASE_PATH=/root/workspace/apache-tomcat-7.0.57/webapps/teamdivider/
+EMAIL_ONLY_TO_ZONGHAN=true
+BASE_LINK=http://115.28.51.176:8080
+DEFAULT_USER_SCORE=6
+AVATAR_BASE_LINK=http://7xjao2.com1.z0.glb.clouddn.com/
+AVATAR_BUCKET_NAME=sacavatardev

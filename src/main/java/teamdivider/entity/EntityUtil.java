@@ -1,0 +1,92 @@
+package teamdivider.entity;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+public class EntityUtil {
+  public static void removeUserFromList(List<User> users, User user) {
+    Iterator<User> it = users.iterator();
+    while (it.hasNext()) {
+      User member = (User) it.next();
+      if (member.getUsername().equals(user.getUsername())) {
+        it.remove();
+        return;
+      }
+    }
+  }
+  
+  public static Team weakestTeam(List<Team> teams) {
+    Team weakestTeam = teams.get(0);
+    for (Team team : teams) {
+      if (memberSize(team) > memberSize(weakestTeam)) {
+        continue;
+      } else if (team.getMembers().size() == weakestTeam.getMembers().size()) {
+        if (team.getScore() < weakestTeam.getScore()) {
+          weakestTeam = team;
+        }
+      } else {
+        weakestTeam = team;
+      }
+    }
+    return weakestTeam;
+  }
+
+  private static int memberSize(Team team) {
+    return team.getMembers().size() + team.getGuests().size();
+  }
+  
+  // for example: 
+  //            5 means 5 score striker
+  //            106 means 6 score defender
+  //            207 means 7 score middle fielder
+  //            305 means 5 score goal keeper
+  // also suppose back field player is more important then front field player
+  public static int simpleScore(int richScore) {
+    return richScore%100;
+  }
+  
+  public static void sortJoinersByScoreAsc(List<User> joiners) {
+    Collections.sort(joiners, new Comparator<User>() {
+      public int compare(User joiner1, User joiner2) {
+        return new Integer(joiner1.getScore()).compareTo(new Integer(joiner2
+            .getScore()));
+      }
+    });
+  }
+
+  public static void sortEventByOrdinalDesc(List<ActivityEvent> events) {
+    Collections.sort(events, new Comparator<ActivityEvent>() {
+      public int compare(ActivityEvent event1, ActivityEvent event2) {
+        return new Integer(event2.getOrdinal()).compareTo(new Integer(event1
+            .getOrdinal()));
+      }
+    });
+  }
+
+  public static void sortTypesByPriorityDesc(List<ActivityType> types) {
+    Collections.sort(types, new Comparator<ActivityType>() {
+      public int compare(ActivityType type1, ActivityType type2) {
+        return typePriorityMap.get(type2.getName()).compareTo(
+            typePriorityMap.get(type1.getName()));
+      }
+    });
+  }
+
+  private static Map<String, Integer> typePriorityMap = new HashMap<String, Integer>();
+
+  static {
+    typePriorityMap.put("soccer", 10);
+    typePriorityMap.put("badminton", 9);
+    typePriorityMap.put("boardgame", 8);
+    typePriorityMap.put("bicycle", 7);
+    typePriorityMap.put("dance", 5);
+    typePriorityMap.put("yoga", 4);
+    typePriorityMap.put("tennis", 2);
+    typePriorityMap.put("tabletennis", 3);
+    typePriorityMap.put("basketball", 1);
+  }
+}

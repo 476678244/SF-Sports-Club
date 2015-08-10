@@ -1,0 +1,34 @@
+<?xml version="1.0"?><svg viewBox="0 0 720 1150" xmlns="http://www.w3.org/2000/svg">
+ <title>football pitch rev</title>
+ <g transform="rotate(90,575,360) translate(215, 215)">
+  <title>Layer 1</title>
+  <rect id="svg_1" fill="#7ccb71" height="720" width="1150" y="0" x="0"/>
+  <rect id="svg_29" height="722.00673" width="78.000002" y="-1.00578" x="616" stroke-width="0" stroke="white" fill="#6abc5f"/>
+  <rect id="svg_27" height="722.00673" width="78.000002" y="-1.00578" x="456" stroke-width="0" stroke="white" fill="#6abc5f"/>
+  <circle id="svg_3" fill-opacity="0" stroke-width="2" stroke="white" r="91.5" cy="360" cx="575"/>
+  <rect id="svg_26" height="722.00673" width="78.000002" y="-1.00578" x="301" stroke-width="0" stroke="white" fill="#6abc5f"/>
+  <rect id="svg_19" height="722.00673" width="78.000002" y="-0.837811" x="-1" stroke-width="0" stroke="white" fill="#6abc5f"/>
+  <rect id="svg_32" height="722.00673" width="78.000002" y="-1.00578" x="1075" stroke-width="0" stroke="white" fill="#6abc5f"/>
+  <circle id="svg_4" fill="white" stroke="white" r="2" cy="360" cx="575"/>
+  <rect id="svg_25" height="722.00673" width="78.000002" y="-1.00578" x="145" stroke-width="0" stroke="white" fill="#6abc5f"/>
+  <circle id="svg_5" fill="white" stroke="white" r="2" cy="360" cx="160"/>
+  <rect id="svg_31" height="722.00673" width="78.000002" y="-1.00578" x="927" stroke-width="0" stroke="white" fill="#6abc5f"/>
+  <circle id="svg_6" fill="white" stroke="white" r="2" cy="360" cx="990"/>
+  <path id="svg_7" fill-opacity="0" stroke-width="2" stroke="white" d="m50,324.399994l-10,0l0,72.200012l10,0l0,-72.200012z"/>
+  <path fill="black" id="svg_8" fill-opacity="0" stroke-width="2" stroke="white" d="m1100,324.399994l10,0l0,72.200012l-10,0l0,-72.200012z"/>
+  <path id="svg_9" fill-opacity="0" stroke-width="2" stroke="white" d="m50,269.399994l55,0l0,182.200012l-55,0l0,-182.200012z"/>
+  <path fill="black" id="svg_10" fill-opacity="0" stroke-width="2" stroke="white" d="m1100,269.399994l-55,0l0,182.200012l55,0l0,-182.200012z"/>
+  <path fill="#ffffff" id="svg_11" fill-opacity="0" stroke-width="2" stroke="white" d="m50,160.399994l165,0l0,402.199982l-165,0l0,-402.199982z"/>
+  <path fill="black" id="svg_12" fill-opacity="0" stroke-width="2" stroke="white" d="m1100,159.399994l-165,0l0,402.199982l165,0l0,-402.199982z"/>
+  <path id="svg_13" fill="none" stroke-width="2" stroke="white" d="m215,286.875a91.5,91.5 0 0 1 0,146.25l0,-146.25z"/>
+  <path id="svg_14" fill="none" stroke-width="2" stroke="white" d="m935,286.875a91.5,91.5 0 0 0 0,146.25l0,-146.25z"/>
+  <path id="svg_15" fill-opacity="0" stroke-width="2" stroke="white" d="m50,30a10,10 0 0 0 10,-10l-10,0l0,10z"/>
+  <path id="svg_16" fill-opacity="0" stroke-width="2" stroke="white" d="m60,700a10,10 0 0 0 -10,-10l0,10l10,0z"/>
+  <rect id="svg_30" height="722.00673" width="78.000002" y="-1.00578" x="766" stroke-width="0" stroke="white" fill="#6abc5f"/>
+  <path id="svg_2" fill="none" stroke-width="2" stroke="white" d="m575,20l-525,0l0,680l1050,0l0,-680l-525,0l0,680l0,-680z"/>
+  <path id="svg_17" fill-opacity="0" stroke-width="2" stroke="white" d="m1100,690a10,10 0 0 0 -10,10l10,0l0,-10z"/>
+  <path id="svg_18" fill-opacity="0" stroke-width="2" stroke="white" d="m1090,20a10,10 0 0 0 10,10l0,-10l-10,0z"/>
+  <line stroke-width="2" id="svg_33" y2="20" x2="1097" y1="20" x1="50" stroke="white" fill="none"/>
+  <line id="svg_35" y2="391.000002" x2="49.999999" y1="20" x1="48.999999" stroke-width="2" stroke="white" fill="none"/>
+ </g>
+</svg>

@@ -1,0 +1,57 @@
+<div class="match-info">
+  {{ detail.name }}<br>
+  <small>Start Time: {{ detail.time | sfdate : "MMM.dd, h:mma"}}</small><br>
+  <small>Let's Go at: {{ detail.goTime | sfdate : "MMM.dd, h:mma"}}</small><br>
+  <small>{{ detail.description }}</small><br>
+  <div class="operation-bar">
+    <span class="btn-group">
+      <a href="javascript:void(0);" class="pure-button pure-button-primary"
+        ng-if="!isMember()"  ng-click="join(true)">JOIN</a>
+      <a href="javascript:void(0);" class="pure-button pure-button-error"
+        ng-if="!!isMember()" ng-click="join(false)">QUIT</a>
+      <a href="javascript:void(0);" class="pure-button pure-button-secondary"
+        ng-if="!willTakeCar()" ng-click="takeCar(true);">
+        <i class="icon-car"></i> Drive Car
+      </a>
+      <a href="javascript:void(0);" class="pure-button pure-button-trivial"
+        ng-if="!!willTakeCar()" ng-click="takeCar(false);">
+        <i class="icon-car"></i> Cancel
+      </a>
+    </span>
+  </div>
+</div>
+<h2 class="detail-title" ng-if="isOrganizer();">Control Panel</h2>
+<section class="detail-section" ng-if="isOrganizer();">
+  <a href="javascript:void(0);" class="pure-button pure-button-primary" ng-click="regroup();" ng-if="supportFendui();">Regroup</a>
+  <a href="javascript:void(0);" class="pure-button pure-button-secondary" ng-click="sendMail('invite');">Email Invite</a>
+  <a href="javascript:void(0);" class="pure-button pure-button-secondary" ng-click="sendMail('encourage');">Email Encourage</a>
+  <a href="javascript:void(0);" class="pure-button pure-button-secondary" ng-click="sendMail('start_off');">Schedule Go Email</a>
+  <a href="javascript:void(0);" class="pure-button pure-button-error" ng-click="deleteEvent();">Delete Event</a>
+</section>
+<div ng-if="detail.members.length">
+  <h2 class="detail-title">Current Participants ({{ detail.members.length }})</h2>
+  <section class="detail-section member-inline-list">
+    <sf-member-element member="member" ng-repeat="member in detail.members" car="willTakeCar(member.username)" type="activity" ordinal="ordinal" ></sf-member-element>
+  </section>
+  <section class="detail-section">
+    <a href="javascript:void(0);" class="pure-button pure-button-primary"
+      ng-click="manageGuest(true);"><i class="icon-plus" style="font-size: .9em"></i> GUEST</a>
+    <a href="javascript:void(0);" class="pure-button pure-button-error"
+      ng-click="manageGuest(false);"><i class="icon-minus" style="font-size: .9em"></i> GUEST</a>
+  </section>
+  <section ng-if="supportFendui();">
+    <h2 class="detail-title">Grouping Result</h2>
+    <section class="detail-section">
+      <span class="number-selector" ng-click="group(2);" ng-class="{hl: groupNumber === 2}">2 GROUPS</span>
+      <span class="number-selector" ng-click="group(3);" ng-class="{hl: groupNumber === 3}">3 GROUPS</span>
+    </section>
+    <section class="detail-section field-ctnr">
+      <sf-soccer-field teams="teams"></sf-soccer-field>
+    </section> 
+    </section>
+</div>
+<div ng-if="!detail.members.length">
+  <h2 class="detail-title">
+    No members have joined yet.
+  </h2>
+</div>

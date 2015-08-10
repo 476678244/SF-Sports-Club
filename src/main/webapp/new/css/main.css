@@ -1,0 +1,529 @@
+/* Common */
+html, button, input, select, textarea, .pure-g [class *= "pure-u"] {
+  font-family: 'Oswald', "Microsoft YaHei","Hiragino Sans GB","\5b8b\4f53", sans-serif;
+}
+body {
+  color: #777;
+  background: #f8f8f8;
+  line-height: 1.6;
+  font-size: 16px;
+}
+a {
+  outline: none !important;
+}
+.page-with-sidebar {
+  padding-left: 80px;
+}
+.side-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80px;
+  background: #333;
+}
+@keyframes sidebar-avatar-blink {
+    0%   { background-color: #333; }
+    50%  { background-color: #555; }
+    100% { background-color: #333; }
+}
+.side-nav .sidebar-avatar-ctnr {
+  display: block;
+  overflow: hidden;
+}
+.side-nav .sidebar-avatar-ctnr.blink {
+  animation: sidebar-avatar-blink .7s 4;
+}
+.side-nav .sidebar-avatar-link {
+  display: block;
+  margin: 7px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  overflow: hidden;
+  transition: border-color .2s;
+  border: 3px solid #333;
+}
+.side-nav .sidebar-avatar-link:hover {
+  border-color: #555;
+}
+.side-nav .sidebar-avatar-img {
+  width: 100%;
+}
+a.sports-select-item {
+  display: inline;
+  text-decoration: none;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  color: #666;
+  text-align: center;
+  transition: background-color .2s;
+}
+a.sports-nav-item {
+  display: block;
+  text-decoration: none;
+  font-size: 40px;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  color: #666;
+  text-align: center;
+  transition: background-color .2s;
+  background: #333;
+}
+a.sports-nav-item:hover {
+  background: #444;
+}
+a.sports-nav-item.hl {
+  background: #0C9;
+  color: #FFF;
+}
+a.logout-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transition: color .2s;
+}
+a.logout-btn:hover {
+  background: #333;
+  color: #ddd;
+}
+@media(max-width: 500px) {
+  body {
+    font-size: 13px;
+  }
+  .page-with-sidebar {
+    padding-left: 40px;
+  }
+  .side-nav {
+    width: 40px;
+  }
+  .side-nav .sidebar-avatar-link {
+    margin: 3px;
+    border-width: 2px;
+    width: 30px;
+    height: 30px;
+  }
+  a.sports-nav-item {
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+}
+.pure-button-error {
+  color: white;
+  background: rgb(202, 60, 60);
+}
+.pure-button-secondary {
+  color: white;
+  background: rgb(100, 180, 100);
+}
+.pure-button-trivial {
+  color: rgb(100, 125, 125);
+  background: rgb(200, 220, 230);
+}
+.v-center-container {
+  display: table;
+  width: 100%;
+}
+.v-center-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+/* Login Page and Register Page */
+.account-form-wrapper {
+  padding: 0 4em;
+}
+.account-page {
+  background-image: url('../img/login/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.account-form {
+  background: rgba(255,255,255,0.95);
+  max-width: 30em;
+  margin: 4em auto;
+  padding: 1.5em;
+  border-radius: 4px;
+}
+.account-form legend {
+  color: #F44;
+  font-size: 1.2em;
+}
+.login-form [type="submit"] {
+  margin: 5px 0;
+}
+.login-msg {
+  font-size: .9em;
+  color: #888;
+  color: #F22;
+  white-space: pre;
+}
+.register-form .sports-selector {
+  margin-bottom: .25em;
+  padding: .5em 0;
+}
+.register-form .sports-select-item,
+.my-info-form .sports-select-item {
+  font-size: 2em;
+  color: #AAA;
+  outline: none;
+}
+.register-form .sports-select-item.selected,
+.my-info-form .sports-select-item.selected {
+  color: #3AA;
+}
+.register-form .btn-ctnr {
+  text-align: right;
+}
+.register-form .btn-ctnr .row {
+  margin: .25em 0;
+}
+.register-form a.pure-input-1 {
+  box-sizing: border-box;
+}
+.my-info-form .my-avatar-img-ctnr {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 50px;
+  margin-bottom: 0.5em;
+  margin-top: 1.5em;
+}
+.my-info-form .my-avatar-img-ctnr img {
+  width: 100%;
+}
+.my-info-form .gutter {
+  height: 1em;
+}
+.my-info-form input[name="email"][disabled] {
+  background: #FFF;
+  color: #000;
+}
+/* Join Page */
+.join-banner {
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background-position: center center;
+  display: table;
+}
+.join-banner h1 {
+  margin: 0;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+.join-banner h1 .inner {
+  display: inline-block;
+  height: 2em;
+  line-height: 2em;
+  text-align: center;
+  color: #FFF;
+  /*border: 3px solid #FFF;*/
+  /*border-width: 3px 0 3px 0;*/
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+.join-banner h1 .inner:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #FFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+.join-banner h1 .inner:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #FFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+.join-content {
+  margin: 2em;
+  text-align: center;
+}
+.create-event-btn-ctnr {
+  display: inline;
+}
+.all-organizers {
+  margin: 2em;
+}
+.all-subscribers {
+  margin: 2em;
+}
+.all-subscribers .detail-section, 
+.all-organizers .detail-section {
+  text-align: center;
+}
+.all-events {
+  margin: 2em;
+}
+.all-organizers h2,
+.all-subscribers h2,
+.all-events h2 {
+  border-bottom: 3px double #bbb;
+  padding: .3em;
+  margin-left: .3em;
+  margin-right: .3em;
+  text-align: center;
+}
+.pure-event {
+  margin-bottom: 1em;
+}
+.event-item-wrapper {
+  margin-bottom: .6em;
+}
+a.event-item {
+  display: block;
+  border-radius: 5px;
+  color: #777;
+  text-align: center;
+  text-decoration: none;
+  padding: .5em;
+  background: #EEE;
+  margin: 0 .5em;
+  transition: background-color .2s;
+}
+a.event-item:hover {
+  background: antiquewhite;
+  color: #B54;
+}
+.event-item .event-name {
+  display: block;
+  font-size: 1.2em;
+}
+.event-item .event-time {
+  display: block;
+  font-size: .9em;
+}
+.event-item .event-joiner-size{
+  display: block;
+  font-size: .9em;
+}
+/* Detail Page */
+.detail-page .match-info {
+  background: #EEE;
+  margin: 0;
+  padding: 1em 1.5em;
+  border-bottom: 3px solid #0DA;
+  color: #333;
+  font-size: 2em;
+  font-weight: bold;
+}
+.detail-page .match-info small {
+  font-size: .6em;
+  color: #777;
+}
+.detail-page .detail-title,
+.detail-page .detail-section {
+  margin: 1em 2em;
+  text-align: center;
+}
+.detail-page .match-info .operation-bar {
+  margin-top: 1em; 
+  font-size: .5em;
+  line-height: 2.5;
+}
+.detail-page .match-info .btn-group {
+  margin-right: .5em;
+  display: inline-block;
+}
+.detail-page .match-info .checkbox-group {
+  display: inline-block;
+}
+label[for="having-car-checkbox"] {
+  margin-left: .25em;
+  color: #777;
+}
+.number-selector {
+  display: inline-block;
+  font-size: 1.2em;
+  margin: 0 5px;
+  color: #999;
+  cursor: pointer;
+}
+.number-selector.hl{
+  color: #444;
+  border-bottom: 2px solid #0D9;
+}
+.member-item {
+  margin-right: 20px;
+  display: inline-block;
+  line-height: 60px;
+  position: relative;
+}
+.member-avatar {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 60px;
+  vertical-align: top;
+}
+.member-avatar img {
+  width: 60px;
+  vertical-align: top;
+  background: #FFF;
+}
+.member-continous-times {
+  position: absolute;
+  left: 5.1em;
+  bottom: 1.5em;
+  color: gainsboro;
+  font-size: smaller;
+}
+.member-name {
+  margin-left: 5px;
+  font-size: 1.1em;
+}
+.member-icons {
+  font-size: 1.5em;
+  color: #333;
+}
+.member-inline-list .member-item {
+  width: 200px;
+  margin-bottom: 10px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media(max-width: 500px) {
+  .member-inline-list .member-avatar {
+    display: none;
+  }
+  .member-inline-list .member-continous-times {
+    display: none;
+  }
+  .member-inline-list .member-item {
+    width: auto;
+    line-height: 1.6;
+  }
+}
+.soccer-field {
+  background: url('../img/soccer/field.svg') no-repeat;
+  background-size: 100%;
+  max-width: 720px;
+  margin: auto;
+  box-sizing: border-box;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+.soccer-field .pending-msg-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+.soccer-field .pending-msg {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  color: #063;
+  font-size: 1.5em;
+  padding: 0 1em;
+}
+.soccer-field .half {
+  overflow: hidden;
+}
+.soccer-field .row {
+  width: 100%;
+  display: table;
+}
+.soccer-field .row-inner {
+  display: table-row;
+}
+.soccer-field .member-cell {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  width: 33%;
+}
+.soccer-field .member-item {
+  display: inline-block;
+  line-height: inherit;
+  margin: 0;
+}
+.soccer-field .member-avatar {
+  border: 3px solid #FFF;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+}
+.soccer-field .member-name {
+  color: #FFF;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.4);
+  margin-top: .2em;
+  display: block;
+}
+@media(max-width: 700px) {
+  .soccer-field .member-avatar {
+    display: none;
+  }
+  .soccer-field .member-name {
+    font-weight: normal;
+  }
+}
+@media(max-width: 500px) {
+  .soccer-field .member-name {
+    font-size: .9em;
+  }
+}
+.soccer-bench-area {
+  max-width: 720px;
+  margin: auto;
+}
+.bench-list {
+  margin: 30px 40px;
+  line-height: 80px;
+}
+.bench-list .member-name{
+  font-weight: bold;
+}
+/* Create Page */
+.create-content {
+  padding: 0 3em;
+}
+.create-form {
+  max-width: 500px;
+  margin: 2em auto;
+}
+.create-form legend {
+  border: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.create-form .quickdate {
+  display: block;
+  width: 100%;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  margin: .25em 0;
+}
+.create-form .quickdate-button {
+  display: block;
+  color: #000;
+  padding: .5em .6em;
+  box-shadow: inset 0 1px 3px #ddd;
+  text-decoration: none;
+}
+.create-form .quickdate-action-link {
+  text-decoration: none;
+}
+.create-form input.ng-valid-required,
+.create-form .quickdate.ng-valid-required a {
+  /*border-color: #0B5;*/
+}

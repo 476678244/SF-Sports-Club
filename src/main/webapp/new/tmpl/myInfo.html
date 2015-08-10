@@ -1,0 +1,46 @@
+<section class="account-page v-center-container" sf-window-height>
+  <ng-include src="'./tmpl/side-nav.html'"></ng-include>
+  <div class="v-center-wrapper">
+    <div class="v-center-inner account-form-wrapper">
+      <form class="account-form my-info-form pure-form pure-form-stacked" ng-controller="MyInfoController" ng-submit="updateUser();">
+        <legend>Personal Profile</legend>
+        <fieldset>
+          <div class="pure-g">
+            <div class="pure-u-1 pure-u-sm-1-3">
+              <div class="my-avatar-img-ctnr">
+                <img class="my-avatar-img pure-u-1" 
+                  ng-src="{{ avatar }}" fallback-src="./img/avatar/default.svg"> 
+              </div>
+              <div class="pure-u-1" ngf-select ng-model="files">
+                <button ng-if="canEdit();" class="pure-input-1 pure-button pure-button-primary">Change Avatar</button>
+              </div>
+              <p>{{ uploadMessage }}</p>
+            </div>
+            <div class="pure-u-1 pure-u-sm-1-24 gutter"></div>
+            <div class="pure-u-1 pure-u-sm-5-8">
+              <label for="user-email">Email</label>
+              <input id="user-fullname" ng-model="email" name="email"
+                class="pure-input-1" type="text" disabled>
+              <label for="user-fullname">Full Name</label>
+              <input id="user-fullname" required ng-model="fullname" name="fullname"
+                class="pure-input-1" type="text">
+              <label>Joining Clubs:</label>
+              <div class="sports-selector">
+                <a ng-repeat="item in sports"
+                    ng-class="{ selected: subscribeTypeSet.hasOwnProperty(item.id), 'sports-select-item': true }"
+                    ng-click="clickType(item.id);"
+                    href="javascript:void(0);">
+                  <i class="icon-{{ item.id }}"></i>
+                </a>
+              </div>
+              <br>
+              <input ng-if="canEdit();" type="submit" class="pure-input-1-4 pure-button pure-button-primary" ng-disabled="createForm.$invalid" value="Update">
+              <input ng-if="canEdit();" type="button" class="pure-input-1-4 pure-button pure-button-trivial" value="Cancel" ng-click="toView();">
+              <input ng-if="!canEdit();" type="button" class="pure-input-1-4 pure-button pure-button-primary" value="Edit" ng-click="toEdit();">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</section>

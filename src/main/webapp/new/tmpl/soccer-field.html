@@ -1,0 +1,24 @@
+<div class="soccer-field">
+  <div ng-if="empty" class="pending-msg-wrapper">
+    <div class="pending-msg">
+      Grouping result is pending.<br>
+      Still waiting for more members to join.
+    </div>
+  </div>
+  <div class="half" ng-repeat="team in positions" ng-if="!empty">
+    <div class="row" ng-repeat="row in team" ng-style="{height: rowHeight[$parent.$index]}">
+      <div class="row-inner">
+        <div class="member-cell" ng-repeat="player in row">
+          <sf-member-element member="player"></sf-member-element>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="soccer-bench-area" ng-if="teams[2]">
+  <h3>ON THE BENCH</h3>
+  <div class="member-inline-list">
+    <sf-member-element ng-repeat="player in teams[2]" member="player"></sf-member-element>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<section class="account-page v-center-container" sf-window-height>
+  <div class="v-center-wrapper">
+    <div class="v-center-inner account-form-wrapper">
+      <form class="account-form register-form pure-form pure-form-stacked" name="registerForm" ng-controller="RegisterController" ng-submit="createUser();">
+        <legend>REGISTER</legend>
+        <fieldset class="pure-g">
+          <div class="pure-u-1">
+            <label for="user-email">User Email</label>
+            <input id="user-email" required ng-model="email" name="email"
+              class="pure-input-1" type="text">
+            <label for="user-fullname">User Full Name</label>
+            <input id="user-fullname" required ng-model="fullname" name="fullname"
+              class="pure-input-1" type="text">
+            <label>Join Club:</label>
+            <div class="sports-selector">
+              <a ng-repeat="item in sports"
+                  ng-class="{ selected: subscribeTypeSet.hasOwnProperty(item.id), 'sports-select-item': true }"
+                  ng-click="clickType(item.id);"
+                  href="javascript:void(0);">
+                <i class="icon-{{ item.id }}"></i>
+              </a>
+            </div>
+          </div>
+          <div class="btn-ctnr pure-u-1">
+            <div class="pure-u-sm-5-24 pure-u-11-24 row">
+              <a class="pure-input-1 pure-button pure-button-trivial" href="#/">Go Back</a>
+            </div><div class="pure-u-sm-1-24 pure-u-1-12">
+              
+            </div><div class="pure-u-sm-5-24 pure-u-11-24 row">
+              <input type="submit" class="pure-input-1 pure-button pure-button-primary" ng-disabled="createForm.$invalid" value="Register">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</section>

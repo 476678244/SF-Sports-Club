@@ -1,0 +1,41 @@
+<section class="page-with-sidebar create-page">
+  <ng-include src="'./tmpl/side-nav.html'"></ng-include>
+  <div class="create-panel">
+    <div class="join-banner" ng-style="{backgroundImage: 'url(img/{{ activity }}/bg.jpg)'}">
+      <h1>
+        <span class="inner">SF {{ activity | uppercase }} CLUB</span>
+      </h1>
+    </div>
+    <div class="create-content">
+      <form class="pure-form pure-form-stacked create-form" name="createForm" ng-controller="CreateController" ng-submit="createEvent();">
+        <legend>Create Event</legend>
+        <fieldset>
+          <div>
+            <label for="event-name">Event Name</label>
+            <input id="event-name" required ng-model="name" name="name"
+              class="pure-input-1" type="text">
+          </div>
+          <div>
+            <label for="event-start-time">Start Time</label>
+            <quick-datepicker id="event-start-time" required ng-model="startTime"
+              name="startTime" disable-clear-button="true" placeholder="-"
+              on-change="onStartTimeChange()"></quick-datepicker>
+          </div>
+          <div>
+            <label for="event-go-time">Go Time</label>
+            <quick-datepicker id="event-go-time" required ng-model='goTime'
+              name="goTime" disable-clear-button="true" placeholder="-"></quick-datepicker>
+          </div>
+          <div>
+            <label for="event-description">Description</label>
+            <input id="event-description" required ng-model="description"
+              name="description" class="pure-input-1" type="text">
+          </div>
+          <div>
+            <input type="submit" class="pure-button pure-button-primary" ng-disabled="createForm.$invalid" value="Create">
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</section>

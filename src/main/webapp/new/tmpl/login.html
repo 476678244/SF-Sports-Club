@@ -1,0 +1,30 @@
+<section class="account-page v-center-container" sf-window-height>
+  <div class="v-center-wrapper">
+    <div class="v-center-inner account-form-wrapper">
+      <form class="account-form login-form pure-form pure-form-stacked" ng-submit="login();">
+        <fieldset>
+          <legend>SF SPORTS CLUB</legend>
+          <!-- <label for="login-input-email">SAP Email Address</label> -->
+          <div class="pure-g">
+            <div class="pure-u-1 pure-u-sm-1-2">
+              <input id="login-input-email" type="email" class="pure-input-1"
+                placeholder="SAP Email Address"
+                ng-model="email">
+            </div><div class="pure-u-1 pure-u-sm-1-24">
+              
+            </div><div class="pure-u-1 pure-u-sm-5-24">
+              <input id="login-input-email" type="submit"
+                class="pure-input-1 pure-button pure-button-primary" value="LOGIN">
+            </div><div class="pure-u-1 pure-u-sm-1-24">
+              
+            </div><div class="pure-u-1 pure-u-sm-5-24">
+              <input id="login-input-register" type="submit"
+                class="pure-input-1 pure-button pure-button-primary" value="REGISTER" ng-click="clickRegister();">
+            </div>
+            <div class="pure-u-1 pure-u-sm-1 login-msg" ng-show="message">{{ message }}</div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</section>
