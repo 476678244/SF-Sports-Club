@@ -134,6 +134,7 @@ a.logout-btn:hover {
 /* Login Page and Register Page */
 .account-form-wrapper {
   padding: 0 4em;
+  margin-left: 3em;
 }
 .account-page {
   background-image: url('../img/login/bg.jpg');
