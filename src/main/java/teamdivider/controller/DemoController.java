@@ -121,6 +121,6 @@ public class DemoController {
   
   @PostConstruct
   void init() {
-    soccer = this.baseData.getSoccer();
+    //soccer = this.baseData.getSoccer();
   }
 }

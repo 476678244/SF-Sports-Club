@@ -105,8 +105,10 @@ public class BaseData {
     soccer.setRegularTime("Tuesday 6:00 pm");
     int ordinal = soccer.getLatestOrdinal() + 1;
 
-    ActivityEvent event = new ActivityEvent(ordinal, "周二张江中学踢球(1/27)", soccer.getRegularTime(), new Date());
+    ActivityEvent event = new ActivityEvent(ordinal, "周二张江中学踢球(1/27)",
+        soccer.getRegularTime(), new Date());
     event.setDescription("start to go @5:30pm");
+    event.setType(soccer.getName());
 
     List<User> soccerMembers = new ArrayList<User>();
     soccerMembers.add(this.userDAO.findByUsername("zonghan.wu@sap.com"));

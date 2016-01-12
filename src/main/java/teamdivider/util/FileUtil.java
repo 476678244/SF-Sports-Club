@@ -1,15 +1,15 @@
 package teamdivider.util;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class FileUtil {
 
-  public static String projectHeadPicturePath = PropertyUtil.PROJECT_IMAGE_PATH + "avatar/";
+  // specific for tomcat server
+  public static String projectAvatarPath = new File("").getAbsolutePath()
+      .replace("bin", "temp/");
 
   public static void FileCopy(InputStream input, String writeFile) {
     try {

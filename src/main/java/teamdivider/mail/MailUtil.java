@@ -16,7 +16,8 @@ public class MailUtil {
 
   public static String getEmailBody() {
     try {
-      String emailFilePath = PropertyUtil.PROJECT_BASE_PATH + "email.html";
+      String emailFilePath = MailInfo.class.getClassLoader()
+          .getResource("email.html").getPath();
       FileInputStream fileinputstream = new FileInputStream(emailFilePath);
       int lenght = fileinputstream.available();
       byte[] bytes = new byte[lenght];
@@ -38,8 +39,7 @@ public class MailUtil {
   public static int sendGoEmail(List<User> users, String activityType,
       int ordinal, ActivityEvent event) throws Exception {
     String viewEventLink = generateViewLink(activityType, ordinal);
-    MailInfo emailInfo = new MailInfo("即刻出发！" + event.getName(),
-        EmailPictureEnum.GO, activityType);
+    MailInfo emailInfo = new MailInfo("即刻出发！" + event.getName());
     emailInfo.setEmailTo(EmailAccountUtil.getAddress());
     List<String> ccList = new ArrayList<String>();
     for (User user : users) {
@@ -65,8 +65,7 @@ public class MailUtil {
       MailService mailService) throws Exception {
     String viewEventLink = generateViewLink(activityType, ordinal);
     String enrollToEventLink = generateEnrollLink(activityType, user, ordinal);
-    MailInfo emailInfo = new MailInfo("快来报名:" + event.getName(),
-        EmailPictureEnum.INVITE, activityType);
+    MailInfo emailInfo = new MailInfo("快来报名:" + event.getName());
     emailInfo.setEmailTo(user.getUsername());
     emailInfo.setEmailRegistUrl(enrollToEventLink);
     emailInfo.setEmailViewGroupUrl(viewEventLink);
@@ -94,7 +93,7 @@ public class MailUtil {
     String viewEventLink = generateViewLink(activityType, ordinal);
     String enrollToEventLink = generateEnrollLink(activityType, user, ordinal);
     MailInfo emailInfo = new MailInfo("何不参加！"
-        + event.getName(), EmailPictureEnum.ENCOURAGE, activityType);
+        + event.getName());
     emailInfo.setEmailTo(user.getUsername());
     emailInfo.setEmailRegistUrl(enrollToEventLink);
     emailInfo.setEmailViewGroupUrl(viewEventLink);
@@ -109,8 +108,8 @@ public class MailUtil {
       int ordinal, ActivityEvent event, User driver, boolean stillDriver,
       Set<User> usersToTellIfNoStillDriver) throws Exception {
     String viewEventLink = generateViewLink(activityType, ordinal);
-    MailInfo emailInfo = new MailInfo(driver.getFullname() + "车上最新乘坐情况—"
-        + event.getName(), EmailPictureEnum.GO, activityType);
+    MailInfo emailInfo = new MailInfo(
+        driver.getFullname() + "车上最新乘坐情况—" + event.getName());
     emailInfo.setEmailTo(EmailAccountUtil.getAddress());
     List<String> ccList = new ArrayList<String>();
     if (stillDriver) {

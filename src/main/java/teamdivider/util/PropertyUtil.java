@@ -20,9 +20,6 @@ public class PropertyUtil {
     return value;
   }
 
-  public static final String PROJECT_BASE_PATH = PropertyUtil
-      .readProperty("PROJECT_BASE_PATH");
-
   public static final String BASE_LINK = PropertyUtil.readProperty("BASE_LINK");
   
   public static final int DEFAULT_USER_SCORE = Integer.valueOf(PropertyUtil
@@ -32,8 +29,6 @@ public class PropertyUtil {
     return Boolean.valueOf(readProperty("EMAIL_ONLY_TO_ZONGHAN"));
   }
   
-  public static final String PROJECT_IMAGE_PATH = PROJECT_BASE_PATH + "new/img/";
-  
   public static final String AVATAR_BUCKET_NAME = PropertyUtil
       .readProperty("AVATAR_BUCKET_NAME");
 
@@ -41,4 +36,7 @@ public class PropertyUtil {
       .readProperty("AVATAR_BASE_LINK");
   
   public static final int SHOW_EVENTS_NUMBER = 5;
+  
+  public static final boolean DISABLE_CACHE = Boolean
+      .valueOf(readProperty("DISABLE_CACHE"));
 }

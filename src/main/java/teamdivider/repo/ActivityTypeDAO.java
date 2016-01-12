@@ -84,6 +84,7 @@ public class ActivityTypeDAO {
   
   public ActivityType getTypeByNameFromDB(String name) {
     ActivityType type = datastore.find(ActivityType.class, "name", name).get();
+    if (type == null) return null;
     EntityUtil.sortEventByOrdinalDesc(type.getEvents());
     return type;
   }

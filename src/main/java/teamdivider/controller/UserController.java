@@ -151,7 +151,7 @@ public class UserController {
     double scale = file.getSize() > 50000 ? 50000 / file.getSize() : 1;
     scale = scale == 0 ? 0.2 : scale;
     // copy to server avatar path temperarily
-    String tempImagePath = FileUtil.projectHeadPicturePath + standardAvatarName;
+    String tempImagePath = FileUtil.projectAvatarPath + standardAvatarName;
     Thumbnails.of(file.getInputStream()).outputFormat("jpg").outputQuality(1)
         .scale(scale).toFile(tempImagePath);
     imageToSquare(tempImagePath);

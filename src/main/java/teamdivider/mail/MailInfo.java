@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
 
-import teamdivider.mail.MailUtil.EmailPictureEnum;
 import teamdivider.util.PropertyUtil;
 
 public class MailInfo {
@@ -20,16 +19,14 @@ public class MailInfo {
   private Address emailTo;
   private Address[] emailCc;
 
-  private String emailPictureName;
   private String emailContent = "Welcome!";
   private String emailTheme = "email theme!";
   
   private Set<String> addresses = new HashSet<String>();
 
-  public MailInfo(String emailSubject, EmailPictureEnum emailPictureEnum, String type) {
+  public MailInfo(String emailSubject) {
     this.emailSubject = emailSubject;
     this.emailBody = MailUtil.getEmailBody();
-    this.emailPictureName = "new/img/" + type + "/bg.jpg";
   }
 
   public void setEmailSubject(String emailSubject) {
@@ -116,14 +113,6 @@ public class MailInfo {
 
   public Address[] getEmailCc() {
     return this.emailCc;
-  }
-
-  public String getEmailPictureName() {
-    return emailPictureName;
-  }
-
-  public void setEmailPictureName(String emailPictureName) {
-    this.emailPictureName = emailPictureName;
   }
 
   public String getEmailContent() {

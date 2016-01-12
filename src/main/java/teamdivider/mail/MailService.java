@@ -18,7 +18,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import org.springframework.stereotype.Service;
-
 import teamdivider.util.PropertyUtil;
 
 @Service
@@ -82,16 +81,9 @@ public class MailService {
 
     mp.addBodyPart(htmlBodyPart);
 
-    // set body pic
-    FileDataSource header = new FileDataSource(new File(
-        PropertyUtil.PROJECT_BASE_PATH + emailInfo.getEmailPictureName()));
-    MimeBodyPart jpgBodyPart = new MimeBodyPart();
-    jpgBodyPart.setDataHandler(new DataHandler(header));
-    jpgBodyPart.setContentID("headerPic");
-    //mp.addBodyPart(jpgBodyPart);
     // set sap header pic
     FileDataSource sapPic = new FileDataSource(new File(
-        PropertyUtil.PROJECT_BASE_PATH + "images/email/sap.jpg"));
+        MailInfo.class.getClassLoader().getResource("sap.jpg").getPath()));
     MimeBodyPart sapPicBodyPart = new MimeBodyPart();
     sapPicBodyPart.setDataHandler(new DataHandler(sapPic));
     sapPicBodyPart.setContentID("sapPic");

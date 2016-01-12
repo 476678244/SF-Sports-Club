@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import teamdivider.util.PropertyUtil;
-
 public class EmailAccountUtil {
 
   private static final LinkedList<String> addresses = new LinkedList<String>();
@@ -15,8 +13,6 @@ public class EmailAccountUtil {
   private static final Map<String, String> addressPasswordMap = new HashMap<String, String>();
 
   private static final LinkedList<String> template = new LinkedList<String>();
-
-  private static int usedTimes = 0;
 
   static {
     template.add("a476678244@sina.cn");
