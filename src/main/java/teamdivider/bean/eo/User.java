@@ -7,20 +7,17 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class User {
 
-  @JsonIgnore
   @Id
-  ObjectId id;
+  private ObjectId id;
 
-  long userId;
+  private long userId;
   
-  String email;
+  private String email;
 
-  String avatar;
+  private String avatar;
 
   public ObjectId getId() {
     return id;
@@ -52,6 +49,34 @@ public class User {
 
   public void setAvatar(String avatar) {
     this.avatar = avatar;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (int) (userId ^ (userId >>> 32));
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    User other = (User) obj;
+    if (userId != other.userId)
+      return false;
+    return true;
+  }
+
+  @Override
+  public String toString() {
+    return "User [userId=" + userId + ", email=" + email + ", avatar=" + avatar
+        + "]";
   }
 
 }
