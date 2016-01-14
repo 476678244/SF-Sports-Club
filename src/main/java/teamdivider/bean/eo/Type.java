@@ -1,14 +1,15 @@
 package teamdivider.bean.eo;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Reference;
-
-import teamdivider.entity.User;
+import org.mongodb.morphia.annotations.Transient;
 
 @Entity
 public class Type {
@@ -23,17 +24,21 @@ public class Type {
   @Reference
   private Event latestEvent;
 
-  @Reference
+  @Transient
   private Set<User> organizers = new HashSet<User>();
 
-  @Reference(lazy = true)
+  @Transient
   private Set<User> subscribers = new HashSet<User>();
 
-  @Reference(lazy = true)
+  @Transient
   private Set<Event> events = new HashSet<Event>();
 
+  @Transient
+  private Map<Long, Integer> scores = new HashMap<Long, Integer>();
+
   private Type(ObjectId id, long typeId, String name, Event latestEvent,
-      Set<User> organizers, Set<User> subscribers, Set<Event> events) {
+      Set<User> organizers, Set<User> subscribers, Set<Event> events,
+      Map<Long, Integer> scores) {
     super();
     this.id = id;
     this.typeId = typeId;
@@ -42,6 +47,7 @@ public class Type {
     this.organizers = organizers;
     this.subscribers = subscribers;
     this.events = events;
+    this.scores = scores;
   }
 
   public ObjectId getId() {
@@ -100,6 +106,14 @@ public class Type {
     this.events = events;
   }
 
+  public Map<Long, Integer> getScores() {
+    return scores;
+  }
+
+  public void setScores(Map<Long, Integer> scores) {
+    this.scores = scores;
+  }
+
   public class Builder {
 
     private ObjectId id;
@@ -116,9 +130,11 @@ public class Type {
 
     private Set<Event> events = new HashSet<Event>();
 
+    private Map<Long, Integer> scores = new HashMap<Long, Integer>();
+
     public Type build() {
       Type type = new Type(this.id, this.typeId, this.name, this.latestEvent,
-          this.organizers, this.subscribers, this.events);
+          this.organizers, this.subscribers, this.events, this.scores);
       return type;
     }
 
@@ -156,6 +172,11 @@ public class Type {
       this.events = events;
       return this;
     }
+
+    public Builder scores(Map<Long, Integer> scores) {
+      this.scores = scores;
+      return this;
+    }
   }
 
   @Override
@@ -185,5 +206,5 @@ public class Type {
     return "Type [typeId=" + typeId + ", name=" + name + ", latestEvent="
         + latestEvent + "]";
   }
-  
+
 }

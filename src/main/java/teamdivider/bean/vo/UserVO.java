@@ -8,10 +8,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import teamdivider.bean.eo.Type;
-import teamdivider.entity.User;
 import teamdivider.util.ContextUtil;
 
-public class UserVO extends User {
+public class UserVO extends teamdivider.entity.User {
+  
+  public UserVO(teamdivider.bean.eo.User user) {
+    this.userId = user.getUserId();
+    this.username = user.getEmail();
+    this.avatar = user.getAvatar();
+  }
 
   private long userId;
 
@@ -27,7 +32,7 @@ public class UserVO extends User {
     if (!ContextUtil.getContext().fetchUserSubscribedTypes)
       return Collections.emptySet();
     Set<String> types = new HashSet<String>();
-    for (Type type : ContextUtil.getContext().getUserMapping(this.userId)
+    for (Type type : ContextUtil.getContext().getUser(this.userId)
         .getSubscribedTypes()) {
       types.add(type.getName());
     }

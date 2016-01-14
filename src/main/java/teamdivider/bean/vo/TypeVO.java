@@ -8,7 +8,7 @@ import java.util.List;
 
 import teamdivider.entity.ActivityEvent;
 import teamdivider.entity.ActivityType;
-import teamdivider.entity.User;
+import teamdivider.entity.EntityUtil;
 
 public class TypeVO extends ActivityType {
 
@@ -30,6 +30,10 @@ public class TypeVO extends ActivityType {
     this.typeId = typeId;
   }
 
+  public String getName() {
+    return this.name;
+  }
+  
   public List<ActivityEvent> getEvents() {
     List<ActivityEvent> activityEvents = new ArrayList<ActivityEvent>(
         events.size());
@@ -39,23 +43,19 @@ public class TypeVO extends ActivityType {
     return activityEvents;
   }
 
-  public List<User> getOrganizers() {
-    List<User> users = new ArrayList<User>(this.organizers.size());
-    for (UserVO userVO : this.organizers) {
-      users.add(userVO);
-    }
-    return users;
+  public List<teamdivider.entity.User> getOrganizers() {
+    return EntityUtil.userVOsToUsers(organizers);
   }
 
-  public List<User> getSubscribers() {
-    List<User> users = new ArrayList<User>(this.subscribers.size());
-    for (UserVO userVO : this.subscribers) {
-      users.add(userVO);
-    }
-    return users;
+  public List<teamdivider.entity.User> getSubscribers() {
+    return EntityUtil.userVOsToUsers(subscribers);
   }
 
   public ActivityEvent getLatestEvent() {
     return this.latestEvent;
+  }
+  
+  public int getLatestOrdinal() {
+    return this.latestEvent.getOrdinal();
   }
 }

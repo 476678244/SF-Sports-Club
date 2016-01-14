@@ -1,11 +1,17 @@
 package teamdivider.entity;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import teamdivider.bean.eo.Event;
+import teamdivider.bean.vo.UserVO;
 
 public class EntityUtil {
   public static void removeUserFromList(List<User> users, User user) {
@@ -66,6 +72,15 @@ public class EntityUtil {
       }
     });
   }
+  
+  public static void sortEventByOrdinalDescNew(List<Event> events) {
+    Collections.sort(events, new Comparator<Event>() {
+      public int compare(Event event1, Event event2) {
+        return new Long(event2.getEventId())
+            .compareTo(new Long(event1.getEventId()));
+      }
+    });
+  }
 
   public static void sortTypesByPriorityDesc(List<ActivityType> types) {
     Collections.sort(types, new Comparator<ActivityType>() {
@@ -89,4 +104,21 @@ public class EntityUtil {
     typePriorityMap.put("tabletennis", 3);
     typePriorityMap.put("basketball", 1);
   }
+  
+  public static Set<User> userVOsToUsers(Set<UserVO> userVOs) {
+    Set<User> users = new HashSet<User>();
+    for (UserVO userVO : userVOs) {
+      users.add(userVO);
+    }
+    return users;
+  }
+  
+  public static List<User> userVOsToUsers(List<UserVO> userVOs) {
+    List<User> users = new ArrayList<User>();
+    for (UserVO userVO : userVOs) {
+      users.add(userVO);
+    }
+    return users;
+  }
+
 }

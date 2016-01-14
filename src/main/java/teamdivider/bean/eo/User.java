@@ -3,9 +3,13 @@
  */
 package teamdivider.bean.eo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Transient;
 
 @Entity
 public class User {
@@ -18,6 +22,17 @@ public class User {
   private String email;
 
   private String avatar;
+  
+  @Transient
+  private Set<Type> subscribedTypes = new HashSet<Type>();
+
+  public Set<Type> getSubscribedTypes() {
+    return subscribedTypes;
+  }
+
+  public void setSubscribedTypes(Set<Type> subscribedTypes) {
+    this.subscribedTypes = subscribedTypes;
+  }
 
   public ObjectId getId() {
     return id;

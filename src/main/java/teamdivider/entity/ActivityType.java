@@ -14,19 +14,19 @@ import org.mongodb.morphia.annotations.Transient;
 @Entity
 public class ActivityType {
   @Id
-  private ObjectId id;
-  private String name;
-  private String regularTime = "";
-  private int latestOrdinal = 0;
+  protected ObjectId id;
+  protected String name;
+  protected String regularTime = "";
+  protected int latestOrdinal = 0;
   @Reference
-  private List<User> organizers = new ArrayList<User>();
+  protected List<User> organizers = new ArrayList<User>();
   @Reference
-  private List<User> subscribers = new ArrayList<User>();
-  private List<ActivityEvent> events = new ArrayList<ActivityEvent>();
+  protected List<User> subscribers = new ArrayList<User>();
+  protected List<ActivityEvent> events = new ArrayList<ActivityEvent>();
   // username/score map
   @Transient
-  private Map<String, Integer> usersScore = new HashMap<String, Integer>();
-  private Map<ObjectId, Integer> scoreStatistic = new HashMap<ObjectId, Integer>();
+  protected Map<String, Integer> usersScore = new HashMap<String, Integer>();
+  protected Map<ObjectId, Integer> scoreStatistic = new HashMap<ObjectId, Integer>();
 
   public ActivityType() {
   }

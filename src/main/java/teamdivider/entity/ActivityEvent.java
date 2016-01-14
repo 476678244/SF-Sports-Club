@@ -21,26 +21,26 @@ import teamdivider.util.ContextUtil;
 
 @Embedded
 public class ActivityEvent {
-  private int ordinal;
-  private String name;
-  private String time;
-  private String description;
-  private Date goTime;
+  protected int ordinal;
+  protected String name;
+  protected String time;
+  protected String description;
+  protected Date goTime;
   @Reference
-  private List<User> members = new ArrayList<User>();
-  private Map<Integer, List<Team>> fenDuiResults = new HashMap<Integer, List<Team>>();
+  protected List<User> members = new ArrayList<User>();
+  protected Map<Integer, List<Team>> fenDuiResults = new HashMap<Integer, List<Team>>();
   // temp users
-  private List<String> guests = new ArrayList<String>();
+  protected List<String> guests = new ArrayList<String>();
   @Reference
-  private Set<User> drivingCarMembers = new HashSet<User>();
+  protected Set<User> drivingCarMembers = new HashSet<User>();
   @JsonIgnore
-  private Map<ObjectId, Set<User>> carPassengersMap = new HashMap<ObjectId, Set<User>>();
-  private String type;
+  protected Map<ObjectId, Set<User>> carPassengersMap = new HashMap<ObjectId, Set<User>>();
+  protected String type;
   // just used in join page
   @Transient
-  private int totalMembers;
+  protected int totalMembers;
   @Transient
-  private String result = "";
+  protected String result = "";
 
   protected ActivityEvent() {}
 

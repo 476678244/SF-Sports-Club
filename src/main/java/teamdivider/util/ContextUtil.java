@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import teamdivider.bean.eo.Event;
 import teamdivider.bean.eo.Type;
 import teamdivider.bean.eo.User;
-import teamdivider.bean.eo.UserMapping;
 import teamdivider.mail.MailService;
 import teamdivider.repo.ActivityTypeDAO;
 import teamdivider.repo.UserDAO;
@@ -42,7 +41,7 @@ public class ContextUtil {
     ACTIVITY_TYPE_DAO = this.activityTypeDAO;
     MAIL_SERVICE = this.mailService;
   }
-  
+
   public static Context getContext() {
     return context.get();
   }
@@ -54,9 +53,7 @@ public class ContextUtil {
     private Map<Long, Event> events = new HashMap<Long, Event>();
 
     private Map<Long, User> users = new HashMap<Long, User>();
-    
-    private Map<Long, UserMapping> userMappings = new HashMap<Long, UserMapping>();
-    
+
     public boolean fetchUserSubscribedTypes = false;
 
     public Context() {
@@ -85,13 +82,6 @@ public class ContextUtil {
     public void setUser(long userId, User user) {
       this.users.put(userId, user);
     }
-    
-    public UserMapping getUserMapping(long userId) {
-      return this.userMappings.get(userId);
-    }
-    
-    public void setUserMapping(long userId, UserMapping userMapping) {
-      this.userMappings.put(userId, userMapping);
-    }
+
   }
 }

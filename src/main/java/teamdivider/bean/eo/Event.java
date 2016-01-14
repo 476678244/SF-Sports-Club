@@ -4,21 +4,24 @@
 package teamdivider.bean.eo;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Reference;
+import org.mongodb.morphia.annotations.Transient;
 
-import teamdivider.entity.User;
+import teamdivider.entity.Team;
 
 @Entity
 public class Event {
 
   @Id
-  ObjectId id;
+  private ObjectId id;
 
   private long eventId;
 
@@ -29,18 +32,28 @@ public class Event {
   private Date goTime;
 
   private String description;
-
+  
   private long typeId;
 
-  @Reference(lazy = true)
+  @Transient
   private Set<User> members = new HashSet<User>();
+
+  @Transient
+  private Set<User> drivers = new HashSet<User>();
+
+  @Transient
+  private Map<Long, Set<Long>> passengers = new HashMap<Long, Set<Long>>();
+
+  @Transient
+  private Map<Integer, List<Team>> fenDuiResult = new HashMap<Integer, List<Team>>();
 
   // guest users
   private Set<String> guests = new HashSet<String>();
 
   private Event(ObjectId id, long eventId, String name, Date startTime,
-      Date goTime, String description, long typeId, Set<User> members,
-      Set<String> guests) {
+      Date goTime, String description, Set<User> members, Set<String> guests,
+      Set<User> drivers, Map<Long, Set<Long>> passengers,
+      Map<Integer, List<Team>> fenDuiResult, long typeId) {
     super();
     this.id = id;
     this.eventId = eventId;
@@ -48,9 +61,12 @@ public class Event {
     this.startTime = startTime;
     this.goTime = goTime;
     this.description = description;
-    this.typeId = typeId;
     this.members = members;
     this.guests = guests;
+    this.drivers = drivers;
+    this.passengers = passengers;
+    this.fenDuiResult = fenDuiResult;
+    this.typeId = typeId;
   }
 
   public ObjectId getId() {
@@ -101,14 +117,6 @@ public class Event {
     this.description = description;
   }
 
-  public long getTypeId() {
-    return typeId;
-  }
-
-  public void setTypeId(long typeId) {
-    this.typeId = typeId;
-  }
-
   public Set<User> getMembers() {
     return members;
   }
@@ -125,6 +133,38 @@ public class Event {
     this.guests = guests;
   }
 
+  public long getTypeId() {
+    return typeId;
+  }
+
+  public void setTypeId(long typeId) {
+    this.typeId = typeId;
+  }
+
+  public Set<User> getDrivers() {
+    return drivers;
+  }
+
+  public void setDrivers(Set<User> drivers) {
+    this.drivers = drivers;
+  }
+
+  public Map<Long, Set<Long>> getPassengers() {
+    return passengers;
+  }
+
+  public void setPassengers(Map<Long, Set<Long>> passengers) {
+    this.passengers = passengers;
+  }
+
+  public Map<Integer, List<Team>> getFenDuiResult() {
+    return fenDuiResult;
+  }
+
+  public void setFenDuiResult(Map<Integer, List<Team>> fenDuiResult) {
+    this.fenDuiResult = fenDuiResult;
+  }
+
   public class Builder {
 
     ObjectId id;
@@ -138,7 +178,7 @@ public class Event {
     private Date goTime;
 
     private String description;
-
+    
     private long typeId;
 
     private Set<User> members = new HashSet<User>();
@@ -146,10 +186,16 @@ public class Event {
     // guest users
     private Set<String> guests = new HashSet<String>();
 
+    private Set<User> drivers = new HashSet<User>();
+
+    private Map<Long, Set<Long>> passengers = new HashMap<Long, Set<Long>>();
+
+    private Map<Integer, List<Team>> fenDuiResult = new HashMap<Integer, List<Team>>();
+
     public Event build() {
       Event event = new Event(this.id, this.eventId, this.name, this.startTime,
-          this.goTime, this.description, this.typeId, this.members,
-          this.guests);
+          this.goTime, this.description, this.members, this.guests, drivers,
+          passengers, fenDuiResult, this.typeId);
       return event;
     }
 
@@ -187,7 +233,7 @@ public class Event {
       this.typeId = typeId;
       return this;
     }
-
+    
     public Builder members(Set<User> members) {
       this.members = members;
       return this;
@@ -195,6 +241,11 @@ public class Event {
 
     public Builder guests(Set<String> guests) {
       this.guests = guests;
+      return this;
+    }
+
+    public Builder drivers(Set<User> drivers) {
+      this.drivers = drivers;
       return this;
     }
   }
@@ -224,8 +275,7 @@ public class Event {
   @Override
   public String toString() {
     return "Event [eventId=" + eventId + ", name=" + name + ", startTime="
-        + startTime + ", goTime=" + goTime + ", description=" + description
-        + ", typeId=" + typeId + "]";
+        + startTime + ", goTime=" + goTime + ", description=" + description;
   }
 
 }
