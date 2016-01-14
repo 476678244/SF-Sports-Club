@@ -3,9 +3,6 @@
  */
 package teamdivider.bean.eo.mapping;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
@@ -24,7 +21,7 @@ public class TypeEvent {
   
   private long eventId;
   
-  private Set<Event> events = new HashSet<Event>();
+  private Event event;
 
   public ObjectId getId() {
     return id;
@@ -58,12 +55,12 @@ public class TypeEvent {
     this.eventId = eventId;
   }
 
-  public Set<Event> getEvents() {
-    return events;
+  public Event getEvent() {
+    return event;
   }
 
-  public void setEvents(Set<Event> events) {
-    this.events = events;
+  public void setEvent(Event event) {
+    this.event = event;
   }
   
 }
