@@ -32,7 +32,7 @@ public class Event {
 
   private long typeId;
 
-  @Reference
+  @Reference(lazy = true)
   private Set<User> members = new HashSet<User>();
 
   // guest users

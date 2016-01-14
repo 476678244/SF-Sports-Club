@@ -1,10 +1,17 @@
 package teamdivider.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import teamdivider.bean.eo.Event;
+import teamdivider.bean.eo.Type;
+import teamdivider.bean.eo.User;
+import teamdivider.bean.eo.UserMapping;
 import teamdivider.mail.MailService;
 import teamdivider.repo.ActivityTypeDAO;
 import teamdivider.repo.UserDAO;
@@ -21,6 +28,8 @@ public class ContextUtil {
   @Autowired
   private MailService mailService;
 
+  private static final ThreadLocal<Context> context = new ThreadLocal<Context>();
+
   public static UserDAO USER_DAO = null;
 
   public static ActivityTypeDAO ACTIVITY_TYPE_DAO = null;
@@ -32,5 +41,57 @@ public class ContextUtil {
     USER_DAO = this.userDAO;
     ACTIVITY_TYPE_DAO = this.activityTypeDAO;
     MAIL_SERVICE = this.mailService;
+  }
+  
+  public static Context getContext() {
+    return context.get();
+  }
+
+  public static class Context {
+
+    private Map<Long, Type> types = new HashMap<Long, Type>();
+
+    private Map<Long, Event> events = new HashMap<Long, Event>();
+
+    private Map<Long, User> users = new HashMap<Long, User>();
+    
+    private Map<Long, UserMapping> userMappings = new HashMap<Long, UserMapping>();
+    
+    public boolean fetchUserSubscribedTypes = false;
+
+    public Context() {
+    }
+
+    public Type getType(long typeId) {
+      return this.types.get(typeId);
+    }
+
+    public Event getEvent(long eventId) {
+      return this.events.get(eventId);
+    }
+
+    public User getUser(long userId) {
+      return this.users.get(userId);
+    }
+
+    public void setType(long typeId, Type type) {
+      this.types.put(typeId, type);
+    }
+
+    public void setEvent(long eventId, Event event) {
+      this.events.put(eventId, event);
+    }
+
+    public void setUser(long userId, User user) {
+      this.users.put(userId, user);
+    }
+    
+    public UserMapping getUserMapping(long userId) {
+      return this.userMappings.get(userId);
+    }
+    
+    public void setUserMapping(long userId, UserMapping userMapping) {
+      this.userMappings.put(userId, userMapping);
+    }
   }
 }

@@ -13,15 +13,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User {
-  @JsonIgnore@Id ObjectId id;
-  String username;
-  String password;
-  String fullname;
-  String avatar;
+  protected @JsonIgnore@Id ObjectId id;
+  protected String username;
+  protected String password;
+  protected String fullname;
+  protected String avatar;
   // this is the temp score to be used in Fendui
-  int score;
+  protected int score;
   
-  User() {}
+  protected User() {}
   
   public User(String username, String fullname, String avatar) {
     this(username, "123", fullname, avatar, 0);

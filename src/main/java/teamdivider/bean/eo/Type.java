@@ -26,10 +26,10 @@ public class Type {
   @Reference
   private Set<User> organizers = new HashSet<User>();
 
-  @Reference
+  @Reference(lazy = true)
   private Set<User> subscribers = new HashSet<User>();
 
-  @Reference
+  @Reference(lazy = true)
   private Set<Event> events = new HashSet<Event>();
 
   private Type(ObjectId id, long typeId, String name, Event latestEvent,
