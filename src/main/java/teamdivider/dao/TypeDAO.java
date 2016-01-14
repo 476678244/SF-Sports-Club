@@ -92,33 +92,4 @@ public class TypeDAO extends AbstractDAO<Type> {
     return Type.class;
   }
 
-  @Repository
-  private class TypeEventDAO extends AbstractDAO<TypeEvent> {
-
-    @Override
-    protected Class<TypeEvent> getClazz() {
-      return TypeEvent.class;
-    }
-
-  }
-
-  @Repository
-  private class TypeOrganizerDAO extends AbstractDAO<TypeOrganizer> {
-
-    @Override
-    protected Class<TypeOrganizer> getClazz() {
-      return TypeOrganizer.class;
-    }
-
-  }
-
-  @Repository
-  private class TypeSubscriberDAO extends AbstractDAO<TypeSubscriber> {
-
-    @Override
-    protected Class<TypeSubscriber> getClazz() {
-      return TypeSubscriber.class;
-    }
-
-  }
 }
