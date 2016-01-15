@@ -3,9 +3,15 @@
  */
 package teamdivider.bean.eo.mapping;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+
+import teamdivider.entity.Team;
 
 @Entity
 public class EventFenDui {
@@ -17,7 +23,10 @@ public class EventFenDui {
   
   private long eventId;
   
-  private long fenDuiId;
+  private int teamNumber;
+  
+  @Embedded
+  private Set<Team> teams = new HashSet<Team>();
 
   public ObjectId getId() {
     return id;
@@ -43,12 +52,20 @@ public class EventFenDui {
     this.eventId = eventId;
   }
 
-  public long getFenDuiId() {
-    return fenDuiId;
+  public int getTeamNumber() {
+    return teamNumber;
   }
 
-  public void setFenDuiId(long fenDuiId) {
-    this.fenDuiId = fenDuiId;
+  public void setTeamNumber(int teamNumber) {
+    this.teamNumber = teamNumber;
+  }
+
+  public Set<Team> getTeams() {
+    return teams;
+  }
+
+  public void setTeams(Set<Team> teams) {
+    this.teams = teams;
   }
 
 }

@@ -6,24 +6,20 @@ package teamdivider.bean.eo.mapping;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Reference;
-
-import teamdivider.bean.eo.Event;
 
 @Entity
-public class TypeEvent {
+public class TypeUserScore {
 
   @Id
   private ObjectId id;
   
   private long mappingId;
   
+  private long userId;
+  
   private long typeId;
   
-  private long eventId;
-  
-  @Reference
-  private Event event;
+  private int score;
 
   public ObjectId getId() {
     return id;
@@ -41,6 +37,14 @@ public class TypeEvent {
     this.mappingId = mappingId;
   }
 
+  public long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(long userId) {
+    this.userId = userId;
+  }
+
   public long getTypeId() {
     return typeId;
   }
@@ -49,20 +53,12 @@ public class TypeEvent {
     this.typeId = typeId;
   }
 
-  public long getEventId() {
-    return eventId;
+  public int getScore() {
+    return score;
   }
 
-  public void setEventId(long eventId) {
-    this.eventId = eventId;
+  public void setScore(int score) {
+    this.score = score;
   }
 
-  public Event getEvent() {
-    return event;
-  }
-
-  public void setEvent(Event event) {
-    this.event = event;
-  }
-  
 }

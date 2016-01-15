@@ -5,7 +5,7 @@ import org.mongodb.morphia.Datastore;
 
 public class BasicDAO<T> extends org.mongodb.morphia.dao.BasicDAO<T, ObjectId> {
 
-  BasicDAO(Class clazz, Datastore ds) {
+  BasicDAO(Class<T> clazz, Datastore ds) {
     super(clazz, ds);
   }
 

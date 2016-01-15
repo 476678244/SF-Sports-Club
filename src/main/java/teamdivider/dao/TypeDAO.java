@@ -4,8 +4,10 @@
 package teamdivider.dao;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.mongodb.morphia.query.Query;
@@ -18,6 +20,7 @@ import teamdivider.bean.eo.User;
 import teamdivider.bean.eo.mapping.TypeEvent;
 import teamdivider.bean.eo.mapping.TypeOrganizer;
 import teamdivider.bean.eo.mapping.TypeSubscriber;
+import teamdivider.bean.eo.mapping.TypeUserScore;
 
 @Repository
 public class TypeDAO extends AbstractDAO<Type> {
@@ -31,11 +34,24 @@ public class TypeDAO extends AbstractDAO<Type> {
   @Autowired
   TypeSubscriberDAO typeSubscriberDAO;
 
+  @Autowired
+  TypeUserScoreDAO typeUserScoreDAO;
+
   public Type getTypeByName(String name) {
     Type type = this.getBasicDAO().findOne("name", name);
+    return this.resolveTypeMappings(type);
+  }
+  
+  public Type getTypeByTypeId(long typeId) {
+    Type type = this.getBasicDAO().findOne("typeId", typeId);
+    return this.resolveTypeMappings(type);
+  }
+  
+  private Type resolveTypeMappings(Type type) {
     type.setEvents(this.getTypeEvents(type.getTypeId()));
     type.setOrganizers(this.getTypeOrganizers(type.getTypeId()));
     type.setSubscribers(this.getTypeSubscribers(type.getTypeId()));
+    type.setScores(this.getUserScore(type.getTypeId()));
     return type;
   }
 
@@ -86,6 +102,21 @@ public class TypeDAO extends AbstractDAO<Type> {
     }
     return users;
   }
+  
+  private Map<Long, Integer> getUserScore(long typeId) {
+    Query<TypeUserScore> query = this.typeUserScoreDAO.getBasicDAO()
+        .createQuery();
+    query.filter("typeId", typeId);
+    List<TypeUserScore> queryResults = this.typeUserScoreDAO.getBasicDAO().find(query).asList();
+    if (queryResults == null) {
+      return Collections.emptyMap();
+    }
+    Map<Long, Integer> userScore = new HashMap<Long, Integer>();
+    for (TypeUserScore mapping : queryResults) {
+      userScore.put(mapping.getUserId(), mapping.getScore());
+    }
+    return userScore;
+  } 
 
   @Override
   protected Class<Type> getClazz() {
