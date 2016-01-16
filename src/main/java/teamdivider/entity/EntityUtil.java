@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Set;
 
 import teamdivider.bean.eo.Event;
+import teamdivider.bean.eo.Type;
+import teamdivider.bean.vo.EventVO;
+import teamdivider.bean.vo.TypeVO;
 import teamdivider.bean.vo.UserVO;
 
 public class EntityUtil {
@@ -104,6 +107,30 @@ public class EntityUtil {
     typePriorityMap.put("tabletennis", 3);
     typePriorityMap.put("basketball", 1);
   }
-  
+
+  public static Event eventOf(EventVO vo) {
+    if (vo == null) return null;
+    Event event = Event.builder().eventId(vo.getEventId()).name(vo.getName())
+        .startTime(vo.getStartTime()).goTime(vo.getGoTime())
+        .description(vo.getDescription()).typeId(vo.getTypeId())
+        .guests(vo.getGuests()).build();
+    return event;
+  }
+
+  public static teamdivider.bean.eo.User userOf(UserVO vo) {
+    if (vo == null) return null;
+    teamdivider.bean.eo.User user = new teamdivider.bean.eo.User();
+    user.setUserId(vo.getUserId());
+    user.setEmail(vo.getEmail());
+    user.setAvatar(vo.getAvatar());
+    return user;
+  }
+
+  public static Type typeOf(TypeVO vo) {
+    if (vo == null) return null;
+    Type type = Type.builder().typeId(vo.getTypeId()).name(vo.getName())
+        .latestEvent(eventOf(vo.getLatestEvent())).build();
+    return type;
+  }
 
 }
