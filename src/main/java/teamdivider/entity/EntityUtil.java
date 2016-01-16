@@ -105,20 +105,5 @@ public class EntityUtil {
     typePriorityMap.put("basketball", 1);
   }
   
-  public static Set<User> userVOsToUsers(Set<UserVO> userVOs) {
-    Set<User> users = new HashSet<User>();
-    for (UserVO userVO : userVOs) {
-      users.add(userVO);
-    }
-    return users;
-  }
-  
-  public static List<User> userVOsToUsers(List<UserVO> userVOs) {
-    List<User> users = new ArrayList<User>();
-    for (UserVO userVO : userVOs) {
-      users.add(userVO);
-    }
-    return users;
-  }
 
 }

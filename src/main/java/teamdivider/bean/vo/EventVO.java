@@ -12,29 +12,45 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.mongodb.morphia.annotations.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import teamdivider.bean.eo.Event;
 import teamdivider.bean.eo.Type;
 import teamdivider.bean.eo.User;
-import teamdivider.entity.ActivityEvent;
 import teamdivider.entity.EntityUtil;
 import teamdivider.entity.Team;
 import teamdivider.util.ContextUtil;
 
-public class EventVO extends ActivityEvent {
+public class EventVO {
 
   private long eventId;
 
+  private String name;
+
   private Date startTime;
+
+  private Date goTime;
+
+  private String description;
 
   private long typeId;
 
-  private List<UserVO> members = new ArrayList<UserVO>();
+  @Transient
+  private Set<UserVO> members = new HashSet<UserVO>();
 
+  @Transient
   private Set<UserVO> drivers = new HashSet<UserVO>();
 
+  @Transient
   private Map<Long, Set<Long>> passengers = new HashMap<Long, Set<Long>>();
+
+  @Transient
+  private Map<Integer, List<Team>> fenDuiResult = new HashMap<Integer, List<Team>>();
+
+  // guest users
+  private Set<String> guests = new HashSet<String>();
 
   public EventVO(Event event) {
     this.description = event.getDescription();
@@ -42,9 +58,9 @@ public class EventVO extends ActivityEvent {
       this.drivers.add(new UserVO(user));
     }
     this.eventId = event.getEventId();
-    this.fenDuiResults = event.getFenDuiResult();
+    this.fenDuiResult = event.getFenDuiResult();
     this.goTime = event.getGoTime();
-    this.guests = new ArrayList<String>(event.getGuests());
+    this.guests = event.getGuests();
     for (User user : event.getMembers()) {
       this.members.add(new UserVO(user));
     }
@@ -99,7 +115,7 @@ public class EventVO extends ActivityEvent {
     this.passengers = passengers;
   }
 
-  public void setMembers(List<UserVO> members) {
+  public void setMembers(Set<UserVO> members) {
     this.members = members;
   }
 
@@ -111,29 +127,57 @@ public class EventVO extends ActivityEvent {
     return this.startTime.toString();
   }
 
-  public List<teamdivider.entity.User> getMembers() {
-    return EntityUtil.userVOsToUsers(members);
+  public String getName() {
+    return name;
   }
 
-  public List<Team> getFenDuiResult(int numberTeams) {
-    List<Team> teams = fenDuiResults.get(numberTeams);
-    if (teams == null) {
-      return new ArrayList<Team>();
-    }
-    return teams;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public Set<teamdivider.entity.User> getDrivingCarMembers() {
-    return EntityUtil.userVOsToUsers(drivers);
+  public Date getGoTime() {
+    return goTime;
   }
 
-  public List<teamdivider.entity.User> getOrganizers() {
-    Type type = ContextUtil.getContext().getType(this.typeId);
-    List<UserVO> userVOs = new ArrayList<UserVO>();
-    for (User user : type.getOrganizers()) {
-      userVOs.add(new UserVO(user));
-    }
-    return EntityUtil.userVOsToUsers(userVOs);
+  public void setGoTime(Date goTime) {
+    this.goTime = goTime;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  @JsonIgnore
+  public Map<Integer, List<Team>> getFenDuiResult() {
+    return fenDuiResult;
+  }
+
+  public void setFenDuiResult(Map<Integer, List<Team>> fenDuiResult) {
+    this.fenDuiResult = fenDuiResult;
+  }
+
+  public Set<String> getGuests() {
+    return guests;
+  }
+
+  public void setGuests(Set<String> guests) {
+    this.guests = guests;
+  }
+
+  public Set<UserVO> getMembers() {
+    return members;
+  }
+
+  public Set<UserVO> getDrivingCarMembers() {
+    return this.drivers;
+  }
+
+  public List<UserVO> getOrganizers() {
+    return this.getOrganizers();
   }
 
   public String getType() {
@@ -204,7 +248,7 @@ public class EventVO extends ActivityEvent {
   }
 
   public String getResult() {
-    return result;
+    return "not support anymore!";
   }
 
 }
