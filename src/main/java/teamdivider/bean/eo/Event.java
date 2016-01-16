@@ -69,6 +69,10 @@ public class Event {
     this.typeId = typeId;
   }
 
+  public static Builder builder() {
+    return new Builder();
+  }
+  
   public ObjectId getId() {
     return id;
   }
@@ -165,7 +169,7 @@ public class Event {
     this.fenDuiResult = fenDuiResult;
   }
 
-  public class Builder {
+  public static class Builder {
 
     ObjectId id;
 

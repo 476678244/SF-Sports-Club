@@ -50,6 +50,10 @@ public class Type {
     this.scores = scores;
   }
 
+  public static Builder builder() {
+    return new Builder();
+  }
+
   public ObjectId getId() {
     return id;
   }
@@ -114,7 +118,7 @@ public class Type {
     this.scores = scores;
   }
 
-  public class Builder {
+  public static class Builder {
 
     private ObjectId id;
 

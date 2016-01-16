@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import teamdivider.bean.eo.Event;
 import teamdivider.bean.eo.Type;
 import teamdivider.bean.eo.User;
@@ -50,6 +52,55 @@ public class EventVO extends ActivityEvent {
     this.passengers = event.getPassengers();
     this.startTime = event.getStartTime();
     this.typeId = event.getTypeId();
+  }
+
+  @JsonIgnore
+  public long getEventId() {
+    return eventId;
+  }
+
+  public void setEventId(long eventId) {
+    this.eventId = eventId;
+  }
+
+  @JsonIgnore
+  public Date getStartTime() {
+    return startTime;
+  }
+
+  public void setStartTime(Date startTime) {
+    this.startTime = startTime;
+  }
+
+  @JsonIgnore
+  public long getTypeId() {
+    return typeId;
+  }
+
+  public void setTypeId(long typeId) {
+    this.typeId = typeId;
+  }
+
+  @JsonIgnore
+  public Set<UserVO> getDrivers() {
+    return drivers;
+  }
+
+  public void setDrivers(Set<UserVO> drivers) {
+    this.drivers = drivers;
+  }
+
+  @JsonIgnore
+  public Map<Long, Set<Long>> getPassengers() {
+    return passengers;
+  }
+
+  public void setPassengers(Map<Long, Set<Long>> passengers) {
+    this.passengers = passengers;
+  }
+
+  public void setMembers(List<UserVO> members) {
+    this.members = members;
   }
 
   public int getOrdinal() {
