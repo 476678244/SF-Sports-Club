@@ -44,11 +44,33 @@ public class EventDAO extends AbstractDAO<Event> {
 
   public Event getEventByEventId(long eventId) {
     Event event = this.getBasicDAO().findOne("eventId", eventId);
+    this.resolveEventMappings(event);
     return event;
   }
 
-  public Event resolveEventMappings(Event event) {
-    return event;
+  public EventDAO resolveEventMappings(Event event) {
+    return this.resolveEventMembers(event).resolveEventDrivers(event)
+        .resolveEventPassengers(event).resolveEventFenDui(event);
+  }
+
+  public EventDAO resolveEventMembers(Event event) {
+    event.setMembers(this.getEventMembers(event.getEventId()));
+    return this;
+  }
+
+  public EventDAO resolveEventDrivers(Event event) {
+    event.setDrivers(this.getEventDrivers(event.getEventId()));
+    return this;
+  }
+
+  public EventDAO resolveEventPassengers(Event event) {
+    event.setPassengers(this.getDriverPassengers(event.getEventId()));
+    return this;
+  }
+
+  public EventDAO resolveEventFenDui(Event event) {
+    event.setFenDuiResult(this.getEventFenDui(event.getEventId()));
+    return this;
   }
 
   private Set<User> getEventMembers(long eventId) {
@@ -80,7 +102,7 @@ public class EventDAO extends AbstractDAO<Event> {
     }
     return users;
   }
-  
+
   private Map<Long, Set<Long>> getDriverPassengers(long eventId) {
     Query<DriverPassenger> query = this.driverPassengerDAO.getBasicDAO()
         .createQuery();
@@ -102,27 +124,19 @@ public class EventDAO extends AbstractDAO<Event> {
     }
     return driver2Passengers;
   }
-  
+
   private Map<Integer, List<Team>> getEventFenDui(long eventId) {
-    Query<EventFenDui> query = this.eventFenDuiDAO.getBasicDAO()
-        .createQuery();
+    Query<EventFenDui> query = this.eventFenDuiDAO.getBasicDAO().createQuery();
     query.filter("eventId", eventId);
     List<EventFenDui> queryResults = this.eventFenDuiDAO.getBasicDAO()
         .find(query).asList();
     if (queryResults == null)
       return Collections.emptyMap();
-    Map<Integer, List<Team>> name2Teams = new Map<Integer, List<Team>>();
+    Map<Integer, List<Team>> fenDui = new HashMap<Integer, List<Team>>();
     for (EventFenDui mapping : queryResults) {
-      Set<Long> passengers = driver2Passengers.get(mapping.getDriverId());
-      if (passengers == null) {
-        passengers = new HashSet<Long>();
-        passengers.add(mapping.getPassengerId());
-        driver2Passengers.put(mapping.getDriverId(), passengers);
-      } else {
-        passengers.add(mapping.getPassengerId());
-      }
+      fenDui.put(mapping.getTeamNumber(), mapping.getTeams());
     }
-    return driver2Passengers;
+    return fenDui;
   }
 
 }
