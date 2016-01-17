@@ -18,7 +18,7 @@ public class RepoFactory {
   @PostConstruct
   void init() throws UnknownHostException {
     datastore = new Morphia().mapPackage("teamdivider.entity")
-        .createDatastore(new MongoClient(), "team");
+        .createDatastore(new MongoClient(), SpringMongoConfig.DB);
   }
   
   @Bean

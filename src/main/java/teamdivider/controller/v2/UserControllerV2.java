@@ -33,7 +33,7 @@ import teamdivider.util.PropertyUtil;
 @RestController
 public class UserControllerV2 {
 
-  @Autowired()
+  @Autowired
   private UserDAO userDAO;
 
   @Autowired

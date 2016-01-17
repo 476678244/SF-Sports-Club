@@ -1,5 +1,8 @@
 package teamdivider.bean.eo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -27,6 +30,22 @@ public class SequenceId {
   public static final String SEQUENCE_TYPE_ORGANIZER = "type_organizer";
   
   public static final String SEQUENCE_TYPE_SUBSCRIBER = "type_subscriber";
+  
+  public static final Set<String> sequences = new HashSet<String>();
+  
+  static {
+    sequences.add(SEQUENCE_USER);
+    sequences.add(SEQUENCE_TYPE);
+    sequences.add(SEQUENCE_EVENT);
+    sequences.add(SEQUENCE_FENDUI);
+    sequences.add(SEQUENCE_DRIVER_PASSENGER);
+    sequences.add(SEQUENCE_EVENT_DRIVER);
+    sequences.add(SEQUENCE_EVENT_FENDUI);
+    sequences.add(SEQUENCE_EVENT_MEMBER);
+    sequences.add(SEQUENCE_TYPE_EVENT);
+    sequences.add(SEQUENCE_TYPE_ORGANIZER);
+    sequences.add(SEQUENCE_TYPE_SUBSCRIBER);
+  }
 
   @Id
   private String id;
