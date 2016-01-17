@@ -36,6 +36,9 @@ public class TypeDAO extends AbstractDAO<Type> {
 
   @Autowired
   TypeUserScoreDAO typeUserScoreDAO;
+  
+  @Autowired
+  SequenceDAO sequenceDAO;
 
   public Type getTypeByName(String name) {
     Type type = this.getBasicDAO().findOne("name", name);
@@ -123,4 +126,35 @@ public class TypeDAO extends AbstractDAO<Type> {
     return Type.class;
   }
 
+  public List<Type> getAllActivityTypes() {
+    return this.getBasicDAO().find().asList();
+  }
+  
+  public List<Type> getAllActivityTypes(boolean resolveSubscribers) {
+    List<Type> types = this.getBasicDAO().find().asList();
+    for (Type type : types) {
+      if (resolveSubscribers) {
+        this.resolveTypeMappings(type);
+      }
+    }
+    return types;
+  }
+
+  public void saveActivityType(Type type) {
+    this.getBasicDAO().save(type);
+  }
+  
+  public void userSubscribe(long userId, long typeId, User user) {
+    TypeSubscriber mapping = new TypeSubscriber();
+    mapping.setTypeId(typeId);
+    mapping.setUserId(userId);
+    mapping.setUser(user);
+    this.typeSubscriberDAO.create(mapping);
+  }
+
+  public void userUnSubscribe(long userId, long typeId) {
+    this.typeSubscriberDAO.getBasicDAO()
+        .deleteByQuery(this.typeSubscriberDAO.getBasicDAO().createQuery()
+            .filter("userId", userId).filter("typeId", typeId));
+  }
 }

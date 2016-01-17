@@ -21,10 +21,21 @@ public class User {
   
   private String email;
 
+  private String fullName;
+  
   private String avatar;
   
   @Transient
   private Set<Type> subscribedTypes = new HashSet<Type>();
+
+  public User() {  
+  }
+  
+  public User(String email, String fullName, String avatar) {
+    this.email = email;
+    this.fullName = fullName;
+    this.avatar = avatar;
+  }
 
   public Set<Type> getSubscribedTypes() {
     return subscribedTypes;
@@ -56,6 +67,14 @@ public class User {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
   }
 
   public String getAvatar() {

@@ -13,7 +13,7 @@ public abstract class AbstractDAO<T> {
 
   protected BasicDAO<T> basicDAO;
 
-  public BasicDAO<T> getBasicDAO() {
+  BasicDAO<T> getBasicDAO() {
     return basicDAO;
   }
   

@@ -1,6 +1,7 @@
 package teamdivider.entity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -122,6 +123,7 @@ public class EntityUtil {
     teamdivider.bean.eo.User user = new teamdivider.bean.eo.User();
     user.setUserId(vo.getUserId());
     user.setEmail(vo.getEmail());
+    user.setFullName(vo.getFullName());
     user.setAvatar(vo.getAvatar());
     return user;
   }
@@ -131,6 +133,14 @@ public class EntityUtil {
     Type type = Type.builder().typeId(vo.getTypeId()).name(vo.getName())
         .latestEvent(eventOf(vo.getLatestEvent())).build();
     return type;
+  }
+  
+  public static List<UserVO> userVOsOf(Collection<teamdivider.bean.eo.User> eos) {
+    List<UserVO> vos = new ArrayList<UserVO>(eos.size());
+    for (teamdivider.bean.eo.User eo : eos) {
+      vos.add(new UserVO(eo));
+    }
+    return vos;
   }
 
 }

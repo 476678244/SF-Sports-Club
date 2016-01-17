@@ -21,6 +21,8 @@ public class UserVO {
 
   private String email;
 
+  private String fullName;
+  
   private String avatar;
 
   @Transient
@@ -29,6 +31,7 @@ public class UserVO {
   public UserVO(User eo) {
     this.userId = eo.getUserId();
     this.email = eo.getEmail();
+    this.fullName = eo.getFullName();
     this.avatar = eo.getAvatar();
     this.userSubscribedTypes = eo.getSubscribedTypes();
   }
@@ -49,6 +52,19 @@ public class UserVO {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  @JsonIgnore
+  public String getFullName() {
+    return fullName;
+  }
+
+  public String getFullname() {
+    return this.fullName;
+  }
+  
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
   }
 
   public String getAvatar() {
