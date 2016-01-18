@@ -248,7 +248,7 @@ public class EventVO {
   }
 
   public String getResult() {
-    return "not support anymore!";
+    return "";
   }
 
 }

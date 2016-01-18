@@ -21,11 +21,7 @@ import teamdivider.bean.vo.UserVO;
 import teamdivider.dao.EventDAO;
 import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
-import teamdivider.entity.ActivityEvent;
-import teamdivider.entity.ActivityType;
 import teamdivider.entity.EntityUtil;
-import teamdivider.util.CacheUtil;
-import teamdivider.util.PropertyUtil;
 
 @RestController
 public class TypeController {
@@ -116,5 +112,98 @@ public class TypeController {
     this.eventDAO.addMember(eventId, user.getUserId(), user);
     Event event = this.eventDAO.getEventByEventId(eventId);
     return new EventVO(event);
+  }
+
+  @RequestMapping("/enrollActivityEventFromEmail")
+  public String enrollActivityEventFromEmail(
+      @RequestParam("activityType") String activityType,
+      @RequestParam("username") String username,
+      @RequestParam("eventId") int ordinal,
+      @RequestParam("baseLink") String baseLink) {
+    this.enrollActivityEvent(activityType, username, ordinal);
+    String viewEventLink = baseLink + "/teamdivider/new/#/detail/"
+        + activityType + "/" + ordinal;
+    return "<html>Successfully joined! Please click View Detail link to check the Activity.</html>"
+        + "<a href=\"" + viewEventLink
+        + "\" target=\"view_window\">View Detail!</a>";
+  }
+  
+  @RequestMapping("/quitActivityEvent")
+  public EventVO quitActivityEvent(
+      @RequestParam("activityType") String activityType,
+      @RequestParam("username") String username,
+      @RequestParam("eventId") int eventId) {
+    Event event = this.eventDAO.getEventByEventId(eventId, true);
+    User user = this.userDAO.findByEmail(username);
+    if (event.getDrivers().contains(user)) {
+      return new EventVO(event);
+    }
+    this.eventDAO.removeUserInEvent(eventId, user.getUserId());
+    return new EventVO(this.eventDAO.getEventByEventId(eventId, true));
+  }
+  
+  @RequestMapping("/becomeOrganizer")
+  public TypeVO becomeOrganizer(
+      @RequestParam("activityType") String activityType,
+      @RequestParam("username") String username) {
+    Type type = this.typeDAO.getTypeByName(activityType, true);
+    User user = this.userDAO.findByEmail(username);
+    if (user == null)
+      return null;
+    if (!type.getOrganizers().contains(user)) {
+      this.typeDAO.addOrganizer(type.getTypeId(), user.getUserId(), user);
+    }
+    return new TypeVO(this.typeDAO.getTypeByName(activityType, true));
+  }
+  
+  @RequestMapping("/giveUpOrganizer")
+  public TypeVO giveUpOrganizer(
+      @RequestParam("activityType") String activityType,
+      @RequestParam("username") String username) {
+    Type type = this.typeDAO.getTypeByName(activityType, false);
+    User user = this.userDAO.findByEmail(username);
+    if (user == null) {
+      return null;
+    }
+    this.typeDAO.removeOrganizer(type.getTypeId(), user.getUserId());
+    return new TypeVO(this.typeDAO.getTypeByTypeId(type.getTypeId(), true));
+  }
+  
+  @RequestMapping("/yesDrivingCar")
+  public EventVO yesDrivingCar(
+      @RequestParam("activityType") String activityType,
+      @RequestParam("username") String username,
+      @RequestParam("eventId") int eventId) {
+    User user = this.userDAO.findByEmail(username);
+    this.eventDAO.addDriver(eventId, user);
+    return new EventVO(this.eventDAO.getEventByEventId(eventId, true));
+  }
+  
+  @RequestMapping("/noDrivingCar")
+  public EventVO noDrivingCar(@RequestParam("activityType") String activityType,
+      @RequestParam("username") String username,
+      @RequestParam("eventId") int eventId) {
+    User user = this.userDAO.findByEmail(username);
+    this.eventDAO.removeDriver(eventId, user.getUserId());
+    return new EventVO(this.eventDAO.getEventByEventId(eventId, true));
+  }
+  
+  @RequestMapping("/userSubscribe")
+  public UserVO userSubscribe(@RequestParam("type") String type,
+      @RequestParam("username") String username) {
+    Type activityType = this.typeDAO.getTypeByName(type);
+    User user = this.userDAO.findByEmail(username);
+    this.typeDAO.userSubscribe(user.getUserId(), activityType.getTypeId(),
+        user);
+    return new UserVO(this.userDAO.findByUserId(user.getUserId()));
+  }
+  
+  @RequestMapping("/userUnsubscribe")
+  public UserVO userUnsubscribe(@RequestParam("type") String type,
+      @RequestParam("username") String username) {
+    Type activityType = this.typeDAO.getTypeByName(type);
+    User user = this.userDAO.findByEmail(username);
+    this.typeDAO.userUnSubscribe(user.getUserId(), activityType.getTypeId());
+    return new UserVO(this.userDAO.findByUserId(user.getUserId()));
   }
 }

@@ -44,14 +44,14 @@ public class EventDAO extends AbstractDAO<Event> {
   }
 
   public Event getEventByEventId(long eventId) {
-    Event event = this.getBasicDAO().findOne("eventId", eventId);
-    this.resolveEventMappings(event);
-    return event;
+    return this.getEventByEventId(eventId, false);
   }
   
   public Event getEventByEventId(long eventId, boolean resolveEventMappings) {
     Event event = this.getBasicDAO().findOne("eventId", eventId);
-    this.resolveEventMappings(event);
+    if (resolveEventMappings) {
+      this.resolveEventMappings(event);
+    }
     return event;
   }
 
@@ -146,7 +146,7 @@ public class EventDAO extends AbstractDAO<Event> {
     return fenDui;
   }
   
-  public void removeUser(long userId) {
+  public void removeEventUserMapping(long userId) {
     this.eventDriverDAO.getBasicDAO().deleteByQuery(this.eventDriverDAO
         .getBasicDAO().createQuery().filter("userId", userId));
     this.driverPassengerDAO.getBasicDAO().deleteByQuery(this.driverPassengerDAO
@@ -166,6 +166,41 @@ public class EventDAO extends AbstractDAO<Event> {
     mapping.setUserId(userId);
     mapping.setUser(user);
     this.eventMemberDAO.create(mapping);
+  }
+
+  public void removeMember(long eventId, long userId) {
+    this.eventMemberDAO.getBasicDAO()
+        .deleteByQuery(this.eventMemberDAO.getBasicDAO().createQuery()
+            .filter("eventId", eventId).filter("userId", userId));
+  }
+
+  public void removeDriver(long eventId, long userId) {
+    this.eventDriverDAO.getBasicDAO()
+        .deleteByQuery(this.eventDriverDAO.getBasicDAO().createQuery()
+            .filter("eventId", eventId).filter("userId", userId));
+    this.driverPassengerDAO.getBasicDAO()
+        .deleteByQuery(this.driverPassengerDAO.getBasicDAO().createQuery()
+            .filter("eventId", eventId).filter("driverId", userId));
+  }
+
+  public void removePassenger(long eventId, long userId) {
+    this.driverPassengerDAO.getBasicDAO()
+        .deleteByQuery(this.driverPassengerDAO.getBasicDAO().createQuery()
+            .filter("eventId", eventId).filter("passengerId", userId));
+  }
+  
+  public void removeUserInEvent(long eventId, long userId) {
+    this.removeDriver(eventId, userId);
+    this.removePassenger(eventId, userId);
+    this.removeMember(eventId, userId);
+  }
+  
+  public void addDriver(long eventId, User user) {
+    EventDriver mapping = new EventDriver();
+    mapping.setEventId(eventId);
+    mapping.setUserId(user.getUserId());
+    mapping.setUser(user);
+    this.eventDriverDAO.create(mapping);
   }
 
 }

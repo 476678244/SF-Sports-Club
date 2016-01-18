@@ -78,7 +78,7 @@ public class UserDAO extends AbstractDAO<User> {
   }
 
   public void deleteUser(long userId) {
-    this.typeDAO.removeUser(userId);
+    this.typeDAO.removeTypeUserMapping(userId);
     this.getBasicDAO().deleteByQuery(
         this.getBasicDAO().createQuery().filter("userId", userId));
   }
