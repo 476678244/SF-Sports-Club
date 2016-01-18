@@ -36,6 +36,10 @@ public class Type {
   @Transient
   private Map<Long, Integer> scores = new HashMap<Long, Integer>();
 
+  public Type() {
+    
+  }
+
   private Type(ObjectId id, long typeId, String name, Event latestEvent,
       Set<User> organizers, Set<User> subscribers, Set<Event> events,
       Map<Long, Integer> scores) {

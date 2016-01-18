@@ -114,6 +114,7 @@ public class TypeVO {
   }
 
   public int getLatestOrdinal() {
+    if (this.latestEvent == null) return 0;
     return this.latestEvent.getOrdinal();
   }
 }

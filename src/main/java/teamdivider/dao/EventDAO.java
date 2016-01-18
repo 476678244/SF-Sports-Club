@@ -138,5 +138,14 @@ public class EventDAO extends AbstractDAO<Event> {
     }
     return fenDui;
   }
+  
+  public void removeUser(long userId) {
+    this.eventDriverDAO.getBasicDAO().deleteByQuery(this.eventDriverDAO
+        .getBasicDAO().createQuery().filter("userId", userId));
+    this.driverPassengerDAO.getBasicDAO().deleteByQuery(this.driverPassengerDAO
+        .getBasicDAO().createQuery().filter("passengerId", userId));
+    this.eventMemberDAO.getBasicDAO().deleteByQuery(this.eventMemberDAO
+        .getBasicDAO().createQuery().filter("userId", userId));
+  }
 
 }

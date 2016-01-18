@@ -50,6 +50,9 @@ public class Event {
   // guest users
   private Set<String> guests = new HashSet<String>();
 
+  public Event() {    
+  }
+
   private Event(ObjectId id, long eventId, String name, Date startTime,
       Date goTime, String description, Set<User> members, Set<String> guests,
       Set<User> drivers, Map<Long, Set<Long>> passengers,

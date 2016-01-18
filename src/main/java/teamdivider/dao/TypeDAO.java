@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import teamdivider.bean.eo.Event;
+import teamdivider.bean.eo.SequenceId;
 import teamdivider.bean.eo.Type;
 import teamdivider.bean.eo.User;
 import teamdivider.bean.eo.mapping.TypeEvent;
@@ -39,15 +40,32 @@ public class TypeDAO extends AbstractDAO<Type> {
   
   @Autowired
   SequenceDAO sequenceDAO;
+  
+  @Autowired
+  EventDAO eventDAO;
 
   public Type getTypeByName(String name) {
+    return this.getTypeByName(name, true);
+  }
+  
+  public Type getTypeByName(String name, boolean resolveTypeMappings) {
     Type type = this.getBasicDAO().findOne("name", name);
-    return this.resolveTypeMappings(type);
+    if (resolveTypeMappings) {
+      return this.resolveTypeMappings(type);
+    }
+    return type;
   }
   
   public Type getTypeByTypeId(long typeId) {
+    return this.getTypeByTypeId(typeId, true);
+  }
+  
+  public Type getTypeByTypeId(long typeId, boolean resolveTypeMappings) {
     Type type = this.getBasicDAO().findOne("typeId", typeId);
-    return this.resolveTypeMappings(type);
+    if (resolveTypeMappings) {
+      return this.resolveTypeMappings(type);
+    }
+    return type;
   }
   
   private Type resolveTypeMappings(Type type) {
@@ -144,6 +162,11 @@ public class TypeDAO extends AbstractDAO<Type> {
     this.getBasicDAO().save(type);
   }
   
+  public void create(Type type) {
+    type.setTypeId(this.sequenceDAO.getNextSequenceId(SequenceId.SEQUENCE_TYPE));
+    this.getBasicDAO().save(type);
+  }
+  
   public void userSubscribe(long userId, long typeId, User user) {
     TypeSubscriber mapping = new TypeSubscriber();
     mapping.setTypeId(typeId);
@@ -156,5 +179,13 @@ public class TypeDAO extends AbstractDAO<Type> {
     this.typeSubscriberDAO.getBasicDAO()
         .deleteByQuery(this.typeSubscriberDAO.getBasicDAO().createQuery()
             .filter("userId", userId).filter("typeId", typeId));
+  }
+  
+  public void removeUser(long userId) {
+    this.typeOrganizerDAO.getBasicDAO().deleteByQuery(this.typeOrganizerDAO
+        .getBasicDAO().createQuery().filter("userId", userId));
+    this.typeSubscriberDAO.getBasicDAO().deleteByQuery(this.typeSubscriberDAO
+        .getBasicDAO().createQuery().filter("userId", userId));
+    this.eventDAO.removeUser(userId);
   }
 }

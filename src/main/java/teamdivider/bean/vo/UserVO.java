@@ -3,17 +3,13 @@
  */
 package teamdivider.bean.vo;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.mongodb.morphia.annotations.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import teamdivider.bean.eo.Type;
 import teamdivider.bean.eo.User;
-import teamdivider.util.ContextUtil;
 
 public class UserVO {
 
@@ -25,15 +21,19 @@ public class UserVO {
   
   private String avatar;
 
-  @Transient
-  private Set<Type> userSubscribedTypes = new HashSet<Type>();
+  private Set<String> subscribedTypes = new HashSet<String>();
 
   public UserVO(User eo) {
     this.userId = eo.getUserId();
     this.email = eo.getEmail();
     this.fullName = eo.getFullName();
     this.avatar = eo.getAvatar();
-    this.userSubscribedTypes = eo.getSubscribedTypes();
+    Set<Type> typeEOs = eo.getSubscribedTypes();
+    if (typeEOs != null) {
+      for (Type type : typeEOs) {
+        this.subscribedTypes.add(type.getName());
+      }
+    }
   }
   
   @JsonIgnore
@@ -75,26 +75,15 @@ public class UserVO {
     this.avatar = avatar;
   }
 
-  @JsonIgnore
-  public Set<Type> getUserSubscribedTypes() {
-    return userSubscribedTypes;
-  }
-
-  public void setUserSubscribedTypes(Set<Type> userSubscribedTypes) {
-    this.userSubscribedTypes = userSubscribedTypes;
-  }
-
   public Set<String> getSubscribedTypes() {
-    if (!ContextUtil.getContext().fetchUserSubscribedTypes)
-      return Collections.emptySet();
-    Set<String> types = new HashSet<String>();
-    for (Type type : this.userSubscribedTypes) {
-      types.add(type.getName());
-    }
-    return types;
+    return this.getSubscribedTypes();
   }
 
   public String getUsername() {
     return this.email;
+  }
+
+  public void setSubscribedTypes(Set<String> subscribedTypes) {
+    this.subscribedTypes = subscribedTypes;
   }
 }

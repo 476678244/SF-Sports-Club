@@ -61,26 +61,32 @@ public class UserControllerV2 {
   @RequestMapping("/addUser")
   public UserVO addUser(@RequestParam("username") String username,
       @RequestParam("fullname") String fullname,
-      @RequestParam("avator") String avator) {
-    User existUser = this.userDAO.findByEmail(username);
-    if (existUser != null) {
-      return new UserVO(existUser);
-    }
-    User user = new User(username, fullname, avator);
-    this.userDAO.create(user);
-    return new UserVO(user);
+      @RequestParam("avator") String avator) { 
+    return new UserVO(this.createUser(username, fullname, avator));
   }
 
+  private User createUser(String email, String fullName, String avatar) {
+    User existUser = this.userDAO.findByEmail(email);
+    if (existUser != null) {
+      return existUser;
+    }
+    User user = new User(email, fullName, avatar);
+    this.userDAO.create(user);
+    return user;
+  }
+  
   @RequestMapping("/addUserWithSubscribing")
   public UserVO addUserWithSubscribing(
       @RequestParam("username") String username,
       @RequestParam("fullname") String fullname,
       @RequestParam("avator") String avator,
       @RequestParam(value = "types", defaultValue = "") String types) {
-    UserVO user = this.addUser(username, fullname, avator);
+    User user = this.createUser(username, fullname, avator);
     Set<String> typeSet = this.typesToSet(types);
-    this.updateTypeSubscriberMapping(typeSet, EntityUtil.userOf(user));
-    return user;
+    this.updateTypeSubscriberMapping(typeSet, user);
+    UserVO vo = new UserVO(user);
+    vo.setSubscribedTypes(typeSet);
+    return vo;
   }
 
   private Set<String> typesToSet(String types) {
