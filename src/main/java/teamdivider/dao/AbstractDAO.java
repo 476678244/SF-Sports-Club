@@ -12,6 +12,9 @@ public abstract class AbstractDAO<T> {
   protected Datastore datastore;
 
   protected BasicDAO<T> basicDAO;
+  
+  @Autowired
+  protected SequenceDAO sequenceDAO;
 
   BasicDAO<T> getBasicDAO() {
     return basicDAO;

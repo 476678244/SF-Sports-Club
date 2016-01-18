@@ -215,4 +215,15 @@ public class Type {
         + latestEvent + "]";
   }
 
+  public Event hasEvent(Event event) {
+    for (Event existingEvent : this.getEvents()) {
+      if (existingEvent.getName().equals(event.getName())
+          && existingEvent.getDescription().equals(event.getDescription())
+          && existingEvent.getStartTime().equals(event.getStartTime())) {
+        return existingEvent;
+      }
+    }
+    return null;
+  }
+
 }

@@ -142,5 +142,14 @@ public class EntityUtil {
     }
     return vos;
   }
+  
+  public static void sortTypeVOsByPriorityDesc(List<TypeVO> types) {
+    Collections.sort(types, new Comparator<TypeVO>() {
+      public int compare(TypeVO type1, TypeVO type2) {
+        return typePriorityMap.get(type2.getName()).compareTo(
+            typePriorityMap.get(type1.getName()));
+      }
+    });
+  }
 
 }

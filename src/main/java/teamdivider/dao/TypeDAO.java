@@ -188,4 +188,13 @@ public class TypeDAO extends AbstractDAO<Type> {
         .getBasicDAO().createQuery().filter("userId", userId));
     this.eventDAO.removeUser(userId);
   }
+
+  public void addEvent(Event event) {
+    TypeEvent mapping = new TypeEvent();
+    mapping.setEvent(event);
+    mapping.setEventId(event.getEventId());
+    mapping.setTypeId(event.getTypeId());
+    this.typeEventDAO.create(mapping);
+  }
+
 }

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import teamdivider.bean.eo.Event;
+import teamdivider.bean.eo.SequenceId;
 import teamdivider.bean.eo.User;
 import teamdivider.bean.eo.mapping.DriverPassenger;
 import teamdivider.bean.eo.mapping.EventDriver;
@@ -26,16 +27,16 @@ import teamdivider.entity.Team;
 public class EventDAO extends AbstractDAO<Event> {
 
   @Autowired
-  DriverPassengerDAO driverPassengerDAO;
+  private DriverPassengerDAO driverPassengerDAO;
 
   @Autowired
-  EventDriverDAO eventDriverDAO;
+  private EventDriverDAO eventDriverDAO;
 
   @Autowired
-  EventFenDuiDAO eventFenDuiDAO;
+  private EventFenDuiDAO eventFenDuiDAO;
 
   @Autowired
-  EventMemberDAO eventMemberDAO;
+  private EventMemberDAO eventMemberDAO;
 
   @Override
   protected Class<Event> getClazz() {
@@ -43,6 +44,12 @@ public class EventDAO extends AbstractDAO<Event> {
   }
 
   public Event getEventByEventId(long eventId) {
+    Event event = this.getBasicDAO().findOne("eventId", eventId);
+    this.resolveEventMappings(event);
+    return event;
+  }
+  
+  public Event getEventByEventId(long eventId, boolean resolveEventMappings) {
     Event event = this.getBasicDAO().findOne("eventId", eventId);
     this.resolveEventMappings(event);
     return event;
@@ -146,6 +153,19 @@ public class EventDAO extends AbstractDAO<Event> {
         .getBasicDAO().createQuery().filter("passengerId", userId));
     this.eventMemberDAO.getBasicDAO().deleteByQuery(this.eventMemberDAO
         .getBasicDAO().createQuery().filter("userId", userId));
+  }
+  
+  public void create(Event event) {
+    event.setEventId(this.sequenceDAO.getNextSequenceId(SequenceId.SEQUENCE_EVENT));
+    this.getBasicDAO().save(event);
+  }
+  
+  public void addMember(long eventId, long userId, User user) {
+    EventMember mapping = new EventMember();
+    mapping.setEventId(eventId);
+    mapping.setUserId(userId);
+    mapping.setUser(user);
+    this.eventMemberDAO.create(mapping);
   }
 
 }
