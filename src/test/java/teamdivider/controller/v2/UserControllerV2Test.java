@@ -19,6 +19,7 @@ import teamdivider.bean.eo.User;
 import teamdivider.bean.vo.UserVO;
 import teamdivider.dao.TypeDAO;
 import teamdivider.entity.EntityUtil;
+import teamdivider.util.ContextUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
@@ -49,6 +50,7 @@ public class UserControllerV2Test {
   @Test
   // get users and add users
   public void testA2() {
+    ContextUtil.getContext().skipQiniuActions = true;
     List<UserVO> userVOs = this.controller.user("all");
     List<User> eos = new ArrayList<User>();
     if (userVOs != null) {
@@ -72,6 +74,7 @@ public class UserControllerV2Test {
   @Test
   // delete user and addWithSubscribing
   public void testB() {
+    ContextUtil.getContext().skipQiniuActions = true;
     this.controller.deleteUser("zonghan_ishare@163.com");
     UserVO vo = this.controller.addUserWithSubscribing("zonghan_ishare@163.com",
         "Zonghan Wu", "avatar address", "soccer/badminton/");

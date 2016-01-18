@@ -2,6 +2,7 @@ package teamdivider.integration;
 
 import java.io.File;
 
+import teamdivider.util.ContextUtil;
 import teamdivider.util.PropertyUtil;
 
 import com.qiniu.common.QiniuException;
@@ -30,6 +31,8 @@ public class QiniuIntegrationManager {
   }
 
   public void deleteFile(String fileName) {
+    if (ContextUtil.getContext().skipQiniuActions)
+      return;
     try {
       bucketManager.delete(avatarBucket, fileName);
     } catch (QiniuException e) {
@@ -47,6 +50,8 @@ public class QiniuIntegrationManager {
   
   public String uploadFileToQiniu(File file, String newFileName,
       String existingFileName) {
+    if (ContextUtil.getContext().skipQiniuActions)
+      return "";
     try {
       bucketManager.delete(avatarBucket, existingFileName);
     } catch (QiniuException e) {

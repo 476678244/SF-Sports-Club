@@ -40,6 +40,7 @@ public class ContextUtil {
     USER_DAO = this.userDAO;
     ACTIVITY_TYPE_DAO = this.activityTypeDAO;
     MAIL_SERVICE = this.mailService;
+    context.set(new Context());
   }
 
   public static Context getContext() {
@@ -55,6 +56,8 @@ public class ContextUtil {
     private Map<Long, User> users = new HashMap<Long, User>();
 
     public boolean fetchUserSubscribedTypes = false;
+    
+    public boolean skipQiniuActions = false;
 
     public Context() {
     }

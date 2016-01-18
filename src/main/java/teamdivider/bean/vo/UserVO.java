@@ -76,7 +76,7 @@ public class UserVO {
   }
 
   public Set<String> getSubscribedTypes() {
-    return this.getSubscribedTypes();
+    return this.subscribedTypes;
   }
 
   public String getUsername() {
