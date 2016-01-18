@@ -1,9 +1,13 @@
 package teamdivider.controller.v2;
 
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +22,7 @@ import teamdivider.bean.eo.Type;
 import teamdivider.bean.eo.User;
 import teamdivider.bean.vo.UserVO;
 import teamdivider.dao.TypeDAO;
-import teamdivider.entity.EntityUtil;
+import teamdivider.dao.UserDAO;
 import teamdivider.util.ContextUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,9 +34,14 @@ public class UserControllerV2Test {
   private UserControllerV2 controller;
   
   @Autowired
+  private UserDAO userDAO;
+  
+  @Autowired
   private TypeDAO typeDAO;
   
-  @Test
+  private static Set<String> emails = new HashSet<String>();
+  
+  @Before
   // make sure types added
   public void testA1() {
     Type soccer = this.typeDAO.getTypeByName("soccer", false);
@@ -50,35 +59,61 @@ public class UserControllerV2Test {
   @Test
   // get users and add users
   public void testA2() {
+    String email = this.genereateNewEmail();
     ContextUtil.getContext().skipQiniuActions = true;
-    List<UserVO> userVOs = this.controller.user("all");
-    List<User> eos = new ArrayList<User>();
-    if (userVOs != null) {
-      for (UserVO vo : userVOs) {
-        eos.add(EntityUtil.userOf(vo));
-      }
-    }
-    if (eos.isEmpty()) {
-      String email = "zonghan_ishare@163.com";
-      String fullName = "Zonghan Wu";
-      String avatar = "avatar address";
-      UserVO user = this.controller.addUser(email, fullName, avatar);
-      eos.add(EntityUtil.userOf(user));
-    }
+    String fullName = "Zonghan Wu";
+    String avatar = "avatar address";
+    UserVO user = this.controller.addUser(email, fullName, avatar);
+    Assert.assertEquals(user.getEmail(), email);
+    List<UserVO> vos = this.controller.user("all");
     System.out.println("---Users--------------------");
-    System.out.println(eos);
+    System.out.println(vos);
     System.out.println("-----------------------");
-    Assert.assertTrue(eos.size() > 0);
+    Assert.assertTrue(vos.size() > 0);
+    emails.add(email);
   }
 
   @Test
   // delete user and addWithSubscribing
   public void testB() {
+    String email = this.genereateNewEmail();
     ContextUtil.getContext().skipQiniuActions = true;
-    this.controller.deleteUser("zonghan_ishare@163.com");
-    UserVO vo = this.controller.addUserWithSubscribing("zonghan_ishare@163.com",
+    UserVO vo = this.controller.addUserWithSubscribing(email,
         "Zonghan Wu", "avatar address", "soccer/badminton/");
     Assert.assertEquals(vo.getSubscribedTypes().size(), 2);
+    emails.add(email);
+  }
+  
+  @Test
+  // update user
+  public void testC() {
+    ContextUtil.getContext().skipQiniuActions = true;
+    String email = this.genereateNewEmail();
+    this.controller.addUserWithSubscribing(email,
+        "Zonghan Wu", "avatar address", "soccer/badminton/");
+    String newEmail = new Date().getTime() + "@163.com";
+    User user = this.userDAO.findByEmail(newEmail);
+    Assert.assertNull(user);
+    this.controller.updateUserEmail(email, newEmail);
+    user = this.userDAO.findByEmail(newEmail);
+    Assert.assertNotNull(user);
+    emails.add(newEmail);
+  }
+  
+  @After
+  public void testD() {
+    ContextUtil.getContext().skipQiniuActions = true;
+    for (String email : emails) {
+      this.controller.deleteUser(email);
+    }
+  }
+  
+  private String genereateNewEmail() {
+    try {
+      Thread.sleep(1);
+    } catch (InterruptedException e) {
+    }
+    return new Date().getTime() + "@163.com";
   }
   
   @Configuration

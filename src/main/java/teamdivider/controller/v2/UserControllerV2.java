@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -113,9 +114,8 @@ public class UserControllerV2 {
   @RequestMapping("/deleteUser")
   public List<UserVO> deleteUser(@RequestParam("username") String username) {
     User user = this.userDAO.findByEmail(username);
-    for (Type type : this.typeDAO.getAllActivityTypes()) {
-      this.typeDAO.userUnSubscribe(user.getUserId(), type.getTypeId());
-    }
+    if (user == null)
+      return user("all");
     new QiniuIntegrationManager()
         .deleteFile(PropertyUtil.AVATAR_BASE_LINK + user.getAvatar());
     this.userDAO.deleteUser(user.getUserId());
