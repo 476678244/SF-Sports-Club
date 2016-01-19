@@ -22,10 +22,7 @@ import teamdivider.bean.vo.UserVO;
 import teamdivider.dao.EventDAO;
 import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
-import teamdivider.entity.ActivityEvent;
-import teamdivider.entity.ActivityType;
 import teamdivider.entity.EntityUtil;
-import teamdivider.util.CacheUtil;
 
 @RestController
 public class TypeController {
@@ -35,7 +32,7 @@ public class TypeController {
 
   @Autowired
   private TypeDAO typeDAO;
-  
+
   @Autowired
   private EventDAO eventDAO;
 
@@ -49,7 +46,7 @@ public class TypeController {
     EntityUtil.sortTypeVOsByPriorityDesc(vos);
     return vos;
   }
-  
+
   @RequestMapping("/activityTypes/joining")
   public List<TypeVO> joiningTypes(@RequestParam("username") String username) {
     User user = this.userDAO.findByEmail(username);
@@ -60,7 +57,7 @@ public class TypeController {
     EntityUtil.sortTypeVOsByPriorityDesc(activityNames);
     return activityNames;
   }
-  
+
   @RequestMapping("/activityType")
   public List<TypeVO> activityType(
       @RequestParam("activityType") String typeName,
@@ -70,7 +67,7 @@ public class TypeController {
     types.add(new TypeVO(type));
     return types;
   }
-  
+
   @RequestMapping("/activityEvent")
   public EventVO activityEvent(
       @RequestParam("activityType") String activityType,
@@ -78,7 +75,7 @@ public class TypeController {
     Event event = this.eventDAO.getEventByEventId(eventId);
     return new EventVO(event);
   }
-  
+
   @RequestMapping("/addActivityType")
   public TypeVO addActivityType(@RequestParam("name") String name,
       @RequestParam("organizerName") String organizerName) {
@@ -88,7 +85,7 @@ public class TypeController {
     this.typeDAO.create(type);
     return new TypeVO(type);
   }
-  
+
   @RequestMapping("/addActivityEvent")
   public EventVO addActivityEvent(
       @RequestParam("activityType") String activityType,
@@ -106,7 +103,7 @@ public class TypeController {
     this.typeDAO.addEvent(event);
     return new EventVO(event);
   }
-  
+
   @RequestMapping("/enrollActivityEvent")
   public EventVO enrollActivityEvent(
       @RequestParam("activityType") String activityType,
@@ -131,7 +128,7 @@ public class TypeController {
         + "<a href=\"" + viewEventLink
         + "\" target=\"view_window\">View Detail!</a>";
   }
-  
+
   @RequestMapping("/quitActivityEvent")
   public EventVO quitActivityEvent(
       @RequestParam("activityType") String activityType,
@@ -145,7 +142,7 @@ public class TypeController {
     this.eventDAO.removeUserInEvent(eventId, user.getUserId());
     return new EventVO(this.eventDAO.getEventByEventId(eventId, true));
   }
-  
+
   @RequestMapping("/becomeOrganizer")
   public TypeVO becomeOrganizer(
       @RequestParam("activityType") String activityType,
@@ -159,7 +156,7 @@ public class TypeController {
     }
     return new TypeVO(this.typeDAO.getTypeByName(activityType, true));
   }
-  
+
   @RequestMapping("/giveUpOrganizer")
   public TypeVO giveUpOrganizer(
       @RequestParam("activityType") String activityType,
@@ -172,7 +169,7 @@ public class TypeController {
     this.typeDAO.removeOrganizer(type.getTypeId(), user.getUserId());
     return new TypeVO(this.typeDAO.getTypeByTypeId(type.getTypeId(), true));
   }
-  
+
   @RequestMapping("/yesDrivingCar")
   public EventVO yesDrivingCar(
       @RequestParam("activityType") String activityType,
@@ -182,7 +179,7 @@ public class TypeController {
     this.eventDAO.addDriver(eventId, user);
     return new EventVO(this.eventDAO.getEventByEventId(eventId, true));
   }
-  
+
   @RequestMapping("/noDrivingCar")
   public EventVO noDrivingCar(@RequestParam("activityType") String activityType,
       @RequestParam("username") String username,
@@ -191,7 +188,7 @@ public class TypeController {
     this.eventDAO.removeDriver(eventId, user.getUserId());
     return new EventVO(this.eventDAO.getEventByEventId(eventId, true));
   }
-  
+
   @RequestMapping("/userSubscribe")
   public UserVO userSubscribe(@RequestParam("type") String type,
       @RequestParam("username") String username) {
@@ -201,7 +198,7 @@ public class TypeController {
         user);
     return new UserVO(this.userDAO.findByUserId(user.getUserId()));
   }
-  
+
   @RequestMapping("/userUnsubscribe")
   public UserVO userUnsubscribe(@RequestParam("type") String type,
       @RequestParam("username") String username) {
@@ -210,7 +207,7 @@ public class TypeController {
     this.typeDAO.userUnSubscribe(user.getUserId(), activityType.getTypeId());
     return new UserVO(this.userDAO.findByUserId(user.getUserId()));
   }
-  
+
   @RequestMapping("/addGuest")
   public EventVO addGuest(@RequestParam("guest") String guest,
       @RequestParam("type") String type, @RequestParam("eventId") int eventId) {
@@ -219,7 +216,7 @@ public class TypeController {
     this.eventDAO.save(event);
     return new EventVO(event);
   }
-  
+
   @RequestMapping("/removeGuest")
   public EventVO removeGuest(@RequestParam("guest") String guest,
       @RequestParam("type") String type, @RequestParam("eventId") int eventId) {
@@ -228,7 +225,7 @@ public class TypeController {
     this.eventDAO.save(event);
     return new EventVO(event);
   }
-  
+
   @RequestMapping("/deleteActivityEvent")
   public TypeVO deleteActivityEvent(@RequestParam("type") String type,
       @RequestParam("eventId") int eventId) {
@@ -251,5 +248,53 @@ public class TypeController {
     activityType.setLatestEvent(latestEvent);
     this.typeDAO.saveActivityType(activityType);
     return new TypeVO(activityType);
+  }
+
+  @RequestMapping("/deleteActivity")
+  public List<TypeVO> deleteActivity(@RequestParam("type") String type) {
+    Type activityType = this.typeDAO.getTypeByName(type, true);
+    this.typeDAO.deleteType(activityType);
+    return this.activityTypes();
+  }
+
+  @RequestMapping("/byHisCar")
+  public String byHisCar(@RequestParam("type") String type,
+      @RequestParam("ordinal") int ordinal,
+      @RequestParam("driver") String driver,
+      @RequestParam("passenger") String passenger,
+      @RequestParam(value = "notification", defaultValue = "false") boolean notification) {
+    Event event = this.eventDAO.getEventByEventId(ordinal, true);
+    User driverUser = this.userDAO.findByEmail(driver);
+    User passengerUser = this.userDAO.findByEmail(passenger);
+    if (!event.getPassengers().containsValue(passengerUser.getUserId())) {
+      return "{\"result\":\"By this car failed, please join this event at first!\"}";
+    }
+    int passengers = event.getPassengers().get(driverUser.getId()).size();
+    if (passengers >= 4) {
+      return "{\"result\":\"By this car failed, because there are alreday 4 passengers!\"}";
+    }
+    this.eventDAO.addPassenger(ordinal, driverUser.getUserId(),
+        passengerUser.getUserId());
+    return "{\"result\":\"success\"}";
+  }
+
+  @RequestMapping("/notByHisCar")
+  public String notByHisCar(@RequestParam("type") String type,
+      @RequestParam("ordinal") int ordinal,
+      @RequestParam("driver") String driver,
+      @RequestParam("passenger") String passenger,
+      @RequestParam(value = "notification", defaultValue = "false") boolean notification) {
+    User passengerUser = this.userDAO.findByEmail(passenger);
+    this.eventDAO.removePassenger(ordinal, passengerUser.getUserId());
+    return "{\"result\":\"success\"}";
+  }
+
+  @RequestMapping("/isUserInCar")
+  public boolean isUserInCar(@RequestParam("type") String type,
+      @RequestParam("ordinal") int ordinal,
+      @RequestParam("username") String username) {
+    Event event = this.eventDAO.getEventByEventId(ordinal, true);
+    User user = this.userDAO.findByEmail(username);
+    return event.getPassengers().containsValue(user.getUserId());
   }
 }

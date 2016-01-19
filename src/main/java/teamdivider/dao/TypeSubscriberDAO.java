@@ -23,4 +23,8 @@ public class TypeSubscriberDAO extends AbstractDAO<TypeSubscriber> {
     this.getBasicDAO().save(mapping);
   }
 
+  public void removeSubscribersOfType(long typeId) {
+    this.getBasicDAO().deleteByQuery(
+        this.getBasicDAO().createQuery().filter("typeId", typeId));
+  }
 }

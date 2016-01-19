@@ -29,6 +29,8 @@ public class SequenceId {
   
   public static final String SEQUENCE_TYPE_SUBSCRIBER = "type_subscriber";
   
+  public static final String SEQUENCE_TYPE_USER_SCORE = "type_user_score";
+  
   public static final Set<String> sequences = new HashSet<String>();
   
   static {
@@ -42,6 +44,7 @@ public class SequenceId {
     sequences.add(SEQUENCE_TYPE_EVENT);
     sequences.add(SEQUENCE_TYPE_ORGANIZER);
     sequences.add(SEQUENCE_TYPE_SUBSCRIBER);
+    sequences.add(SEQUENCE_TYPE_USER_SCORE);
   }
 
   @Id

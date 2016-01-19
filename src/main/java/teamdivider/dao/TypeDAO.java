@@ -213,4 +213,13 @@ public class TypeDAO extends AbstractDAO<Type> {
     this.eventDAO.deleteEvent(eventId);
   }
 
+  public void deleteType(Type type) {
+    this.typeOrganizerDAO.removeOrganizersOfType(type.getTypeId());
+    this.typeSubscriberDAO.removeSubscribersOfType(type.getTypeId());
+    this.typeUserScoreDAO.removeUserScoresOfType(type.getTypeId());
+    for (Event event : type.getEvents()) {
+      this.eventDAO.deleteEvent(event.getEventId());
+    }
+  }
+
 }

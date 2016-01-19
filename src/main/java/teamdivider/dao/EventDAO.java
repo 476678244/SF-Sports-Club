@@ -199,6 +199,14 @@ public class EventDAO extends AbstractDAO<Event> {
     this.eventDriverDAO.create(mapping);
   }
   
+  public void addPassenger(long eventId, long driverId, long passengerId) {
+    DriverPassenger mapping = new DriverPassenger();
+    mapping.setDriverId(driverId);
+    mapping.setEventId(eventId);
+    mapping.setPassengerId(passengerId);
+    this.driverPassengerDAO.create(mapping);
+  }
+  
   public void save(Event event) {
     this.getBasicDAO().save(event);
   }

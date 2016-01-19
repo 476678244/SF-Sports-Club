@@ -29,4 +29,9 @@ public class TypeOrganizerDAO extends AbstractDAO<TypeOrganizer> {
     this.getBasicDAO().deleteByQuery(this.getBasicDAO().createQuery()
         .filter("typeId", typeId).filter("userId", userId));
   }
+  
+  public void removeOrganizersOfType(long typeId) {
+    this.getBasicDAO().deleteByQuery(
+        this.getBasicDAO().createQuery().filter("typeId", typeId));
+  }
 }
