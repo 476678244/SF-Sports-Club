@@ -182,11 +182,10 @@ public class TypeDAO extends AbstractDAO<Type> {
   }
   
   public void removeTypeUserMapping(long userId) {
-    this.typeOrganizerDAO.getBasicDAO().deleteByQuery(this.typeOrganizerDAO
-        .getBasicDAO().createQuery().filter("userId", userId));
+    this.typeOrganizerDAO.removeOrganizerFromTypes(userId);
     this.typeSubscriberDAO.getBasicDAO().deleteByQuery(this.typeSubscriberDAO
         .getBasicDAO().createQuery().filter("userId", userId));
-    this.eventDAO.removeEventUserMapping(userId);
+    this.eventDAO.removeUserFromEvents(userId);
   }
 
   public void addEvent(Event event) {
@@ -206,9 +205,12 @@ public class TypeDAO extends AbstractDAO<Type> {
   }
 
   public void removeOrganizer(long typeId, long userId) {
-    this.typeOrganizerDAO.getBasicDAO()
-        .deleteByQuery(this.typeOrganizerDAO.getBasicDAO().createQuery()
-            .filter("typeId", typeId).filter("userId", userId));
+    this.typeOrganizerDAO.removeOrganizerFromType(userId, typeId);
+  }
+  
+  public void removeEvent(long eventId) {
+    this.typeEventDAO.removeEventFromTypes(eventId);
+    this.eventDAO.deleteEvent(eventId);
   }
 
 }

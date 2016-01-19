@@ -13,11 +13,21 @@ public class TypeEventDAO extends AbstractDAO<TypeEvent> {
   protected Class<TypeEvent> getClazz() {
     return TypeEvent.class;
   }
-  
+
   public void create(TypeEvent mapping) {
     mapping.setMappingId(
         this.sequenceDAO.getNextSequenceId(SequenceId.SEQUENCE_TYPE_EVENT));
     this.getBasicDAO().save(mapping);
+  }
+
+  public void removeEventFromTypes(long eventId) {
+    this.getBasicDAO().deleteByQuery(
+        this.getBasicDAO().createQuery().filter("eventId", eventId));
+  }
+
+  public void removeEventFromType(long eventId, long typeId) {
+    this.getBasicDAO().deleteByQuery(this.getBasicDAO().createQuery()
+        .filter("eventId", eventId).filter("typeId", typeId));
   }
 
 }

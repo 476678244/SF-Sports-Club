@@ -19,4 +19,14 @@ public class TypeOrganizerDAO extends AbstractDAO<TypeOrganizer> {
         this.sequenceDAO.getNextSequenceId(SequenceId.SEQUENCE_TYPE_ORGANIZER));
     this.getBasicDAO().save(mapping);
   }
+
+  public void removeOrganizerFromTypes(long userId) {
+    this.getBasicDAO().deleteByQuery(
+        this.getBasicDAO().createQuery().filter("userId", userId));
+  }
+
+  public void removeOrganizerFromType(long userId, long typeId) {
+    this.getBasicDAO().deleteByQuery(this.getBasicDAO().createQuery()
+        .filter("typeId", typeId).filter("userId", userId));
+  }
 }

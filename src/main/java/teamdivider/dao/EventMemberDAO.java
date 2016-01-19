@@ -22,4 +22,14 @@ public class EventMemberDAO extends AbstractDAO<EventMember> {
     this.getBasicDAO().save(mapping);
   }
 
+  public void removeMembersOfEvent(long eventId) {
+    this.getBasicDAO().deleteByQuery(
+        this.getBasicDAO().createQuery().filter("eventId", eventId));
+  }
+
+  public void removeMemebrFromEvent(long memberId, long eventId) {
+    this.getBasicDAO().deleteByQuery(this.getBasicDAO().createQuery()
+        .filter("eventId", eventId).filter("userId", memberId));
+  }
+
 }

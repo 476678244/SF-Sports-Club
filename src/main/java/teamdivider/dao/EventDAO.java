@@ -37,6 +37,9 @@ public class EventDAO extends AbstractDAO<Event> {
 
   @Autowired
   private EventMemberDAO eventMemberDAO;
+  
+  @Autowired
+  private TypeEventDAO typeEventDAO;
 
   @Override
   protected Class<Event> getClazz() {
@@ -146,13 +149,14 @@ public class EventDAO extends AbstractDAO<Event> {
     return fenDui;
   }
   
-  public void removeEventUserMapping(long userId) {
+  public void removeUserFromEvents(long userId) {
     this.eventDriverDAO.getBasicDAO().deleteByQuery(this.eventDriverDAO
         .getBasicDAO().createQuery().filter("userId", userId));
     this.driverPassengerDAO.getBasicDAO().deleteByQuery(this.driverPassengerDAO
         .getBasicDAO().createQuery().filter("passengerId", userId));
     this.eventMemberDAO.getBasicDAO().deleteByQuery(this.eventMemberDAO
         .getBasicDAO().createQuery().filter("userId", userId));
+    // don`t remove user from fendui result
   }
   
   public void create(Event event) {
@@ -169,24 +173,16 @@ public class EventDAO extends AbstractDAO<Event> {
   }
 
   public void removeMember(long eventId, long userId) {
-    this.eventMemberDAO.getBasicDAO()
-        .deleteByQuery(this.eventMemberDAO.getBasicDAO().createQuery()
-            .filter("eventId", eventId).filter("userId", userId));
+    this.eventMemberDAO.removeMemebrFromEvent(userId, eventId);
   }
 
   public void removeDriver(long eventId, long userId) {
-    this.eventDriverDAO.getBasicDAO()
-        .deleteByQuery(this.eventDriverDAO.getBasicDAO().createQuery()
-            .filter("eventId", eventId).filter("userId", userId));
-    this.driverPassengerDAO.getBasicDAO()
-        .deleteByQuery(this.driverPassengerDAO.getBasicDAO().createQuery()
-            .filter("eventId", eventId).filter("driverId", userId));
+    this.eventDriverDAO.removeDriverFromEvent(userId, eventId);
+    this.driverPassengerDAO.removeDriversOfEvent(userId, eventId);
   }
 
   public void removePassenger(long eventId, long userId) {
-    this.driverPassengerDAO.getBasicDAO()
-        .deleteByQuery(this.driverPassengerDAO.getBasicDAO().createQuery()
-            .filter("eventId", eventId).filter("passengerId", userId));
+    this.driverPassengerDAO.removePassengerFromEvent(userId, eventId);
   }
   
   public void removeUserInEvent(long eventId, long userId) {
@@ -201,6 +197,20 @@ public class EventDAO extends AbstractDAO<Event> {
     mapping.setUserId(user.getUserId());
     mapping.setUser(user);
     this.eventDriverDAO.create(mapping);
+  }
+  
+  public void save(Event event) {
+    this.getBasicDAO().save(event);
+  }
+  
+  public void deleteEvent(long eventId) {
+    this.typeEventDAO.removeEventFromTypes(eventId);
+    this.eventDriverDAO.removeDriversOfEvent(eventId);
+    this.driverPassengerDAO.removePassengersOfEvent(eventId);
+    this.eventFenDuiDAO.removeFenDuisOfEvent(eventId);
+    this.eventMemberDAO.removeMembersOfEvent(eventId);
+    this.getBasicDAO().deleteByQuery(
+        this.getBasicDAO().createQuery().filter("eventId", eventId));
   }
 
 }

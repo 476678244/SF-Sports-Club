@@ -5,6 +5,7 @@ package teamdivider.controller.v2;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,10 @@ import teamdivider.bean.vo.UserVO;
 import teamdivider.dao.EventDAO;
 import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
+import teamdivider.entity.ActivityEvent;
+import teamdivider.entity.ActivityType;
 import teamdivider.entity.EntityUtil;
+import teamdivider.util.CacheUtil;
 
 @RestController
 public class TypeController {
@@ -205,5 +209,47 @@ public class TypeController {
     User user = this.userDAO.findByEmail(username);
     this.typeDAO.userUnSubscribe(user.getUserId(), activityType.getTypeId());
     return new UserVO(this.userDAO.findByUserId(user.getUserId()));
+  }
+  
+  @RequestMapping("/addGuest")
+  public EventVO addGuest(@RequestParam("guest") String guest,
+      @RequestParam("type") String type, @RequestParam("eventId") int eventId) {
+    Event event = this.eventDAO.getEventByEventId(eventId);
+    event.getGuests().add(guest);
+    this.eventDAO.save(event);
+    return new EventVO(event);
+  }
+  
+  @RequestMapping("/removeGuest")
+  public EventVO removeGuest(@RequestParam("guest") String guest,
+      @RequestParam("type") String type, @RequestParam("eventId") int eventId) {
+    Event event = this.eventDAO.getEventByEventId(eventId);
+    event.getGuests().remove(guest);
+    this.eventDAO.save(event);
+    return new EventVO(event);
+  }
+  
+  @RequestMapping("/deleteActivityEvent")
+  public TypeVO deleteActivityEvent(@RequestParam("type") String type,
+      @RequestParam("eventId") int eventId) {
+    Type activityType = this.typeDAO.getTypeByName(type, true);
+    Iterator<Event> it = activityType.getEvents().iterator();
+    Event latestEvent = null;
+    long latestOrdinal = 0;
+    while (it.hasNext()) {
+      Event event = it.next();
+      if (event.getEventId() == eventId) {
+        it.remove();
+        this.typeDAO.removeEvent(eventId);
+      } else {
+        if (event.getEventId() > latestOrdinal) {
+          latestEvent = event;
+          latestOrdinal = event.getEventId();
+        }
+      }
+    }
+    activityType.setLatestEvent(latestEvent);
+    this.typeDAO.saveActivityType(activityType);
+    return new TypeVO(activityType);
   }
 }

@@ -14,8 +14,6 @@ public class SequenceId {
   public static final String SEQUENCE_TYPE = "type";
 
   public static final String SEQUENCE_EVENT = "event";
-
-  public static final String SEQUENCE_FENDUI = "fendui";
   
   public static final String SEQUENCE_DRIVER_PASSENGER = "driver_passenger";
   
@@ -37,7 +35,6 @@ public class SequenceId {
     sequences.add(SEQUENCE_USER);
     sequences.add(SEQUENCE_TYPE);
     sequences.add(SEQUENCE_EVENT);
-    sequences.add(SEQUENCE_FENDUI);
     sequences.add(SEQUENCE_DRIVER_PASSENGER);
     sequences.add(SEQUENCE_EVENT_DRIVER);
     sequences.add(SEQUENCE_EVENT_FENDUI);
