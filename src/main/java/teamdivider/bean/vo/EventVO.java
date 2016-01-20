@@ -177,7 +177,8 @@ public class EventVO {
   }
 
   public List<UserVO> getOrganizers() {
-    return this.getOrganizers();
+    return EntityUtil
+        .userVOsOf(ContextUtil.getContext().getType(typeId).getOrganizers());
   }
 
   public String getType() {

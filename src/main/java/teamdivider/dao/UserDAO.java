@@ -57,7 +57,9 @@ public class UserDAO extends AbstractDAO<User> {
     }
     Set<Type> types = new HashSet<Type>(typeSubscribers.size());
     for (TypeSubscriber mapping : typeSubscribers) {
-      types.add(this.typeDAO.getTypeByTypeId(mapping.getTypeId(), false));
+      Type type = this.typeDAO.getTypeByTypeId(mapping.getTypeId(), false);
+      if (type == null) continue;
+      types.add(type);
     }
     return types;
   }

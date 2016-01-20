@@ -23,6 +23,7 @@ import teamdivider.dao.EventDAO;
 import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
 import teamdivider.entity.EntityUtil;
+import teamdivider.util.ContextUtil;
 
 @RestController
 @RequestMapping("/v2")
@@ -73,6 +74,8 @@ public class TypeController {
   public EventVO activityEvent(
       @RequestParam("activityType") String activityType,
       @RequestParam("eventId") long eventId) {
+    Type type = this.typeDAO.getTypeByName(activityType, true);
+    ContextUtil.getContext().setType(type.getTypeId(), type);
     Event event = this.eventDAO.getEventByEventId(eventId);
     return new EventVO(event);
   }

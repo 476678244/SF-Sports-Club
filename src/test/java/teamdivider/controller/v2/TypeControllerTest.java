@@ -71,7 +71,7 @@ public class TypeControllerTest {
     if (soccer == null) {
       String typeName = "soccer" + new Date().getTime();
       this.controller.addActivityType(typeName, zonghan.getEmail());
-      soccer = this.typeDAO.getTypeByName("soccer", true);
+      soccer = this.typeDAO.getTypeByName(typeName, true);
     }
   }
 

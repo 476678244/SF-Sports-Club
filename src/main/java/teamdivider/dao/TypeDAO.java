@@ -220,6 +220,7 @@ public class TypeDAO extends AbstractDAO<Type> {
     for (Event event : type.getEvents()) {
       this.eventDAO.deleteEvent(event.getEventId());
     }
+    this.getBasicDAO().delete(type);
   }
 
 }

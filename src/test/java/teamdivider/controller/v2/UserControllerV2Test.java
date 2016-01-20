@@ -1,9 +1,7 @@
 package teamdivider.controller.v2;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -32,28 +30,34 @@ public class UserControllerV2Test {
 
   @Autowired
   private UserControllerV2 controller;
-  
+
   @Autowired
   private UserDAO userDAO;
-  
+
   @Autowired
   private TypeDAO typeDAO;
-  
-  private static Set<String> emails = new HashSet<String>();
-  
+
+  private static User zonghan = null;
+
+  private static Type soccer = null;
+
+  private static Type badminton = null;
+
   @Before
   // make sure types added
   public void before() {
     ContextUtil.getContext().skipQiniuActions = true;
-    Type soccer = this.typeDAO.getTypeByName("soccer", false);
     if (soccer == null) {
-      soccer = Type.builder().name("soccer").build();
-      this.typeDAO.create(soccer);
+      String typeName = "soccer" + new Date().getTime();
+      Type type = Type.builder().name(typeName).build();
+      this.typeDAO.create(type);
+      soccer = this.typeDAO.getTypeByName(typeName, true);
     }
-    Type badminton = this.typeDAO.getTypeByName("badminton", false);
     if (badminton == null) {
-      badminton = Type.builder().name("badminton").build();
-      this.typeDAO.create(soccer);
+      String typeName = "badminton" + new Date().getTime();
+      Type type = Type.builder().name(typeName).build();
+      this.typeDAO.create(type);
+      badminton = this.typeDAO.getTypeByName(typeName, true);
     }
   }
 
@@ -64,47 +68,47 @@ public class UserControllerV2Test {
     String fullName = "Zonghan Wu";
     String avatar = "avatar address";
     UserVO user = this.controller.addUser(email, fullName, avatar);
+    zonghan = this.userDAO.findByEmail(email);
     Assert.assertEquals(user.getEmail(), email);
     List<UserVO> vos = this.controller.user("all");
     System.out.println("---Users--------------------");
     System.out.println(vos);
     System.out.println("-----------------------");
     Assert.assertTrue(vos.size() > 0);
-    emails.add(email);
   }
 
   @Test
   // delete user and addWithSubscribing
   public void testB() {
+    this.controller.deleteUser(zonghan.getEmail());
     String email = this.genereateNewEmail();
-    UserVO vo = this.controller.addUserWithSubscribing(email,
-        "Zonghan Wu", "avatar address", "soccer/badminton/");
+    UserVO vo = this.controller.addUserWithSubscribing(email, "Zonghan Wu",
+        "avatar address", "soccer/badminton/");
     Assert.assertEquals(vo.getSubscribedTypes().size(), 2);
-    emails.add(email);
+    zonghan = this.userDAO.findByEmail(vo.getEmail());
   }
-  
+
   @Test
   // update user
   public void testC() {
-    String email = this.genereateNewEmail();
-    this.controller.addUserWithSubscribing(email,
-        "Zonghan Wu", "avatar address", "soccer/badminton/");
-    String newEmail = new Date().getTime() + "@163.com";
-    User user = this.userDAO.findByEmail(newEmail);
-    Assert.assertNull(user);
-    this.controller.updateUserEmail(email, newEmail);
-    user = this.userDAO.findByEmail(newEmail);
-    Assert.assertNotNull(user);
-    emails.add(newEmail);
+    String newEmail = genereateNewEmail();
+    this.controller.updateUserEmail(zonghan.getEmail(), newEmail);
+    zonghan = this.userDAO.findByEmail(newEmail);
+    Assert.assertNotNull(zonghan);
+  }
+
+  @Test
+  public void testXDelete() {
+    this.typeDAO.deleteType(soccer);
+    this.typeDAO.deleteType(badminton);
+    this.userDAO.deleteUser(zonghan.getUserId());
   }
   
   @After
-  public void testD() {
-    for (String email : emails) {
-      this.controller.deleteUser(email);
-    }
+  public void after() {
+    
   }
-  
+
   private String genereateNewEmail() {
     try {
       Thread.sleep(1);
@@ -112,9 +116,10 @@ public class UserControllerV2Test {
     }
     return new Date().getTime() + "@163.com";
   }
-  
+
   @Configuration
   @ComponentScan("teamdivider.*")
-  public static class TestConfiguration{}
+  public static class TestConfiguration {
+  }
 
 }
