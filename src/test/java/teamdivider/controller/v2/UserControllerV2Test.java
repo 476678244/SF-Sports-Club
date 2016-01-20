@@ -43,7 +43,8 @@ public class UserControllerV2Test {
   
   @Before
   // make sure types added
-  public void testA1() {
+  public void before() {
+    ContextUtil.getContext().skipQiniuActions = true;
     Type soccer = this.typeDAO.getTypeByName("soccer", false);
     if (soccer == null) {
       soccer = Type.builder().name("soccer").build();
@@ -60,7 +61,6 @@ public class UserControllerV2Test {
   // get users and add users
   public void testA2() {
     String email = this.genereateNewEmail();
-    ContextUtil.getContext().skipQiniuActions = true;
     String fullName = "Zonghan Wu";
     String avatar = "avatar address";
     UserVO user = this.controller.addUser(email, fullName, avatar);
@@ -77,7 +77,6 @@ public class UserControllerV2Test {
   // delete user and addWithSubscribing
   public void testB() {
     String email = this.genereateNewEmail();
-    ContextUtil.getContext().skipQiniuActions = true;
     UserVO vo = this.controller.addUserWithSubscribing(email,
         "Zonghan Wu", "avatar address", "soccer/badminton/");
     Assert.assertEquals(vo.getSubscribedTypes().size(), 2);
@@ -87,7 +86,6 @@ public class UserControllerV2Test {
   @Test
   // update user
   public void testC() {
-    ContextUtil.getContext().skipQiniuActions = true;
     String email = this.genereateNewEmail();
     this.controller.addUserWithSubscribing(email,
         "Zonghan Wu", "avatar address", "soccer/badminton/");
@@ -102,7 +100,6 @@ public class UserControllerV2Test {
   
   @After
   public void testD() {
-    ContextUtil.getContext().skipQiniuActions = true;
     for (String email : emails) {
       this.controller.deleteUser(email);
     }

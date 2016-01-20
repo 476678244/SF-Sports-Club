@@ -34,7 +34,9 @@ public class TypeVO {
   public TypeVO(Type eo) {
     this.typeId = eo.getTypeId();
     this.name = eo.getName();
-    this.latestEvent = new EventVO(eo.getLatestEvent());
+    if (eo.getLatestEvent() != null) {
+      this.latestEvent = new EventVO(eo.getLatestEvent());
+    }
     Set<User> organizerEOs = eo.getOrganizers();
     if (organizers != null) {
       for (User user : organizerEOs) {

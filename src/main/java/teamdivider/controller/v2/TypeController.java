@@ -71,7 +71,7 @@ public class TypeController {
   @RequestMapping("/activityEvent")
   public EventVO activityEvent(
       @RequestParam("activityType") String activityType,
-      @RequestParam("eventId") int eventId) {
+      @RequestParam("eventId") long eventId) {
     Event event = this.eventDAO.getEventByEventId(eventId);
     return new EventVO(event);
   }
@@ -81,8 +81,8 @@ public class TypeController {
       @RequestParam("organizerName") String organizerName) {
     User organizer = this.userDAO.findByEmail(organizerName);
     Type type = Type.builder().name(name).build();
-    type.getOrganizers().add(organizer);
     this.typeDAO.create(type);
+    this.typeDAO.addOrganizer(type.getTypeId(), organizer.getUserId(), organizer);
     return new TypeVO(type);
   }
 
@@ -108,7 +108,7 @@ public class TypeController {
   public EventVO enrollActivityEvent(
       @RequestParam("activityType") String activityType,
       @RequestParam("username") String username,
-      @RequestParam("eventId") int eventId) {
+      @RequestParam("eventId") long eventId) {
     User user = this.userDAO.findByEmail(username);
     this.eventDAO.addMember(eventId, user.getUserId(), user);
     Event event = this.eventDAO.getEventByEventId(eventId);
@@ -119,7 +119,7 @@ public class TypeController {
   public String enrollActivityEventFromEmail(
       @RequestParam("activityType") String activityType,
       @RequestParam("username") String username,
-      @RequestParam("eventId") int ordinal,
+      @RequestParam("eventId") long ordinal,
       @RequestParam("baseLink") String baseLink) {
     this.enrollActivityEvent(activityType, username, ordinal);
     String viewEventLink = baseLink + "/teamdivider/new/#/detail/"
@@ -133,7 +133,7 @@ public class TypeController {
   public EventVO quitActivityEvent(
       @RequestParam("activityType") String activityType,
       @RequestParam("username") String username,
-      @RequestParam("eventId") int eventId) {
+      @RequestParam("eventId") long eventId) {
     Event event = this.eventDAO.getEventByEventId(eventId, true);
     User user = this.userDAO.findByEmail(username);
     if (event.getDrivers().contains(user)) {
@@ -174,7 +174,7 @@ public class TypeController {
   public EventVO yesDrivingCar(
       @RequestParam("activityType") String activityType,
       @RequestParam("username") String username,
-      @RequestParam("eventId") int eventId) {
+      @RequestParam("eventId") long eventId) {
     User user = this.userDAO.findByEmail(username);
     this.eventDAO.addDriver(eventId, user);
     return new EventVO(this.eventDAO.getEventByEventId(eventId, true));
@@ -183,7 +183,7 @@ public class TypeController {
   @RequestMapping("/noDrivingCar")
   public EventVO noDrivingCar(@RequestParam("activityType") String activityType,
       @RequestParam("username") String username,
-      @RequestParam("eventId") int eventId) {
+      @RequestParam("eventId") long eventId) {
     User user = this.userDAO.findByEmail(username);
     this.eventDAO.removeDriver(eventId, user.getUserId());
     return new EventVO(this.eventDAO.getEventByEventId(eventId, true));
@@ -210,7 +210,7 @@ public class TypeController {
 
   @RequestMapping("/addGuest")
   public EventVO addGuest(@RequestParam("guest") String guest,
-      @RequestParam("type") String type, @RequestParam("eventId") int eventId) {
+      @RequestParam("type") String type, @RequestParam("eventId") long eventId) {
     Event event = this.eventDAO.getEventByEventId(eventId);
     event.getGuests().add(guest);
     this.eventDAO.save(event);
@@ -219,7 +219,7 @@ public class TypeController {
 
   @RequestMapping("/removeGuest")
   public EventVO removeGuest(@RequestParam("guest") String guest,
-      @RequestParam("type") String type, @RequestParam("eventId") int eventId) {
+      @RequestParam("type") String type, @RequestParam("eventId") long eventId) {
     Event event = this.eventDAO.getEventByEventId(eventId);
     event.getGuests().remove(guest);
     this.eventDAO.save(event);
@@ -228,7 +228,7 @@ public class TypeController {
 
   @RequestMapping("/deleteActivityEvent")
   public TypeVO deleteActivityEvent(@RequestParam("type") String type,
-      @RequestParam("eventId") int eventId) {
+      @RequestParam("eventId") long eventId) {
     Type activityType = this.typeDAO.getTypeByName(type, true);
     Iterator<Event> it = activityType.getEvents().iterator();
     Event latestEvent = null;
@@ -259,7 +259,7 @@ public class TypeController {
 
   @RequestMapping("/byHisCar")
   public String byHisCar(@RequestParam("type") String type,
-      @RequestParam("ordinal") int ordinal,
+      @RequestParam("ordinal") long ordinal,
       @RequestParam("driver") String driver,
       @RequestParam("passenger") String passenger,
       @RequestParam(value = "notification", defaultValue = "false") boolean notification) {
@@ -269,7 +269,7 @@ public class TypeController {
     if (!event.getPassengers().containsValue(passengerUser.getUserId())) {
       return "{\"result\":\"By this car failed, please join this event at first!\"}";
     }
-    int passengers = event.getPassengers().get(driverUser.getId()).size();
+    long passengers = event.getPassengers().get(driverUser.getId()).size();
     if (passengers >= 4) {
       return "{\"result\":\"By this car failed, because there are alreday 4 passengers!\"}";
     }
@@ -280,7 +280,7 @@ public class TypeController {
 
   @RequestMapping("/notByHisCar")
   public String notByHisCar(@RequestParam("type") String type,
-      @RequestParam("ordinal") int ordinal,
+      @RequestParam("ordinal") long ordinal,
       @RequestParam("driver") String driver,
       @RequestParam("passenger") String passenger,
       @RequestParam(value = "notification", defaultValue = "false") boolean notification) {
@@ -291,7 +291,7 @@ public class TypeController {
 
   @RequestMapping("/isUserInCar")
   public boolean isUserInCar(@RequestParam("type") String type,
-      @RequestParam("ordinal") int ordinal,
+      @RequestParam("ordinal") long ordinal,
       @RequestParam("username") String username) {
     Event event = this.eventDAO.getEventByEventId(ordinal, true);
     User user = this.userDAO.findByEmail(username);
