@@ -3,6 +3,8 @@
  */
 package teamdivider.controller.v2;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -23,7 +25,6 @@ import teamdivider.dao.EventDAO;
 import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
 import teamdivider.entity.EntityUtil;
-import teamdivider.util.ContextUtil;
 
 @RestController
 @RequestMapping("/v2")
@@ -90,12 +91,13 @@ public class TypeController {
     return new TypeVO(type);
   }
 
+  @SuppressWarnings("deprecation")
   @RequestMapping("/addActivityEvent")
   public EventVO addActivityEvent(
       @RequestParam("activityType") String activityType,
       @RequestParam("name") String name, @RequestParam("time") String time,
       @RequestParam("description") String description,
-      @RequestParam("goTime") Date goTime) {
+      @RequestParam("goTime") Date goTime) throws ParseException {
     Type type = this.typeDAO.getTypeByName(activityType, true);
     Event event = Event.builder().name(name).description(description)
         .startTime(new Date(time)).goTime(goTime).typeId(type.getTypeId())
@@ -116,7 +118,7 @@ public class TypeController {
     this.typeDAO.getTypeByName(activityType, true);
     User user = this.userDAO.findByEmail(username);
     this.eventDAO.addMember(eventId, user.getUserId(), user);
-    Event event = this.eventDAO.getEventByEventId(eventId);
+    Event event = this.eventDAO.getEventByEventId(eventId, true);
     return new EventVO(event);
   }
 
