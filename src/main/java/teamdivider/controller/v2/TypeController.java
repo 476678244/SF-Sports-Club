@@ -25,6 +25,7 @@ import teamdivider.dao.UserDAO;
 import teamdivider.entity.EntityUtil;
 
 @RestController
+@RequestMapping("/v2")
 public class TypeController {
 
   @Autowired

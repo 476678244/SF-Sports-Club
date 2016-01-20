@@ -31,6 +31,7 @@ import teamdivider.util.FileUtil;
 import teamdivider.util.PropertyUtil;
 
 @RestController
+@RequestMapping("/v2")
 public class UserControllerV2 {
 
   @Autowired
@@ -42,6 +43,7 @@ public class UserControllerV2 {
   @RequestMapping("/userLogin")
   public UserVO login(@RequestParam("username") String email) {
     User user = this.userDAO.findByEmail(email);
+    if (user == null) return null;
     return new UserVO(user);
   }
 
