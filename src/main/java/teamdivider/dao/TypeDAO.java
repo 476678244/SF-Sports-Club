@@ -22,6 +22,7 @@ import teamdivider.bean.eo.mapping.TypeEvent;
 import teamdivider.bean.eo.mapping.TypeOrganizer;
 import teamdivider.bean.eo.mapping.TypeSubscriber;
 import teamdivider.bean.eo.mapping.TypeUserScore;
+import teamdivider.util.ContextUtil;
 
 @Repository
 public class TypeDAO extends AbstractDAO<Type> {
@@ -45,25 +46,27 @@ public class TypeDAO extends AbstractDAO<Type> {
   EventDAO eventDAO;
 
   public Type getTypeByName(String name) {
-    return this.getTypeByName(name, true);
+    return this.getTypeByName(name, false);
   }
   
   public Type getTypeByName(String name, boolean resolveTypeMappings) {
     Type type = this.getBasicDAO().findOne("name", name);
     if (resolveTypeMappings) {
-      return this.resolveTypeMappings(type);
+      ContextUtil.getContext().setType(type.getTypeId(), type);
+      this.resolveTypeMappings(type);
     }
     return type;
   }
   
   public Type getTypeByTypeId(long typeId) {
-    return this.getTypeByTypeId(typeId, true);
+    return this.getTypeByTypeId(typeId, false);
   }
   
   public Type getTypeByTypeId(long typeId, boolean resolveTypeMappings) {
     Type type = this.getBasicDAO().findOne("typeId", typeId);
     if (resolveTypeMappings) {
-      return this.resolveTypeMappings(type);
+      ContextUtil.getContext().setType(type.getTypeId(), type);
+      this.resolveTypeMappings(type);
     }
     return type;
   }

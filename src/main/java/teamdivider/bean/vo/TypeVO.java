@@ -38,7 +38,7 @@ public class TypeVO {
       this.latestEvent = new EventVO(eo.getLatestEvent());
     }
     Set<User> organizerEOs = eo.getOrganizers();
-    if (organizers != null) {
+    if (organizerEOs != null) {
       for (User user : organizerEOs) {
         this.organizers.add(new UserVO(user));
       }
@@ -100,15 +100,15 @@ public class TypeVO {
   }
 
   public List<EventVO> getEvents() {
-    return new ArrayList<EventVO>(this.events);
+    return this.events;
   }
 
   public List<UserVO> getOrganizers() {
-    return new ArrayList<UserVO>(this.organizers);
+    return this.organizers;
   }
 
   public List<UserVO> getSubscribers() {
-    return new ArrayList<UserVO>(this.subscribers);
+    return this.subscribers;
   }
 
   public EventVO getLatestEvent() {

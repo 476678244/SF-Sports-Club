@@ -40,10 +40,12 @@ public class ContextUtil {
     USER_DAO = this.userDAO;
     ACTIVITY_TYPE_DAO = this.activityTypeDAO;
     MAIL_SERVICE = this.mailService;
-    context.set(new Context());
   }
 
   public static Context getContext() {
+    if (context.get() == null) {
+      context.set(new Context());
+    }
     return context.get();
   }
 
