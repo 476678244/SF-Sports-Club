@@ -90,6 +90,8 @@ public class TypeDAO extends AbstractDAO<Type> {
     }
     Set<Event> events = new HashSet<Event>(typeEvents.size());
     for (TypeEvent mapping : typeEvents) {
+      ContextUtil.getContext().setEvent(mapping.getEventId(),
+          mapping.getEvent());
       events.add(mapping.getEvent());
     }
     return events;
@@ -106,6 +108,7 @@ public class TypeDAO extends AbstractDAO<Type> {
     }
     Set<User> users = new HashSet<User>(typeOrganizers.size());
     for (TypeOrganizer mapping : typeOrganizers) {
+      ContextUtil.getContext().setUser(mapping.getUserId(), mapping.getUser());
       users.add(mapping.getUser());
     }
     return users;
@@ -122,6 +125,7 @@ public class TypeDAO extends AbstractDAO<Type> {
     }
     Set<User> users = new HashSet<User>(typeSubscribers.size());
     for (TypeSubscriber mapping : typeSubscribers) {
+      ContextUtil.getContext().setUser(mapping.getUserId(), mapping.getUser());
       users.add(mapping.getUser());
     }
     return users;

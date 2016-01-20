@@ -31,6 +31,10 @@ public class TypeVO {
 
   private Map<Long, Integer> scores = new HashMap<Long, Integer>();
 
+  public TypeVO() {
+    
+  }
+  
   public TypeVO(Type eo) {
     this.typeId = eo.getTypeId();
     this.name = eo.getName();

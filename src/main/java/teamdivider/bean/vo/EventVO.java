@@ -4,6 +4,7 @@
 package teamdivider.bean.vo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -177,12 +178,15 @@ public class EventVO {
   }
 
   public List<UserVO> getOrganizers() {
-    return EntityUtil
-        .userVOsOf(ContextUtil.getContext().getType(typeId).getOrganizers());
+    Type type = ContextUtil.getContext().getType(typeId);
+    if (type == null)
+      return Collections.emptyList();
+    return EntityUtil.userVOsOf(type.getOrganizers());
   }
 
   public String getType() {
     Type type = ContextUtil.getContext().getType(this.typeId);
+    if (type == null) return "";
     return type.getName();
   }
 
@@ -195,6 +199,7 @@ public class EventVO {
    */
   public Map<String, Integer> getContinousTimes() {
     Type type = ContextUtil.getContext().getType(typeId);
+    if (type == null) return Collections.emptyMap();
     Map<String, Integer> continousTimes = new HashMap<String, Integer>();
     Set<Event> events = type.getEvents();
     List<Event> eventList = new ArrayList<Event>(events);
@@ -238,12 +243,14 @@ public class EventVO {
         continue;
       Set<String> passengerEmails = new HashSet<String>();
       for (Long userId : this.passengers.get(driverId)) {
-        passengerEmails
-            .add(ContextUtil.getContext().getUser(userId).getEmail());
+        User user = ContextUtil.getContext().getUser(userId); 
+        if (user == null) continue;
+        passengerEmails.add(user.getEmail());
       }
-      carPassengersMap.put(
-          ContextUtil.getContext().getUser(driverId).getEmail(),
-          passengerEmails);
+      User driver = ContextUtil.getContext().getUser(driverId);
+      if (driver == null)
+        continue;
+      carPassengersMap.put(driver.getEmail(), passengerEmails);
     }
     return carPassengersMap;
   }

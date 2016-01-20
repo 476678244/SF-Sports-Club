@@ -40,10 +40,11 @@ public class TypeController {
 
   @RequestMapping("/activityTypes")
   public List<TypeVO> activityTypes() {
-    List<Type> types = this.typeDAO.getAllActivityTypes(true);
+    List<Type> types = this.typeDAO.getAllActivityTypes(false);
     List<TypeVO> vos = new ArrayList<TypeVO>();
     for (Type type : types) {
-      vos.add(new TypeVO(type));
+      TypeVO vo = new TypeVO();
+      vo.setName(type.getName());
     }
     EntityUtil.sortTypeVOsByPriorityDesc(vos);
     return vos;

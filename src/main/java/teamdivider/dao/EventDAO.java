@@ -22,6 +22,7 @@ import teamdivider.bean.eo.mapping.EventDriver;
 import teamdivider.bean.eo.mapping.EventFenDui;
 import teamdivider.bean.eo.mapping.EventMember;
 import teamdivider.entity.Team;
+import teamdivider.util.ContextUtil;
 
 @Repository
 public class EventDAO extends AbstractDAO<Event> {
@@ -93,6 +94,7 @@ public class EventDAO extends AbstractDAO<Event> {
     }
     Set<User> users = new HashSet<User>();
     for (EventMember mapping : queryResults) {
+      ContextUtil.getContext().setUser(mapping.getUserId(), mapping.getUser());
       users.add(mapping.getUser());
     }
     return users;
@@ -108,6 +110,7 @@ public class EventDAO extends AbstractDAO<Event> {
     }
     Set<User> users = new HashSet<User>();
     for (EventDriver mapping : queryResults) {
+      ContextUtil.getContext().setUser(mapping.getUserId(), mapping.getUser());
       users.add(mapping.getUser());
     }
     return users;
