@@ -124,16 +124,16 @@ public class UserControllerV2 {
   }
 
   @RequestMapping("/updateUserEmail")
-  public User updateUserEmail(@RequestParam("username") String username,
+  public UserVO updateUserEmail(@RequestParam("username") String username,
       @RequestParam("email") String email) {
     User user = this.userDAO.findByEmail(username);
     user.setEmail(email);
     this.userDAO.saveUser(user);
-    return user;
+    return new UserVO(user);
   }
 
   @RequestMapping("/updateUser")
-  public User updateUser(@RequestParam("username") String username,
+  public UserVO updateUser(@RequestParam("username") String username,
       @RequestParam("fullname") String fullname,
       @RequestParam(value = "types", defaultValue = "") String types) {
     User user = this.userDAO.findByEmail(username);
@@ -141,11 +141,13 @@ public class UserControllerV2 {
     user = this.userDAO.saveUser(user);
     Set<String> typeSet = this.typesToSet(types);
     this.updateTypeSubscriberMapping(typeSet, user);
-    return user;
+    UserVO vo = new UserVO(user);
+    vo.setSubscribedTypes(typeSet);
+    return vo;
   }
 
   @RequestMapping("/uploadHeadPicure")
-  public User uploadHeadPicure(@RequestParam MultipartFile file,
+  public UserVO uploadHeadPicure(@RequestParam MultipartFile file,
       @RequestParam(value = "username") String username) throws IOException {
     String baseLink = PropertyUtil.AVATAR_BASE_LINK;
     String standardAvatarName = username + new Date().getTime() + ".jpg";
@@ -168,7 +170,7 @@ public class UserControllerV2 {
         formerAvatarPath.replaceAll(PropertyUtil.AVATAR_BASE_LINK, ""));
     this.userDAO.saveUser(user);
     new File(tempImagePath).delete();
-    return user;
+    return new UserVO(user);
   }
 
   private void imageToSquare(String imagePath) {

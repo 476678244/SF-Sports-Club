@@ -4,7 +4,6 @@
 package teamdivider.controller.v2;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -46,6 +45,7 @@ public class TypeController {
     for (Type type : types) {
       TypeVO vo = new TypeVO();
       vo.setName(type.getName());
+      vos.add(vo);
     }
     EntityUtil.sortTypeVOsByPriorityDesc(vos);
     return vos;
@@ -107,6 +107,8 @@ public class TypeController {
     }
     this.eventDAO.create(event);
     this.typeDAO.addEvent(event);
+    type.setLatestEvent(event);
+    this.typeDAO.saveActivityType(type);
     return new EventVO(event);
   }
 

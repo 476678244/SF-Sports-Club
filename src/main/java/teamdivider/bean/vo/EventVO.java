@@ -204,9 +204,11 @@ public class EventVO {
     Set<Event> events = type.getEvents();
     List<Event> eventList = new ArrayList<Event>(events);
     EntityUtil.sortEventByOrdinalDescNew(eventList);
-    if (eventList.get(0).getEventId() != this.eventId) {
-      return null; // only support latest event
-    }
+    // only support latest event
+    if (type.getLatestEvent() == null)
+      return Collections.emptyMap();
+    if (type.getLatestEvent().getEventId() != this.eventId)
+      return Collections.emptyMap();
     Set<User> continousUsers = new HashSet<User>();
     int times = 1;
     for (Event event : eventList) {
