@@ -1,8 +1,6 @@
 package teamdivider.controller.v2;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,26 +27,49 @@ public class EmailControllerV2 {
 
   @Autowired
   private EventDAO eventDAO;
-  
+
   @RequestMapping("/emailInvite")
   public String emailInvite(@RequestParam("activityType") String activityType,
-      @RequestParam("eventId") int eventId, @RequestParam("token") String token) {
+      @RequestParam("eventId") int eventId,
+      @RequestParam("token") String token) {
     String error = validateInviteEncouage(activityType, eventId, token);
     if (error != null) {
       return error;
     }
     Event event = this.eventDAO.getEventByEventId(eventId);
     Type type = this.typeDAO.getTypeByName(activityType, true);
-    Collection<String> addresses = new HashSet<String>();
-    for (User user : type.getSubscribers()) {
-      addresses.add(user.getEmail());
-    }
-    MailUtil.sendMail("zonghan.wu@sap.com", addresses, "邀请您参加！",
+    MailUtil.sendMail("zonghan.wu@sap.com", type.getSubscribers(), "邀请您参加！",
         event.getDescription(), activityType, eventId);
     return "Successfully scheduled Invite email task!";
   }
-  
-  private String validateInviteEncouage(String type, int eventId, String token) {
+
+  @RequestMapping("/email/notifySubscribers")
+  public void notifySubscribers(@RequestParam("typeId") long typeId,
+      @RequestParam("content") String content,
+      @RequestParam("userId") long userId) {
+    User user = this.userDAO.findByUserId(userId);
+    Type type = this.typeDAO.getTypeByTypeId(typeId);
+    this.typeDAO.resolveTypeSubscribers(type);
+    MailUtil.sendMail(user.getEmail(), type.getSubscribers(),
+        "Organizer " + user.getFullName() + " are saying to club members:",
+        content, type.getName(), type.getLatestEvent().getEventId());
+  }
+
+  @RequestMapping("/email/notifyEventJoiners")
+  public void notifySubscribers(@RequestParam("eventId") long eventId,
+      @RequestParam("typeName") String typeName,
+      @RequestParam("content") String content,
+      @RequestParam("userId") long userId) {
+    User user = this.userDAO.findByUserId(userId);
+    Event event = this.eventDAO.getEventByEventId(eventId);
+    this.eventDAO.resolveEventMembers(event);
+    MailUtil.sendMail(user.getEmail(), event.getMembers(),
+        "Organizer " + user.getFullName() + " are saying to event joiners:",
+        content, typeName, eventId);
+  }
+
+  private String validateInviteEncouage(String type, int eventId,
+      String token) {
     if (!"token".equals(token)) {
       return generateResult("error token!");
     }
@@ -58,7 +79,7 @@ public class EmailControllerV2 {
     }
     return null;
   }
-  
+
   private String generateResult(String key) {
     return "Sending email failed : " + key;
   }

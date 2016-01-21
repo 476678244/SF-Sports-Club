@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,13 +34,18 @@ public class MailUtil {
     return null;
   }
   
-  public static void sendMail(String to, Collection<String> cc, String subject,
+  public static void sendMail(String to,
+      Collection<teamdivider.bean.eo.User> users, String subject,
       String content, String typeName, long eventId) {
     String url = generateViewLink(typeName, eventId);
-    sendMail(to, cc, subject, content, url);
+    Collection<String> addresses = new HashSet<String>();
+    for (teamdivider.bean.eo.User user : users) {
+      addresses.add(user.getEmail());
+    }
+    sendMail(to, addresses, subject, content, url);
   }
 
-  public static void sendMail(String to, Collection<String> cc, String subject,
+  private static void sendMail(String to, Collection<String> cc, String subject,
       String content, String viewUrl) {
     MailInfo mail = new MailInfo(subject);
     mail.setEmailTheme("SF Sports Club");
