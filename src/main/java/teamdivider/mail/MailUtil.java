@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -31,9 +32,27 @@ public class MailUtil {
     }
     return null;
   }
+  
+  public static void sendMail(String to, Collection<String> cc, String subject,
+      String content, String typeName, long eventId) {
+    String url = generateViewLink(typeName, eventId);
+    sendMail(to, cc, subject, content, url);
+  }
 
-  public enum EmailPictureEnum {
-    INVITE, ENCOURAGE, GO
+  public static void sendMail(String to, Collection<String> cc, String subject,
+      String content, String viewUrl) {
+    MailInfo mail = new MailInfo(subject);
+    mail.setEmailTheme("SF Sports Club");
+    mail.setEmailCC(cc);
+    mail.setEmailContent(content);
+    mail.setEmailRegistUrl(viewUrl + "/join?email=" + to);
+    mail.setEmailViewGroupUrl(viewUrl);
+    mail.setEmailTo(to);
+    try {
+      ContextUtil.MAIL_SERVICE.sendHtmlMail(mail);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 
   public static int sendGoEmail(List<User> users, String activityType,
@@ -74,7 +93,7 @@ public class MailUtil {
     mailService.sendHtmlMail(emailInfo);
   }
 
-  private static String generateViewLink(String activityType, int ordinal) {
+  private static String generateViewLink(String activityType, long ordinal) {
     String viewEventLink = PropertyUtil.BASE_LINK
         + "/teamdivider/new/#/detail/" + activityType + "/" + ordinal;
     return viewEventLink;
@@ -122,9 +141,7 @@ public class MailUtil {
     if (!ccList.contains(driver.getUsername())) {
       ccList.add(driver.getUsername());
     }
-    String[] ccEmailArray = new String[ccList.size()];
-    ccEmailArray = ccList.toArray(ccEmailArray);
-    emailInfo.setEmailCc(ccEmailArray);
+    emailInfo.setEmailCC(ccList);
     emailInfo.setEmailRegistUrl(viewEventLink);
     emailInfo.setEmailViewGroupUrl(viewEventLink);
     String content = driver.getFullname();

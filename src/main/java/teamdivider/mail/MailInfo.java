@@ -1,9 +1,11 @@
 package teamdivider.mail;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.mail.Address;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import teamdivider.util.PropertyUtil;
@@ -19,8 +21,8 @@ public class MailInfo {
   private Address emailTo;
   private Address[] emailCc;
 
-  private String emailContent = "Welcome!";
-  private String emailTheme = "email theme!";
+  private String emailContent = "Email main content!";
+  private String emailTheme = "Theme near SAP image!";
   
   private Set<String> addresses = new HashSet<String>();
 
@@ -35,10 +37,6 @@ public class MailInfo {
 
   public String getEmailSubject() {
     return this.emailSubject;
-  }
-
-  public void setEmailBody(String emailBody) {
-    this.emailBody = emailBody;
   }
 
   public String getEmailBody() {
@@ -61,9 +59,13 @@ public class MailInfo {
     return this.emailViewGroupUrl;
   }
 
-  public void setEmailTo(String userEmailAddress) throws Exception {
-    userEmailAddress = this.addressSafeCheck(userEmailAddress)[0];
-    this.emailTo = new InternetAddress(userEmailAddress);
+  public void setEmailTo(String userEmailAddress) {
+    try {
+      userEmailAddress = this.addressSafeCheck(userEmailAddress)[0];
+      this.emailTo = new InternetAddress(userEmailAddress);
+    } catch (AddressException e) {
+    } catch (Exception e) {
+    }
   }
 
   public Address getEmailTo() {
@@ -97,18 +99,14 @@ public class MailInfo {
     }
     this.emailCc = ccuserEmailAddress;
   }
-
-  public void setEmailCcByArray(String[] receivers) throws Exception {
-    addressSafeCheck(receivers);
-    Address[] ccuserEmailAddress = new InternetAddress[receivers.length];
-    if (receivers != null) {
-      int i = 0;
-      for (String address : receivers) {
-        ccuserEmailAddress[i] = new InternetAddress(address);
-        i++;
-      }
+  
+  public void setEmailCC(Collection<String> receivers) {
+    String[] ccEmailArray = new String[receivers.size()];
+    try {
+      this.setEmailCc(receivers.toArray(ccEmailArray));
+    } catch (Exception e) {
+      this.emailCc = new Address[] {};
     }
-    this.emailCc = ccuserEmailAddress;
   }
 
   public Address[] getEmailCc() {
@@ -132,6 +130,15 @@ public class MailInfo {
   }
 
   public Set<String> getAddresses() {
+    Set<String> addresses = new HashSet<String>();
+    if (this.emailTo != null) {
+      addresses.add(((InternetAddress) this.emailTo).getAddress());
+    }
+    if (this.emailCc != null) {
+      for (Address address : this.emailCc) {
+        addresses.add(((InternetAddress) address).getAddress());
+      }
+    }
     return addresses;
   }
 

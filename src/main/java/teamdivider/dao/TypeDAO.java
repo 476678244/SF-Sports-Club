@@ -72,13 +72,31 @@ public class TypeDAO extends AbstractDAO<Type> {
   }
   
   private Type resolveTypeMappings(Type type) {
-    type.setEvents(this.getTypeEvents(type.getTypeId()));
-    type.setOrganizers(this.getTypeOrganizers(type.getTypeId()));
-    type.setSubscribers(this.getTypeSubscribers(type.getTypeId()));
-    type.setScores(this.getUserScore(type.getTypeId()));
+    this.resolveTypeEvents(type).resolveTypeOrganizers(type)
+        .resolveTypeSubscribers(type).resolveTypeScores(type);
     return type;
   }
 
+  public TypeDAO resolveTypeEvents(Type type) {
+    type.setEvents(this.getTypeEvents(type.getTypeId()));
+    return this;
+  }
+
+  public TypeDAO resolveTypeOrganizers(Type type) {
+    type.setOrganizers(this.getTypeOrganizers(type.getTypeId()));
+    return this;
+  }
+
+  public TypeDAO resolveTypeSubscribers(Type type) {
+    type.setSubscribers(this.getTypeSubscribers(type.getTypeId()));
+    return this;
+  }
+  
+  public TypeDAO resolveTypeScores(Type type) {
+    type.setScores(this.getUserScore(type.getTypeId()));
+    return this;
+  }
+  
   private Set<Event> getTypeEvents(long typeId) {
     Query<TypeEvent> queryEvents = this.typeEventDAO.getBasicDAO()
         .createQuery();
@@ -228,6 +246,11 @@ public class TypeDAO extends AbstractDAO<Type> {
       this.eventDAO.deleteEvent(event.getEventId());
     }
     this.getBasicDAO().delete(type);
+  }
+  
+  public boolean isOrganizer(long typeId, long userId) {
+    return !this.typeOrganizerDAO.getBasicDAO().createQuery()
+        .filter("typeId", typeId).filter("userId", userId).asList().isEmpty();
   }
 
 }
