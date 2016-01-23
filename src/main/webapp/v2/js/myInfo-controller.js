@@ -73,7 +73,7 @@
         for (var i = 0; i < files.length; i++) {
           var file = files[i];
           Upload.upload({
-            url: '/teamdivider/uploadHeadPicure',
+            url: '/teamdivider/v2/uploadHeadPicure',
             fields: {'username': $scope.email},
             file: file
           }).progress(function (evt) {
