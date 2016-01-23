@@ -22,10 +22,7 @@
 </div>
 <h2 class="detail-title" ng-if="isOrganizer();">Control Panel</h2>
 <section class="detail-section" ng-if="isOrganizer();">
-  <a href="javascript:void(0);" class="pure-button pure-button-primary" ng-click="regroup();" ng-if="supportFendui();">Regroup</a>
-  <a href="javascript:void(0);" class="pure-button pure-button-secondary" ng-click="sendMail('invite');">Email Invite</a>
-  <a href="javascript:void(0);" class="pure-button pure-button-secondary" ng-click="sendMail('encourage');">Email Encourage</a>
-  <a href="javascript:void(0);" class="pure-button pure-button-secondary" ng-click="sendMail('start_off');">Schedule Go Email</a>
+  <a href="javascript:void(0);" class="pure-button pure-button-secondary" ng-click="sendMail('invite');">Invite People</a>
   <a href="javascript:void(0);" class="pure-button pure-button-error" ng-click="deleteEvent();">Delete Event</a>
 </section>
 <div ng-if="detail.members.length">
@@ -39,16 +36,6 @@
     <a href="javascript:void(0);" class="pure-button pure-button-error"
       ng-click="manageGuest(false);"><i class="icon-minus" style="font-size: .9em"></i> GUEST</a>
   </section>
-  <section ng-if="supportFendui();">
-    <h2 class="detail-title">Grouping Result</h2>
-    <section class="detail-section">
-      <span class="number-selector" ng-click="group(2);" ng-class="{hl: groupNumber === 2}">2 GROUPS</span>
-      <span class="number-selector" ng-click="group(3);" ng-class="{hl: groupNumber === 3}">3 GROUPS</span>
-    </section>
-    <section class="detail-section field-ctnr">
-      <sf-soccer-field teams="teams"></sf-soccer-field>
-    </section> 
-    </section>
 </div>
 <div ng-if="!detail.members.length">
   <h2 class="detail-title">

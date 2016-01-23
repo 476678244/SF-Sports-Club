@@ -37,7 +37,7 @@ public class MailUtil {
   public static void sendMail(String to,
       Collection<teamdivider.bean.eo.User> users, String subject,
       String content, String typeName, long eventId) {
-    String url = generateViewLink(typeName, eventId);
+    String url = generateViewLinkV2(typeName, eventId);
     Collection<String> addresses = new HashSet<String>();
     for (teamdivider.bean.eo.User user : users) {
       addresses.add(user.getEmail());
@@ -105,6 +105,12 @@ public class MailUtil {
     return viewEventLink;
   }
 
+  private static String generateViewLinkV2(String activityType, long ordinal) {
+    String viewEventLink = PropertyUtil.BASE_LINK
+        + "/teamdivider/v2/#/detail/" + activityType + "/" + ordinal;
+    return viewEventLink;
+  }
+  
   private static String generateEnrollLink(String activityType, User user,
       int ordinal) {
     return PropertyUtil.BASE_LINK

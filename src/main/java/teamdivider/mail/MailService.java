@@ -67,13 +67,10 @@ public class MailService {
     MimeBodyPart htmlBodyPart = new MimeBodyPart();
 
     // set the RegistUrl and ViewGroupUrl replaceAll
-    emailInfo.getEmailBody().replaceAll("emailRegistUrl",
-        emailInfo.getEmailRegistUrl());
-    emailInfo.getEmailBody().replaceAll("emailViewGroupUrl",
-        emailInfo.getEmailViewGroupUrl());
-    emailInfo.getEmailBody().replaceAll("contentInfo",
-        emailInfo.getEmailContent());
-    emailInfo.getEmailBody().replaceAll("themeInfo", emailInfo.getEmailTheme());
+    emailInfo.replaceForBody("emailRegistUrl", emailInfo.getEmailRegistUrl())
+        .replaceForBody("emailViewGroupUrl", emailInfo.getEmailViewGroupUrl())
+        .replaceForBody("contentInfo", emailInfo.getEmailContent())
+        .replaceForBody("themeInfo", emailInfo.getEmailTheme());
 
     htmlBodyPart.setDataHandler(new DataHandler(emailInfo.getEmailBody(),
         "text/html;charset=GBK"));

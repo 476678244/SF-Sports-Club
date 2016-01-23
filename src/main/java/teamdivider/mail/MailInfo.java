@@ -43,6 +43,11 @@ public class MailInfo {
     return this.emailBody;
   }
 
+  public MailInfo replaceForBody(String regex, String value) {
+    this.emailBody = this.emailBody.replaceAll(regex, value);
+    return this;
+  }
+
   public void setEmailRegistUrl(String emailRegistUrl) {
     this.emailRegistUrl = emailRegistUrl;
   }
