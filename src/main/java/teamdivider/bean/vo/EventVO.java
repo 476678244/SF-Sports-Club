@@ -71,7 +71,6 @@ public class EventVO {
     this.typeId = event.getTypeId();
   }
 
-  @JsonIgnore
   public long getEventId() {
     return eventId;
   }

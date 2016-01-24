@@ -267,7 +267,9 @@ public class TypeController {
   @RequestMapping("/deleteActivity")
   public List<TypeVO> deleteActivity(@RequestParam("type") String type) {
     Type activityType = this.typeDAO.getTypeByName(type, true);
-    this.typeDAO.deleteType(activityType);
+    if (activityType != null) {
+      this.typeDAO.deleteType(activityType);
+    }
     return this.activityTypes();
   }
 

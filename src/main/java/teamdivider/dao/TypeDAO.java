@@ -51,6 +51,7 @@ public class TypeDAO extends AbstractDAO<Type> {
   
   public Type getTypeByName(String name, boolean resolveTypeMappings) {
     Type type = this.getBasicDAO().findOne("name", name);
+    if (type == null) return null;
     if (resolveTypeMappings) {
       ContextUtil.getContext().setType(type.getTypeId(), type);
       this.resolveTypeMappings(type);
@@ -64,6 +65,7 @@ public class TypeDAO extends AbstractDAO<Type> {
   
   public Type getTypeByTypeId(long typeId, boolean resolveTypeMappings) {
     Type type = this.getBasicDAO().findOne("typeId", typeId);
+    if (type == null) return null;
     if (resolveTypeMappings) {
       ContextUtil.getContext().setType(type.getTypeId(), type);
       this.resolveTypeMappings(type);
