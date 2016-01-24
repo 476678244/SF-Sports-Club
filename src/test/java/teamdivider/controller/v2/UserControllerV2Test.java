@@ -99,8 +99,8 @@ public class UserControllerV2Test {
 
   @Test
   public void testXDelete() {
-    this.typeDAO.deleteType(soccer);
-    this.typeDAO.deleteType(badminton);
+    this.typeDAO.deleteType(soccer.getTypeId());
+    this.typeDAO.deleteType(badminton.getTypeId());
     this.userDAO.deleteUser(zonghan.getUserId());
   }
   

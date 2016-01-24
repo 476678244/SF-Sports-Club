@@ -87,7 +87,9 @@ public class TypeController {
     User organizer = this.userDAO.findByEmail(organizerName);
     Type type = Type.builder().name(name).build();
     this.typeDAO.create(type);
-    this.typeDAO.addOrganizer(type.getTypeId(), organizer.getUserId(), organizer);
+    if (organizer != null) {
+      this.typeDAO.addOrganizer(type.getTypeId(), organizer.getUserId(), organizer);
+    }
     return new TypeVO(type);
   }
 
@@ -97,7 +99,7 @@ public class TypeController {
       @RequestParam("activityType") String activityType,
       @RequestParam("name") String name, @RequestParam("time") String time,
       @RequestParam("description") String description,
-      @RequestParam("goTime") Date goTime) throws ParseException {
+      @RequestParam("goTime") Date goTime) {
     Type type = this.typeDAO.getTypeByName(activityType, true);
     Event event = Event.builder().name(name).description(description)
         .startTime(new Date(time)).goTime(goTime).typeId(type.getTypeId())
@@ -266,9 +268,9 @@ public class TypeController {
 
   @RequestMapping("/deleteActivity")
   public List<TypeVO> deleteActivity(@RequestParam("type") String type) {
-    Type activityType = this.typeDAO.getTypeByName(type, true);
+    Type activityType = this.typeDAO.getTypeByName(type);
     if (activityType != null) {
-      this.typeDAO.deleteType(activityType);
+      this.typeDAO.deleteType(activityType.getTypeId());
     }
     return this.activityTypes();
   }

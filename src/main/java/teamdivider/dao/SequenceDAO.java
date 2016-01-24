@@ -2,8 +2,6 @@ package teamdivider.dao;
 
 import javax.annotation.PostConstruct;
 
-import org.mongodb.morphia.Datastore;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
@@ -21,9 +19,6 @@ import teamdivider.repo.SpringMongoConfig;
 public class SequenceDAO {
 
   private MongoOperations mongoOperation;
-
-  @Autowired
-  private Datastore datastore;
 
   public long getNextSequenceId(String key) {
 

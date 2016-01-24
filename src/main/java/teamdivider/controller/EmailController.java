@@ -21,14 +21,9 @@ import teamdivider.mail.timer.SendEncourageEmailsTask;
 import teamdivider.mail.timer.SendGoEmailTask;
 import teamdivider.mail.timer.SendInviteEmailsTask;
 import teamdivider.repo.ActivityTypeDAO;
-import teamdivider.repo.UserDAO;
-import teamdivider.util.PropertyUtil;
 
 @RestController
 public class EmailController {
-
-  @Autowired
-  private UserDAO userDAO;
 
   @Autowired
   private ActivityTypeDAO activityTypeDAO;
@@ -47,8 +42,7 @@ public class EmailController {
       return error;
     }
     SendInviteEmailsTask task = new SendInviteEmailsTask(activityType, ordinal);
-    Map<Integer, IdentifiablelEmailTask> IdentifiablelEmailTasks = EmailTaskPool
-        .scheduleTask(task, 1000 * 1);
+    EmailTaskPool.scheduleTask(task, 1000 * 1);
     return "Successfully scheduled Invite email task!";
   }
 

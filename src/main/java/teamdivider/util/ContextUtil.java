@@ -60,6 +60,8 @@ public class ContextUtil {
     public boolean fetchUserSubscribedTypes = false;
     
     public boolean skipQiniuActions = false;
+    
+    public boolean disableCache = false;
 
     public Context() {
     }

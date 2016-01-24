@@ -1,9 +1,7 @@
 package teamdivider.controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +21,9 @@ import teamdivider.mail.timer.SendByCarNotificationEmailTask;
 import teamdivider.repo.ActivityTypeDAO;
 import teamdivider.repo.UserDAO;
 import teamdivider.util.CacheUtil;
+import teamdivider.util.CacheUtil.TypeCache;
 import teamdivider.util.CacheUtil.TypeNamesCache;
 import teamdivider.util.PropertyUtil;
-import teamdivider.util.CacheUtil.TypeCache;
 
 @RestController
 public class ActivityController {

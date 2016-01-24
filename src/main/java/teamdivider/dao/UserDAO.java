@@ -48,6 +48,11 @@ public class UserDAO extends AbstractDAO<User> {
     return user;
   }
 
+  public User findUserByFullName(String fullName) {
+    User user = this.getBasicDAO().findOne("fullName", fullName);
+    return user;
+  }
+
   private Set<Type> getSubscribedTypes(long userId) {
     Query<TypeSubscriber> querySubscribers = this.typeSubscriberDAO
         .getBasicDAO().createQuery().filter("userId", userId);

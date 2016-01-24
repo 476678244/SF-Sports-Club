@@ -73,7 +73,7 @@ public class TypeDAO extends AbstractDAO<Type> {
     return type;
   }
   
-  private Type resolveTypeMappings(Type type) {
+  public Type resolveTypeMappings(Type type) {
     this.resolveTypeEvents(type).resolveTypeOrganizers(type)
         .resolveTypeSubscribers(type).resolveTypeScores(type);
     return type;
@@ -240,7 +240,8 @@ public class TypeDAO extends AbstractDAO<Type> {
     this.eventDAO.deleteEvent(eventId);
   }
 
-  public void deleteType(Type type) {
+  public void deleteType(long typeId) {
+    Type type = this.getTypeByTypeId(typeId, true);
     this.typeOrganizerDAO.removeOrganizersOfType(type.getTypeId());
     this.typeSubscriberDAO.removeSubscribersOfType(type.getTypeId());
     this.typeUserScoreDAO.removeUserScoresOfType(type.getTypeId());
