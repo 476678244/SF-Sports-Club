@@ -22,12 +22,15 @@ import teamdivider.bean.vo.UserVO;
 import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
 import teamdivider.util.ContextUtil;
+import org.apache.log4j.Logger;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserControllerV2Test {
 
+  private static final Logger log = Logger.getLogger(UserControllerV2Test.class);
+  
   @Autowired
   private UserControllerV2 controller;
 
@@ -71,9 +74,9 @@ public class UserControllerV2Test {
     zonghan = this.userDAO.findByEmail(email);
     Assert.assertEquals(user.getEmail(), email);
     List<UserVO> vos = this.controller.user("all");
-    System.out.println("---Users--------------------");
-    System.out.println(vos);
-    System.out.println("-----------------------");
+    log.info("---Users--------------------");
+    log.info(vos);
+    log.info("-----------------------");
     Assert.assertTrue(vos.size() > 0);
   }
 

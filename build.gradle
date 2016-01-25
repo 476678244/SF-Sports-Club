@@ -9,6 +9,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    compile 'log4j:log4j:1.2.17'
     compile "junit:junit:4.12"
     compile "org.hamcrest:hamcrest-core:1.2"
     compile "javax.servlet:javax.servlet-api:3.0.1"
