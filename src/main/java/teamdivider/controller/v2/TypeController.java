@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -281,12 +282,14 @@ public class TypeController {
     Event event = this.eventDAO.getEventByEventId(ordinal, true);
     User driverUser = this.userDAO.findByEmail(driver);
     User passengerUser = this.userDAO.findByEmail(passenger);
-    if (!event.getPassengers().containsValue(passengerUser.getUserId())) {
-      return "{\"result\":\"By this car failed, please join this event at first!\"}";
+    if (!event.getMembers().contains(passengerUser)) {
+      return "{\"result\":\"Failed! Please join this event at first!\"}";
     }
-    long passengers = event.getPassengers().get(driverUser.getId()).size();
-    if (passengers >= 4) {
-      return "{\"result\":\"By this car failed, because there are alreday 4 passengers!\"}";
+    if (event.getPassengers().get(driverUser.getId()) != null) {
+      long passengers = event.getPassengers().get(driverUser.getId()).size();
+      if (passengers >= 4) {
+        return "{\"result\":\"Failed because there are alreday 4 passengers in this car!\"}";
+      }      
     }
     this.eventDAO.addPassenger(ordinal, driverUser.getUserId(),
         passengerUser.getUserId());
@@ -308,8 +311,7 @@ public class TypeController {
   public boolean isUserInCar(@RequestParam("type") String type,
       @RequestParam("ordinal") long ordinal,
       @RequestParam("username") String username) {
-    Event event = this.eventDAO.getEventByEventId(ordinal, true);
     User user = this.userDAO.findByEmail(username);
-    return event.getPassengers().containsValue(user.getUserId());
+    return this.eventDAO.isUserInCar(ordinal, user.getUserId());
   }
 }

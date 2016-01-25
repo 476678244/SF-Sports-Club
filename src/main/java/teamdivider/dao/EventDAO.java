@@ -226,5 +226,9 @@ public class EventDAO extends AbstractDAO<Event> {
 
   public void resolveMemberCountToContext(long eventId) {
     this.eventMemberDAO.resolveMemberCountToContext(eventId);
+  } 
+
+  public boolean isUserInCar(long eventId, long userId) {
+    return this.driverPassengerDAO.isUserInCar(eventId, userId);
   }
 }

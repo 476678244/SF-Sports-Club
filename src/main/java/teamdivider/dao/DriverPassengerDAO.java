@@ -36,4 +36,11 @@ public class DriverPassengerDAO extends AbstractDAO<DriverPassenger> {
     this.getBasicDAO().deleteByQuery(this.getBasicDAO().createQuery()
         .filter("driverId", driverId).filter("eventId", eventId));
   }
+  
+  public boolean isUserInCar(long eventId, long userId) {
+    long count = this.getBasicDAO().createQuery().filter("eventId", eventId)
+        .filter("passengerId", userId).countAll();
+    return count > 0;
+  }
+
 }

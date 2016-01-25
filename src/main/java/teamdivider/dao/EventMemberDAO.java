@@ -39,5 +39,4 @@ public class EventMemberDAO extends AbstractDAO<EventMember> {
     ContextUtil.getContext().putEventMemberCount(eventId,
         Integer.valueOf(count.toString()));
   }
-
 }
