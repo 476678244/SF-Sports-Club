@@ -77,7 +77,9 @@ public class TypeController {
     if (members) {
       this.typeDAO.resolveTypeSubscribers(type);
     }
-    types.add(new TypeVO(type));
+    TypeVO vo = new TypeVO(type);
+    EntityUtil.sortEventVOByOrdinalDescNew(vo.getEvents());
+    types.add(vo);
     return types;
   }
 

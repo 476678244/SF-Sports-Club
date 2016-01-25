@@ -17,6 +17,7 @@ import teamdivider.controller.v2.TypeController;
 import teamdivider.dao.TypeDAO;
 import teamdivider.entity.ActivityEvent;
 import teamdivider.entity.ActivityType;
+import teamdivider.entity.EntityUtil;
 import teamdivider.entity.User;
 import teamdivider.repo.ActivityTypeDAO;
 import teamdivider.repo.UserDAO;
@@ -95,6 +96,7 @@ public class MigrationController {
         log.info("user (" + user.getUsername() + ") become subscriber of type:"
             + typeVO.getName());
       }
+      EntityUtil.sortEventByOrdinalAsc(activityType.getEvents());
       for (ActivityEvent activityEvent : activityType.getEvents()) {
         Calendar cal = new GregorianCalendar(2015, 1, 1);
         Date year2015 = new Date(cal.getTimeInMillis());

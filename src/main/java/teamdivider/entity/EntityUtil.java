@@ -5,11 +5,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import teamdivider.bean.eo.Event;
 import teamdivider.bean.eo.Type;
@@ -77,9 +75,27 @@ public class EntityUtil {
     });
   }
   
+  public static void sortEventByOrdinalAsc(List<ActivityEvent> events) {
+    Collections.sort(events, new Comparator<ActivityEvent>() {
+      public int compare(ActivityEvent event1, ActivityEvent event2) {
+        return new Integer(event1.getOrdinal()).compareTo(new Integer(event2
+            .getOrdinal()));
+      }
+    });
+  }
+  
   public static void sortEventByOrdinalDescNew(List<Event> events) {
     Collections.sort(events, new Comparator<Event>() {
       public int compare(Event event1, Event event2) {
+        return new Long(event2.getEventId())
+            .compareTo(new Long(event1.getEventId()));
+      }
+    });
+  }
+  
+  public static void sortEventVOByOrdinalDescNew(List<EventVO> events) {
+    Collections.sort(events, new Comparator<EventVO>() {
+      public int compare(EventVO event1, EventVO event2) {
         return new Long(event2.getEventId())
             .compareTo(new Long(event1.getEventId()));
       }
