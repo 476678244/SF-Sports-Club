@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,7 @@ import teamdivider.dao.EventDAO;
 import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
 import teamdivider.entity.EntityUtil;
+import teamdivider.mail.MailUtil;
 
 @RestController
 @RequestMapping("/v2")
@@ -197,6 +197,16 @@ public class TypeController {
       @RequestParam("eventId") long eventId) {
     this.typeDAO.getTypeByName(activityType, true);
     User user = this.userDAO.findByEmail(username);
+    // email notify
+    List<User> passengers = this.eventDAO.getPassengers(eventId,
+        user.getUserId());
+    if (!passengers.isEmpty()) {
+      String content = user.getFullName() + " quited this event: "
+          + this.eventDAO.getEventByEventId(eventId).getName();
+      MailUtil.sendMail(username, passengers, "Driver change notification!",
+          content, activityType, eventId);
+    }
+    // remove driver
     this.eventDAO.removeDriver(eventId, user.getUserId());
     return new EventVO(this.eventDAO.getEventByEventId(eventId, true));
   }
@@ -293,6 +303,18 @@ public class TypeController {
     }
     this.eventDAO.addPassenger(ordinal, driverUser.getUserId(),
         passengerUser.getUserId());
+    if (notification) {      
+      List<User> passengers = this.eventDAO.getPassengers(event.getEventId(),
+          driverUser.getUserId());
+      String content = passengerUser.getFullName() + " want to by "
+          + driverUser.getFullName() + "`s car. Then we have ";
+      for (User user : passengers) {
+        content += user.getFullName() + "; ";
+      }
+      content += "in " + driverUser.getFullName() + "`s car currently.";
+      MailUtil.sendMail(driverUser.getEmail(), passengers,
+          "Passengers change notification!", content, type, ordinal);
+    }
     return "{\"result\":\"success\"}";
   }
 
@@ -303,7 +325,20 @@ public class TypeController {
       @RequestParam("passenger") String passenger,
       @RequestParam(value = "notification", defaultValue = "false") boolean notification) {
     User passengerUser = this.userDAO.findByEmail(passenger);
+    User driverUser = this.userDAO.findByEmail(driver);
     this.eventDAO.removePassenger(ordinal, passengerUser.getUserId());
+    if (notification) {
+      List<User> passengers = this.eventDAO.getPassengers(ordinal,
+          driverUser.getUserId());
+      String content = passengerUser.getFullName() + " don`t want to by "
+          + driverUser.getFullName() + "`s car now. Then we have ";
+      for (User user : passengers) {
+        content += user.getFullName() + "; ";
+      }
+      content += "in " + driverUser.getFullName() + "`s car currently.";
+      MailUtil.sendMail(driverUser.getEmail(), passengers,
+          "Passengers change notification!", content, type, ordinal);
+    }
     return "{\"result\":\"success\"}";
   }
 

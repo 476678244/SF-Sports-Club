@@ -3,6 +3,9 @@
  */
 package teamdivider.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import teamdivider.bean.eo.SequenceId;
@@ -41,6 +44,16 @@ public class DriverPassengerDAO extends AbstractDAO<DriverPassenger> {
     long count = this.getBasicDAO().createQuery().filter("eventId", eventId)
         .filter("passengerId", userId).countAll();
     return count > 0;
+  }
+
+  public List<Long> getPassengerIds(long eventId, long driverId) {
+    List<DriverPassenger> mappings = this.getBasicDAO().createQuery()
+        .filter("eventId", eventId).filter("driverId", driverId).asList();
+    List<Long> passengerIds = new ArrayList<Long>();
+    for (DriverPassenger mapping : mappings) {
+      passengerIds.add(mapping.getPassengerId());
+    }
+    return passengerIds;
   }
 
 }

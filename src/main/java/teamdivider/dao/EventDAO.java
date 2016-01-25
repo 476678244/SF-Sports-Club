@@ -3,6 +3,7 @@
  */
 package teamdivider.dao;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,6 +31,9 @@ public class EventDAO extends AbstractDAO<Event> {
   @Autowired
   private DriverPassengerDAO driverPassengerDAO;
 
+  @Autowired
+  private UserDAO userDAO;
+  
   @Autowired
   private EventDriverDAO eventDriverDAO;
 
@@ -230,5 +234,15 @@ public class EventDAO extends AbstractDAO<Event> {
 
   public boolean isUserInCar(long eventId, long userId) {
     return this.driverPassengerDAO.isUserInCar(eventId, userId);
+  }
+
+  public List<User> getPassengers(long eventId, long driverId) {
+    List<Long> passengerIds = this.driverPassengerDAO.getPassengerIds(eventId,
+        driverId);
+    List<User> passengers = new ArrayList<User>();
+    for (Long userId : passengerIds) {
+      passengers.add(this.userDAO.findByUserId(userId));
+    }
+    return passengers;
   }
 }

@@ -248,16 +248,16 @@ public class EventVO {
     for (Long driverId : this.passengers.keySet()) {
       if (this.passengers.get(driverId) == null)
         continue;
-      Set<String> passengerEmails = new HashSet<String>();
+      Set<String> passengerFullNames = new HashSet<String>();
       for (Long userId : this.passengers.get(driverId)) {
         User user = ContextUtil.getContext().getUser(userId); 
         if (user == null) continue;
-        passengerEmails.add(user.getEmail());
+        passengerFullNames.add(user.getFullName());
       }
       User driver = ContextUtil.getContext().getUser(driverId);
       if (driver == null)
         continue;
-      carPassengersMap.put(driver.getEmail(), passengerEmails);
+      carPassengersMap.put(driver.getEmail(), passengerFullNames);
     }
     return carPassengersMap;
   }
