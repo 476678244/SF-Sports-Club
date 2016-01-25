@@ -3,12 +3,12 @@
  */
 package teamdivider.controller.v2;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +29,9 @@ import teamdivider.entity.EntityUtil;
 @RequestMapping("/v2")
 public class TypeController {
 
+  @SuppressWarnings("unused")
+  private static final Logger log = Logger.getLogger(TypeController.class);
+  
   @Autowired
   private UserDAO userDAO;
 
@@ -124,20 +127,6 @@ public class TypeController {
     this.eventDAO.addMember(eventId, user.getUserId(), user);
     Event event = this.eventDAO.getEventByEventId(eventId, true);
     return new EventVO(event);
-  }
-
-  @RequestMapping("/enrollActivityEventFromEmail")
-  public String enrollActivityEventFromEmail(
-      @RequestParam("activityType") String activityType,
-      @RequestParam("username") String username,
-      @RequestParam("eventId") long ordinal,
-      @RequestParam("baseLink") String baseLink) {
-    this.enrollActivityEvent(activityType, username, ordinal);
-    String viewEventLink = baseLink + "/teamdivider/new/#/detail/"
-        + activityType + "/" + ordinal;
-    return "<html>Successfully joined! Please click View Detail link to check the Activity.</html>"
-        + "<a href=\"" + viewEventLink
-        + "\" target=\"view_window\">View Detail!</a>";
   }
 
   @RequestMapping("/quitActivityEvent")
