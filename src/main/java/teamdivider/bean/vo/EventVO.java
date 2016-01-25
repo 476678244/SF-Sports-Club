@@ -190,7 +190,13 @@ public class EventVO {
   }
 
   public int getTotalMembers() {
-    return this.members.size() + this.guests.size();
+    Integer memberCount = ContextUtil.getContext().getEventMemberCount(
+        this.eventId);
+    if (memberCount == null) {
+      return this.guests.size();
+    } else {
+      return memberCount + this.guests.size();
+    }
   }
 
   /**

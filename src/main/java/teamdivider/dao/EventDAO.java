@@ -224,4 +224,7 @@ public class EventDAO extends AbstractDAO<Event> {
         this.getBasicDAO().createQuery().filter("eventId", eventId));
   }
 
+  public void resolveMemberCountToContext(long eventId) {
+    this.eventMemberDAO.resolveMemberCountToContext(eventId);
+  }
 }

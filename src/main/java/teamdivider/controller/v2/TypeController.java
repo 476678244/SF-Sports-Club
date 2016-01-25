@@ -68,9 +68,15 @@ public class TypeController {
   @RequestMapping("/activityType")
   public List<TypeVO> activityType(
       @RequestParam("activityType") String typeName,
-      @RequestParam(value = "allEvents", defaultValue = "false") boolean allEvents) {
+      @RequestParam(value = "allEvents", defaultValue = "false") boolean allEvents,
+      @RequestParam(value = "members", defaultValue = "true") boolean members) {
     List<TypeVO> types = new ArrayList<TypeVO>(1);
-    Type type = this.typeDAO.getTypeByName(typeName, true);
+    Type type = this.typeDAO.getTypeByName(typeName);
+    this.typeDAO.resolveTypeEvents(type).resolveTypeOrganizers(type)
+        .resolveTypeScores(type);
+    if (members) {
+      this.typeDAO.resolveTypeSubscribers(type);
+    }
     types.add(new TypeVO(type));
     return types;
   }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import teamdivider.bean.eo.SequenceId;
 import teamdivider.bean.eo.mapping.EventMember;
+import teamdivider.util.ContextUtil;
 
 @Repository
 public class EventMemberDAO extends AbstractDAO<EventMember> {
@@ -30,6 +31,13 @@ public class EventMemberDAO extends AbstractDAO<EventMember> {
   public void removeMemebrFromEvent(long memberId, long eventId) {
     this.getBasicDAO().deleteByQuery(this.getBasicDAO().createQuery()
         .filter("eventId", eventId).filter("userId", memberId));
+  }
+
+  public void resolveMemberCountToContext(long eventId) {
+    Long count = this.getBasicDAO().createQuery().filter("eventId", eventId)
+        .countAll();
+    ContextUtil.getContext().putEventMemberCount(eventId,
+        Integer.valueOf(count.toString()));
   }
 
 }

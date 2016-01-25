@@ -56,6 +56,8 @@ public class ContextUtil {
     private Map<Long, Event> events = new HashMap<Long, Event>();
 
     private Map<Long, User> users = new HashMap<Long, User>();
+    
+    private Map<Long, Integer> event2MemberCountMap = new HashMap<Long, Integer>();
 
     public boolean fetchUserSubscribedTypes = false;
     
@@ -88,6 +90,14 @@ public class ContextUtil {
 
     public void setUser(long userId, User user) {
       this.users.put(userId, user);
+    }
+    
+    public Integer getEventMemberCount(long eventId) {
+      return this.event2MemberCountMap.get(eventId);
+    }
+    
+    public void putEventMemberCount(long eventId, int count) {
+      this.event2MemberCountMap.put(eventId, count);
     }
 
   }

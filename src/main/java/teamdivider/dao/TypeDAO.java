@@ -100,11 +100,8 @@ public class TypeDAO extends AbstractDAO<Type> {
   }
   
   private Set<Event> getTypeEvents(long typeId) {
-    Query<TypeEvent> queryEvents = this.typeEventDAO.getBasicDAO()
-        .createQuery();
-    queryEvents.filter("typeId", typeId);
-    List<TypeEvent> typeEvents = this.typeEventDAO.getBasicDAO()
-        .find(queryEvents).asList();
+    List<TypeEvent> typeEvents = this.typeEventDAO.getBasicDAO().createQuery()
+        .filter("typeId", typeId).asList();
     if (typeEvents == null) {
       return Collections.emptySet();
     }
@@ -113,6 +110,7 @@ public class TypeDAO extends AbstractDAO<Type> {
       ContextUtil.getContext().setEvent(mapping.getEventId(),
           mapping.getEvent());
       events.add(mapping.getEvent());
+      this.eventDAO.resolveMemberCountToContext(mapping.getEventId());
     }
     return events;
   }

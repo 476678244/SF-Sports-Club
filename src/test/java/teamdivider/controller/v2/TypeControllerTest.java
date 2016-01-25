@@ -135,7 +135,7 @@ public class TypeControllerTest {
   @Test
   public void testA8Query() {
     this.controller.activityEvent(soccer.getName(), event1.getEventId());
-    this.controller.activityType(soccer.getName(), false);
+    this.controller.activityType(soccer.getName(), false, true);
     this.controller.isUserInCar(soccer.getName(), event1.getEventId(), xuejiao.getEmail());
   }
 

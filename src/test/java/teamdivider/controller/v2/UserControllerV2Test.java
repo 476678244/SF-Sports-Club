@@ -75,7 +75,7 @@ public class UserControllerV2Test {
     Assert.assertEquals(user.getEmail(), email);
     List<UserVO> vos = this.controller.user("all");
     log.info("---Users--------------------");
-    log.info(vos);
+    log.info(vos.size());
     log.info("-----------------------");
     Assert.assertTrue(vos.size() > 0);
   }
