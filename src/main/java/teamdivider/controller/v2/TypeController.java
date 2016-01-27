@@ -201,7 +201,7 @@ public class TypeController {
     List<User> passengers = this.eventDAO.getPassengers(eventId,
         user.getUserId());
     if (!passengers.isEmpty()) {
-      String content = user.getFullName() + " quited this event: "
+      String content = user.getFullName() + " canceled driving car in: "
           + this.eventDAO.getEventByEventId(eventId).getName();
       MailUtil.sendMail(username, passengers, "Driver change notification!",
           content, activityType, eventId);
@@ -252,7 +252,7 @@ public class TypeController {
 
   @RequestMapping("/deleteActivityEvent")
   public TypeVO deleteActivityEvent(@RequestParam("type") String type,
-      @RequestParam("eventId") long eventId) {
+      @RequestParam("ordinal") long eventId) {
     Type activityType = this.typeDAO.getTypeByName(type, true);
     Iterator<Event> it = activityType.getEvents().iterator();
     Event latestEvent = null;
@@ -294,6 +294,9 @@ public class TypeController {
     User passengerUser = this.userDAO.findByEmail(passenger);
     if (!event.getMembers().contains(passengerUser)) {
       return "{\"result\":\"Failed! Please join this event at first!\"}";
+    }
+    if (event.getDrivers().contains(passengerUser)) {
+      return "{\"result\":\"Failed! Please don`t drive car at first!\"}";
     }
     if (event.getPassengers().get(driverUser.getId()) != null) {
       long passengers = event.getPassengers().get(driverUser.getId()).size();
