@@ -5,9 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
@@ -59,7 +61,7 @@ public class MailUtil {
     mail.setEmailRegistUrl(viewUrl + "/join?email=" + to);
     mail.setEmailViewGroupUrl(viewUrl);
     mail.setEmailTo(to);
-    new TimerTask() {
+    new Timer(true).schedule(new TimerTask() {
       @Override
       public void run() {
         try {
@@ -68,7 +70,7 @@ public class MailUtil {
           log.error(e);
         }
       }
-    }.run();
+    }, new Date());
   }
 
   public static int sendGoEmail(List<User> users, String activityType,
