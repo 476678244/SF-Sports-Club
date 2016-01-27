@@ -121,9 +121,9 @@ public class TypeControllerTest {
     this.controller.yesDrivingCar(soccer.getName(), zonghan.getEmail(),
         event1.getEventId());
     this.controller.byHisCar(soccer.getName(), event1.getEventId(),
-        zonghan.getEmail(), xuejiao.getEmail(), true);
+        zonghan.getEmail(), xuejiao.getEmail(), false);
     this.controller.notByHisCar(soccer.getName(), event1.getEventId(),
-        zonghan.getEmail(), xuejiao.getEmail(), true);
+        zonghan.getEmail(), xuejiao.getEmail(), false);
   }
   
   @Test
