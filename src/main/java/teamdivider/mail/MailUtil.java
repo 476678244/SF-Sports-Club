@@ -8,6 +8,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TimerTask;
+
+import org.apache.log4j.Logger;
 
 import teamdivider.entity.ActivityEvent;
 import teamdivider.entity.User;
@@ -16,6 +19,8 @@ import teamdivider.util.PropertyUtil;
 
 public class MailUtil {
 
+  private static final Logger log = Logger.getLogger(MailUtil.class);
+  
   public static String getEmailBody() {
     try {
       String emailFilePath = MailInfo.class.getClassLoader()
@@ -54,11 +59,16 @@ public class MailUtil {
     mail.setEmailRegistUrl(viewUrl + "/join?email=" + to);
     mail.setEmailViewGroupUrl(viewUrl);
     mail.setEmailTo(to);
-    try {
-      ContextUtil.MAIL_SERVICE.sendHtmlMail(mail);
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-    }
+    new TimerTask() {
+      @Override
+      public void run() {
+        try {
+          ContextUtil.MAIL_SERVICE.sendHtmlMail(mail);
+        } catch (Exception e) {
+          log.error(e);
+        }
+      }
+    }.run();
   }
 
   public static int sendGoEmail(List<User> users, String activityType,
