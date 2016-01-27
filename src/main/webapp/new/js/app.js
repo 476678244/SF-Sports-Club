@@ -689,6 +689,8 @@
       checkLogin: function(){
         var currentUrl = $location.url(),
             user = this.getUser();
+        var absUrl = $location.absUrl();
+        window.location.href = absUrl.replace(/new/, "v2");
         if (user && currentUrl === '/') {
           $location.url('/join');
         }
