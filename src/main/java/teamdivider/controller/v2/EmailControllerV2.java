@@ -1,5 +1,6 @@
 package teamdivider.controller.v2;
 
+import java.util.Collections;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,10 @@ public class EmailControllerV2 {
     }
     Event event = this.eventDAO.getEventByEventId(eventId);
     Type type = this.typeDAO.getTypeByName(activityType, true);
-    MailUtil.sendMail("zonghan.wu@sap.com", type.getSubscribers(), "邀请您参加！",
-        event.getDescription(), activityType, eventId);
+    for (User subscriber : type.getSubscribers()) {
+      MailUtil.sendMail(subscriber.getEmail(), Collections.emptySet(),
+          "邀请您参加！", event.getDescription(), activityType, eventId);     
+    }
     return "Successfully scheduled Invite email task!";
   }
 

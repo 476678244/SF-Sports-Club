@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,6 +62,8 @@ public class MailUtil {
     mail.setEmailRegistUrl(viewUrl + "/join?email=" + to);
     mail.setEmailViewGroupUrl(viewUrl);
     mail.setEmailTo(to);
+    long delayMinutes = new Random().nextInt(60);
+    log.info("scheduling send email task, delay:" + delayMinutes + "minutes.");
     new Timer(true).schedule(new TimerTask() {
       @Override
       public void run() {
@@ -70,7 +73,7 @@ public class MailUtil {
           log.error(e);
         }
       }
-    }, new Date());
+    }, delayMinutes * 60 * 1000);
   }
 
   public static int sendGoEmail(List<User> users, String activityType,
