@@ -96,6 +96,9 @@ public class TypeController {
   @RequestMapping("/addActivityType")
   public TypeVO addActivityType(@RequestParam("name") String name,
       @RequestParam("organizerName") String organizerName) {
+    Type existingType = this.typeDAO.getTypeByName(name);
+    if (existingType != null)
+      return new TypeVO(existingType);
     User organizer = this.userDAO.findByEmail(organizerName);
     Type type = Type.builder().name(name).build();
     this.typeDAO.create(type);
