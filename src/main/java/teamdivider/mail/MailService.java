@@ -42,7 +42,6 @@ public class MailService {
     if (skip(emailInfo)) {
       return;
     }
-    log.info("Sending mail... " + emailInfo);
     Properties props = new Properties();
     props.put("mail.smtp.auth", "true");
     props.put("mail.smtp.host", "smtp.sina.cn");
@@ -91,6 +90,8 @@ public class MailService {
     mp.addBodyPart(sapPicBodyPart);
 
     mimeMessage.setContent(mp);
+    log.info("Sending mail... " + emailInfo);
+    log.info("mimeMessage... " + mimeMessage);
     Transport.send(mimeMessage);
   }
 

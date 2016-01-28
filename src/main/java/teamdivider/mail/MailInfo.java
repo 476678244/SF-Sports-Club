@@ -9,10 +9,14 @@ import javax.mail.Address;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import org.apache.log4j.Logger;
+
 import teamdivider.util.PropertyUtil;
 
 public class MailInfo {
 
+  private static final Logger log = Logger.getLogger(MailInfo.class);
+  
   private String emailSubject;
   private String emailBody;
 
@@ -70,7 +74,8 @@ public class MailInfo {
       userEmailAddress = this.addressSafeCheck(userEmailAddress)[0];
       this.emailTo = new InternetAddress(userEmailAddress);
     } catch (AddressException e) {
-    } catch (Exception e) {
+      log.error("error when setting emailTo... " + e);
+      this.setEmailTo("zonghan.wu@sap.com");
     }
   }
 
@@ -78,7 +83,7 @@ public class MailInfo {
     return this.emailTo;
   }
 
-  private String[] addressSafeCheck(String... receivers) throws Exception {
+  private String[] addressSafeCheck(String... receivers) {
     if (PropertyUtil.emailOnlyToZonghan()) {
       for (int i = 0; i < receivers.length; i++) {
         if (receivers[i].equals("zonghan.wu@sap.com")) {
@@ -93,13 +98,22 @@ public class MailInfo {
     return receivers;
   }
 
-  public void setEmailCc(String... receivers) throws Exception {
+  public void setEmailCc(String... receivers)  {
     addressSafeCheck(receivers);
     Address[] ccuserEmailAddress = new InternetAddress[receivers.length];
     if (receivers != null) {
       int i = 0;
       for (String address : receivers) {
-        ccuserEmailAddress[i] = new InternetAddress(address);
+        try {
+          ccuserEmailAddress[i] = new InternetAddress(address);
+        } catch (AddressException e) {
+          log.error("error when setting emailcc... " + e);
+          try {
+            ccuserEmailAddress[i] = new InternetAddress("zonghan.wu@sap.com");
+          } catch (AddressException e1) {
+            log.error(e1);
+          }
+        }
         i++;
       }
     }
@@ -108,11 +122,7 @@ public class MailInfo {
   
   public void setEmailCC(Collection<String> receivers) {
     String[] ccEmailArray = new String[receivers.size()];
-    try {
-      this.setEmailCc(receivers.toArray(ccEmailArray));
-    } catch (Exception e) {
-      this.emailCc = new Address[] {};
-    }
+    this.setEmailCc(receivers.toArray(ccEmailArray));
   }
 
   public Address[] getEmailCc() {
