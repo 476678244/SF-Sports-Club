@@ -17,12 +17,15 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import teamdivider.util.PropertyUtil;
 
 @Service
 public class MailService {
+  
+  private static final Logger log = Logger.getLogger(MailService.class);
 
   private boolean skip(MailInfo emailInfo) {
     if (PropertyUtil.emailOnlyToZonghan()) {
@@ -39,6 +42,7 @@ public class MailService {
     if (skip(emailInfo)) {
       return;
     }
+    log.info("Sending mail... " + emailInfo);
     Properties props = new Properties();
     props.put("mail.smtp.auth", "true");
     props.put("mail.smtp.host", "smtp.sina.cn");

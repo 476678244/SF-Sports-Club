@@ -1,5 +1,6 @@
 package teamdivider.mail;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -145,6 +146,13 @@ public class MailInfo {
       }
     }
     return addresses;
+  }
+
+  @Override
+  public String toString() {
+    return "MailInfo [emailSubject=" + emailSubject + ", emailTo=" + emailTo
+        + ", emailCc=" + Arrays.toString(emailCc) + ", emailContent="
+        + emailContent + ", emailTheme=" + emailTheme + "]";
   }
 
 }

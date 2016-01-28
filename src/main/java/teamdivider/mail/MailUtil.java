@@ -54,7 +54,7 @@ public class MailUtil {
 
   private static void sendMail(String to, Collection<String> cc, String subject,
       String content, String viewUrl) {
-    MailInfo mail = new MailInfo(subject);
+    final MailInfo mail = new MailInfo(subject);
     mail.setEmailTheme("SF Sports Club");
     mail.setEmailCC(cc);
     mail.setEmailContent(content);
