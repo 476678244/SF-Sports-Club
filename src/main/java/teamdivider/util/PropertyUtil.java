@@ -4,8 +4,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.springframework.util.StringUtils;
+
 public class PropertyUtil {
 
+  private PropertyUtil(){
+    String baseLink = PropertyUtil.readProperty("BASE_LINK");
+    if (StringUtils.isEmpty(baseLink)) {
+      BASE_LINK = "http://127.0.0.1:8080";
+    } else {
+      BASE_LINK = baseLink;
+    }
+  }
+  
   public static String readProperty(String key) {
     String value = "";
     Properties prop = new Properties();
@@ -20,10 +31,13 @@ public class PropertyUtil {
     return value;
   }
 
-  public static final String BASE_LINK = PropertyUtil.readProperty("BASE_LINK");
+  private static final PropertyUtil instance = new PropertyUtil();
   
-  public static final int DEFAULT_USER_SCORE = Integer.valueOf(PropertyUtil
-      .readProperty("DEFAULT_USER_SCORE"));
+  public static PropertyUtil getInstance() {
+    return instance;
+  }
+  
+  public final String BASE_LINK;
 
   public static boolean emailOnlyToZonghan() {
     return Boolean.valueOf(readProperty("EMAIL_ONLY_TO_ZONGHAN"));
@@ -36,7 +50,4 @@ public class PropertyUtil {
       .readProperty("AVATAR_BASE_LINK");
   
   public static final int SHOW_EVENTS_NUMBER = 5;
-  
-  public static final boolean DISABLE_CACHE = Boolean
-      .valueOf(readProperty("DISABLE_CACHE"));
 }

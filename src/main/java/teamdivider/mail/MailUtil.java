@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -115,23 +114,23 @@ public class MailUtil {
   }
 
   private static String generateViewLink(String activityType, long ordinal) {
-    String viewEventLink = PropertyUtil.BASE_LINK
+    String viewEventLink = PropertyUtil.getInstance().BASE_LINK
         + "/teamdivider/new/#/detail/" + activityType + "/" + ordinal;
     return viewEventLink;
   }
 
   private static String generateViewLinkV2(String activityType, long ordinal) {
-    String viewEventLink = PropertyUtil.BASE_LINK
+    String viewEventLink = PropertyUtil.getInstance().BASE_LINK
         + "/teamdivider/v2/#/detail/" + activityType + "/" + ordinal;
     return viewEventLink;
   }
   
   private static String generateEnrollLink(String activityType, User user,
       int ordinal) {
-    return PropertyUtil.BASE_LINK
+    return PropertyUtil.getInstance().BASE_LINK
         + "/teamdivider/enrollActivityEventFromEmail?activityType="
         + activityType + "&username=" + user.getUsername() + "&eventId="
-        + ordinal + "&baseLink=" + PropertyUtil.BASE_LINK;
+        + ordinal + "&baseLink=" + PropertyUtil.getInstance().BASE_LINK;
   }
 
   public static void sendEncourageEmail(User user, String activityType,

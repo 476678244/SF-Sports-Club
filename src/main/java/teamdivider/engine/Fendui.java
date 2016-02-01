@@ -12,7 +12,6 @@ import teamdivider.entity.ActivityType;
 import teamdivider.entity.EntityUtil;
 import teamdivider.entity.Team;
 import teamdivider.entity.User;
-import teamdivider.util.PropertyUtil;
 
 public class Fendui {
 
@@ -21,7 +20,7 @@ public class Fendui {
     // construct temp user with score
     List<User> allJoiners = event.getMembers();
     for (User joiner : allJoiners) {
-      int realScore = type.getUserScore(joiner.getUsername()) == 0 ? PropertyUtil.DEFAULT_USER_SCORE
+      int realScore = type.getUserScore(joiner.getUsername()) == 0 ? 6
           : type.getUserScore(joiner.getUsername());
       joiner.setScore(realScore);
     }

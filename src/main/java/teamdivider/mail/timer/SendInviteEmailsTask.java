@@ -1,16 +1,12 @@
 package teamdivider.mail.timer;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import teamdivider.entity.ActivityEvent;
 import teamdivider.entity.User;
-import teamdivider.mail.IdentifiablelEmailTask;
 import teamdivider.mail.MailUtil;
 import teamdivider.util.ContextUtil;
 import teamdivider.util.PropertyUtil;
@@ -34,8 +30,8 @@ public class SendInviteEmailsTask extends AbstractEventSpecificEmailTask {
         activityType).getSubscribers());
     for (User user : users) {
       try {
-        MailUtil.sendInviteEmail(user, PropertyUtil.BASE_LINK, activityType,
-            ordinal, event, ContextUtil.MAIL_SERVICE);
+        MailUtil.sendInviteEmail(user, PropertyUtil.getInstance().BASE_LINK,
+            activityType, ordinal, event, ContextUtil.MAIL_SERVICE);
         result.put(event.getName() + " To: " + user.getUsername(),
             new SendEmailResult(true, event.getName()));
         Thread.sleep(1000 * 1);

@@ -6,8 +6,6 @@ import java.util.List;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Reference;
 
-import teamdivider.util.PropertyUtil;
-
 @Embedded
 public class Team {
   private String name;
@@ -49,7 +47,7 @@ public class Team {
   
   public void addGuest(String guest) {
     this.guests.add(guest);
-    this.score += PropertyUtil.DEFAULT_USER_SCORE;
+    this.score += 6;
   } 
   
 }

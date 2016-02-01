@@ -15,7 +15,7 @@ public class CacheUtil {
   private static TypeNamesCache typeNamesCache = null;
 
   public static Set<String> getTypeNamesCache() {
-    if (PropertyUtil.DISABLE_CACHE || ContextUtil.getContext().disableCache) {
+    if (ContextUtil.getContext().disableCache) {
       return null;
     }
     if (typeNamesCache == null)
@@ -34,7 +34,7 @@ public class CacheUtil {
    * to be used as synchronied lock
    */
   public static String getInCacheTypeString(String type) {
-    if (PropertyUtil.DISABLE_CACHE || ContextUtil.getContext().disableCache) {
+    if (ContextUtil.getContext().disableCache) {
       return null;
     }
     Set<String> cache = getTypeNamesCache();
@@ -56,7 +56,7 @@ public class CacheUtil {
   }
 
   public static ActivityType getTypeFromCache(String type) {
-    if (PropertyUtil.DISABLE_CACHE || ContextUtil.getContext().disableCache) {
+    if (ContextUtil.getContext().disableCache) {
       return null;
     }
     if (typesCache.get(type) == null) {
