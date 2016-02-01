@@ -39,4 +39,9 @@ public class EventMemberDAO extends AbstractDAO<EventMember> {
     ContextUtil.getContext().putEventMemberCount(eventId,
         Integer.valueOf(count.toString()));
   }
+
+  public boolean hasMember(long eventId, long userId) {
+    return this.getBasicDAO().createQuery().filter("eventId", eventId)
+        .filter("userId", userId).get() != null;
+  }
 }

@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -106,6 +107,11 @@ public class TypeControllerTest {
         event1.getEventId());
     this.controller.quitActivityEvent(soccer.getName(), zonghan.getEmail(),
         event1.getEventId());
+    this.controller.enrollActivityEvent(soccer.getName(), xuejiao.getEmail(),
+        event1.getEventId());
+    Assert.assertTrue(
+        this.controller.activityEvent(soccer.getName(), event1.getEventId())
+            .getMembers().size() == 1);
   }
 
   @Test

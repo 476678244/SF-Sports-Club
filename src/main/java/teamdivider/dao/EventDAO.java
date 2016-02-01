@@ -172,6 +172,8 @@ public class EventDAO extends AbstractDAO<Event> {
   }
   
   public void addMember(long eventId, long userId, User user) {
+    if (this.eventMemberDAO.hasMember(eventId, userId))
+      return;
     EventMember mapping = new EventMember();
     mapping.setEventId(eventId);
     mapping.setUserId(userId);
