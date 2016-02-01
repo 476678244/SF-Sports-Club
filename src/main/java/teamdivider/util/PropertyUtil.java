@@ -15,15 +15,22 @@ public class PropertyUtil {
     } else {
       BASE_LINK = baseLink;
     }
+    String onlyEmailZonghan = readProperty("EMAIL_ONLY_TO_ZONGHAN");
+    if (StringUtils.isEmpty(onlyEmailZonghan)) {
+      ONLY_EMAIL_ZONGHAN = true;
+    } else {
+      ONLY_EMAIL_ZONGHAN = Boolean.valueOf(readProperty("EMAIL_ONLY_TO_ZONGHAN"));
+    }
   }
   
-  public static String readProperty(String key) {
+  private static String readProperty(String key) {
     String value = "";
     Properties prop = new Properties();
     InputStream in = PropertyUtil.class.getClassLoader().getResourceAsStream(
         "cnf.properties");
     try {
       prop.load(in);
+      if (prop.getProperty(key) == null) return null;
       value = prop.getProperty(key).trim();
       value = new String(value.getBytes("ISO8859-1"), "UTF-8");
     } catch (IOException e) {
@@ -38,9 +45,11 @@ public class PropertyUtil {
   }
   
   public final String BASE_LINK;
+  
+  private final boolean ONLY_EMAIL_ZONGHAN;
 
   public static boolean emailOnlyToZonghan() {
-    return Boolean.valueOf(readProperty("EMAIL_ONLY_TO_ZONGHAN"));
+    return getInstance().ONLY_EMAIL_ZONGHAN;
   }
   
   public static final String AVATAR_BUCKET_NAME = PropertyUtil
