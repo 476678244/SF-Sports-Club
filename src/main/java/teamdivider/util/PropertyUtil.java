@@ -39,6 +39,7 @@ public class PropertyUtil {
   public static PropertyUtil getInstance() {
     return instance;
   }
+
   private final boolean ONLY_EMAIL_ZONGHAN;
 
   public static boolean emailOnlyToZonghan() {
@@ -48,10 +49,10 @@ public class PropertyUtil {
   public static final int SHOW_EVENTS_NUMBER = 5;
 
   public enum StringPropertyEnum {
-    BASE_LINK("BASE_LINK", "http://127.0.0.1:8080"), AVATAR_BUCKET_NAME(
-        "AVATAR_BUCKET_NAME",
-        "http://7xjao2.com1.z0.glb.clouddn.com/"), AVATAR_BASE_LINK(
-            "AVATAR_BASE_LINK", "sacavatardev");
+    BASE_LINK("BASE_LINK", "http://127.0.0.1:8080"), AVATAR_BASE_LINK(
+        "AVATAR_BASE_LINK ",
+        "http://7xjao2.com1.z0.glb.clouddn.com/"), AVATAR_BUCKET_NAME(
+            "AVATAR_BUCKET_NAME", "sacavatardev");
 
     StringPropertyEnum(String label, String defaultValue) {
       this.label = label;
