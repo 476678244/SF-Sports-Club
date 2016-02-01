@@ -21,6 +21,7 @@ import teamdivider.bean.eo.User;
 import teamdivider.bean.vo.UserVO;
 import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
+import teamdivider.mail.EmailAccountUtil;
 import teamdivider.util.ContextUtil;
 import org.apache.log4j.Logger;
 
@@ -66,7 +67,7 @@ public class UserControllerV2Test {
 
   @Test
   // get users and add users
-  public void testA2() {
+  public void testA2() throws Exception {
     String email = this.genereateNewEmail();
     String fullName = "Zonghan Wu";
     String avatar = "avatar address";
@@ -82,7 +83,7 @@ public class UserControllerV2Test {
 
   @Test
   // delete user and addWithSubscribing
-  public void testB() {
+  public void testB() throws Exception {
     this.controller.deleteUser(zonghan.getEmail());
     String email = this.genereateNewEmail();
     UserVO vo = this.controller.addUserWithSubscribing(email, "Zonghan Wu",
@@ -117,7 +118,9 @@ public class UserControllerV2Test {
       Thread.sleep(1);
     } catch (InterruptedException e) {
     }
-    return new Date().getTime() + "@163.com";
+    String address = "zwu" + new Date().getTime() + "@163.com";
+    log.info("email address:" + address);
+    return address;
   }
 
   @Configuration

@@ -11,6 +11,8 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,7 @@ import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
 import teamdivider.entity.EntityUtil;
 import teamdivider.integration.QiniuIntegrationManager;
+import teamdivider.mail.EmailAccountUtil;
 import teamdivider.util.FileUtil;
 import teamdivider.util.PropertyUtil;
 
@@ -43,7 +46,8 @@ public class UserControllerV2 {
   @RequestMapping("/userLogin")
   public UserVO login(@RequestParam("username") String email) {
     User user = this.userDAO.findByEmail(email);
-    if (user == null) return null;
+    if (user == null)
+      return null;
     return new UserVO(user);
   }
 
@@ -63,11 +67,17 @@ public class UserControllerV2 {
   @RequestMapping("/addUser")
   public UserVO addUser(@RequestParam("username") String username,
       @RequestParam("fullname") String fullname,
-      @RequestParam("avator") String avator) { 
+      @RequestParam("avator") String avator) throws Exception {
     return new UserVO(this.createUser(username, fullname, avator));
   }
 
-  private User createUser(String email, String fullName, String avatar) {
+  private User createUser(String email, String fullName, String avatar)
+      throws Exception {
+    try {
+      new InternetAddress(email);
+    } catch (AddressException e) {
+      throw new Exception("Invalid email address format!", e);
+    }
     User existUser = this.userDAO.findByEmail(email);
     if (existUser != null) {
       return existUser;
@@ -76,13 +86,14 @@ public class UserControllerV2 {
     this.userDAO.create(user);
     return user;
   }
-  
+
   @RequestMapping("/addUserWithSubscribing")
   public UserVO addUserWithSubscribing(
       @RequestParam("username") String username,
       @RequestParam("fullname") String fullname,
       @RequestParam("avator") String avator,
-      @RequestParam(value = "types", defaultValue = "") String types) {
+      @RequestParam(value = "types", defaultValue = "") String types)
+          throws Exception {
     User user = this.createUser(username, fullname, avator);
     Set<String> typeSet = this.typesToSet(types);
     this.updateTypeSubscriberMapping(typeSet, user);
