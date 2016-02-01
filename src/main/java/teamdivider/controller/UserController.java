@@ -34,16 +34,16 @@ public class UserController {
 
   @Autowired
   private UserDAO userDAO;
-  
+
   @Autowired
   private ActivityTypeDAO activityTypeDAO;
-  
+
   @RequestMapping("/userLogin")
   public User login(@RequestParam("username") String username) {
     User user = this.userDAO.findByUsername(username);
     return user;
   }
-  
+
   @RequestMapping("/user")
   public List<User> user(
       @RequestParam(value = "username", defaultValue = "all") String username) {
@@ -56,19 +56,19 @@ public class UserController {
       return users;
     }
   }
-  
+
   @RequestMapping("/addUser")
   public User addUser(@RequestParam("username") String username,
       @RequestParam("fullname") String fullname,
       @RequestParam("avator") String avator) {
     User existUser = this.userDAO.findByUsername(username);
-    if ( existUser != null) {
+    if (existUser != null) {
       return existUser;
-    } 
+    }
     User user = new User(username, fullname, avator);
     return this.userDAO.saveUser(user);
   }
-  
+
   @RequestMapping("/addUserWithSubscribing")
   public User addUserWithSubscribing(@RequestParam("username") String username,
       @RequestParam("fullname") String fullname,
@@ -79,7 +79,7 @@ public class UserController {
     this.subscribeUserToTypes(typeSet, user);
     return user;
   }
-  
+
   private Set<String> typesToSet(String types) {
     StringTokenizer tokenizer = new StringTokenizer(types);
     Set<String> typeSet = new HashSet<String>();
@@ -110,12 +110,13 @@ public class UserController {
       type.removeUserFromType(user);
       this.activityTypeDAO.saveActivityType(type);
     }
-    new QiniuIntegrationManager().deleteFile(PropertyUtil.AVATAR_BASE_LINK
-        + user.getAvatar());
+    new QiniuIntegrationManager()
+        .deleteFile(PropertyUtil.StringPropertyEnum.AVATAR_BASE_LINK.getValue()
+            + user.getAvatar());
     this.userDAO.deleteUser(username);
     return user("all");
   }
-  
+
   @RequestMapping("/updateUserEmail")
   public User updateUserEmail(@RequestParam("username") String username,
       @RequestParam("email") String email) {
@@ -124,7 +125,7 @@ public class UserController {
     user = this.userDAO.saveUser(user);
     return user;
   }
-  
+
   @RequestMapping("/updateUser")
   public User updateUser(@RequestParam("username") String username,
       @RequestParam("fullname") String fullname,
@@ -136,11 +137,12 @@ public class UserController {
     this.subscribeUserToTypes(typeSet, user);
     return user;
   }
-  
+
   @RequestMapping("/uploadHeadPicure")
   public User uploadHeadPicure(@RequestParam MultipartFile file,
       @RequestParam(value = "username") String username) throws IOException {
-    String baseLink = PropertyUtil.AVATAR_BASE_LINK;
+    String baseLink = PropertyUtil.StringPropertyEnum.AVATAR_BASE_LINK
+        .getValue();
     String standardAvatarName = username + new Date().getTime() + ".jpg";
     // update avatar
     String newAvatarPath = baseLink + standardAvatarName;
@@ -157,13 +159,13 @@ public class UserController {
     imageToSquare(tempImagePath);
     // upload generated jpg image to Qiniu cloud
     new QiniuIntegrationManager().uploadFileToQiniu(new File(tempImagePath),
-        standardAvatarName,
-        formerAvatarPath.replaceAll(PropertyUtil.AVATAR_BASE_LINK, ""));
+        standardAvatarName, formerAvatarPath.replaceAll(
+            PropertyUtil.StringPropertyEnum.AVATAR_BASE_LINK.getValue(), ""));
     this.userDAO.saveUser(user);
     new File(tempImagePath).delete();
     return user;
   }
-  
+
   private void imageToSquare(String imagePath) {
     try {
       BufferedImage image = ImageIO.read(new File(imagePath));
@@ -171,8 +173,8 @@ public class UserController {
       int height = image.getHeight();
       if (height < width) {
         Thumbnails.of(new File(imagePath))
-            .sourceRegion(Positions.CENTER, height, height)
-            .size(height, height).toFile(imagePath);
+            .sourceRegion(Positions.CENTER, height, height).size(height, height)
+            .toFile(imagePath);
       }
     } catch (IOException e) {
     }

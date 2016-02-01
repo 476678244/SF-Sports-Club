@@ -22,7 +22,7 @@ import teamdivider.util.PropertyUtil;
 public class MailUtil {
 
   private static final Logger log = Logger.getLogger(MailUtil.class);
-  
+
   public static String getEmailBody() {
     try {
       String emailFilePath = MailInfo.class.getClassLoader()
@@ -40,7 +40,7 @@ public class MailUtil {
     }
     return null;
   }
-  
+
   public static void sendMail(String to,
       Collection<teamdivider.bean.eo.User> users, String subject,
       String content, String typeName, long eventId) {
@@ -114,43 +114,42 @@ public class MailUtil {
   }
 
   private static String generateViewLink(String activityType, long ordinal) {
-    String viewEventLink = PropertyUtil.getInstance().BASE_LINK
+    String viewEventLink = PropertyUtil.StringPropertyEnum.BASE_LINK.getValue()
         + "/teamdivider/new/#/detail/" + activityType + "/" + ordinal;
     return viewEventLink;
   }
 
   private static String generateViewLinkV2(String activityType, long ordinal) {
-    String viewEventLink = PropertyUtil.getInstance().BASE_LINK
+    String viewEventLink = PropertyUtil.StringPropertyEnum.BASE_LINK.getValue()
         + "/teamdivider/v2/#/detail/" + activityType + "/" + ordinal;
     return viewEventLink;
   }
-  
+
   private static String generateEnrollLink(String activityType, User user,
       int ordinal) {
-    return PropertyUtil.getInstance().BASE_LINK
+    return PropertyUtil.StringPropertyEnum.BASE_LINK.getValue()
         + "/teamdivider/enrollActivityEventFromEmail?activityType="
         + activityType + "&username=" + user.getUsername() + "&eventId="
-        + ordinal + "&baseLink=" + PropertyUtil.getInstance().BASE_LINK;
+        + ordinal + "&baseLink="
+        + PropertyUtil.StringPropertyEnum.BASE_LINK.getValue();
   }
 
   public static void sendEncourageEmail(User user, String activityType,
       int ordinal, ActivityEvent event) throws Exception {
     String viewEventLink = generateViewLink(activityType, ordinal);
     String enrollToEventLink = generateEnrollLink(activityType, user, ordinal);
-    MailInfo emailInfo = new MailInfo("何不参加！"
-        + event.getName());
+    MailInfo emailInfo = new MailInfo("何不参加！" + event.getName());
     emailInfo.setEmailTo(user.getUsername());
     emailInfo.setEmailRegistUrl(enrollToEventLink);
     emailInfo.setEmailViewGroupUrl(viewEventLink);
-    emailInfo.setEmailContent(event.getMembers().size() + event.getGuests().size()
-        + " 位小伙伴已报名！ 还在犹豫什么？");
+    emailInfo.setEmailContent(event.getMembers().size()
+        + event.getGuests().size() + " 位小伙伴已报名！ 还在犹豫什么？");
     emailInfo.setEmailTheme(event.getName());
     ContextUtil.MAIL_SERVICE.sendHtmlMail(emailInfo);
   }
-  
 
-  public static int sendByCarNotificationEmail(String activityType,
-      int ordinal, ActivityEvent event, User driver, boolean stillDriver,
+  public static int sendByCarNotificationEmail(String activityType, int ordinal,
+      ActivityEvent event, User driver, boolean stillDriver,
       Set<User> usersToTellIfNoStillDriver) throws Exception {
     String viewEventLink = generateViewLink(activityType, ordinal);
     MailInfo emailInfo = new MailInfo(
@@ -173,8 +172,8 @@ public class MailUtil {
     String content = driver.getFullname();
     if (stillDriver) {
       content += "车上乘坐状态已经发生变化，";
-      Set<String> passengers = event.getCarPassengers().get(
-          driver.getUsername());
+      Set<String> passengers = event.getCarPassengers()
+          .get(driver.getUsername());
       if (passengers == null || passengers.isEmpty()) {
         content += "目前没有人在这辆车上。";
       } else {

@@ -2,15 +2,14 @@ package teamdivider.integration;
 
 import java.io.File;
 
-import teamdivider.util.ContextUtil;
-import teamdivider.util.PropertyUtil;
-
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
-import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
+
+import teamdivider.util.ContextUtil;
+import teamdivider.util.PropertyUtil;
 
 public class QiniuIntegrationManager {
 
@@ -18,7 +17,8 @@ public class QiniuIntegrationManager {
 
   public static final String secretKey = "2E-t-bWLR4ftG1Az-J88VJ8P_KpKRwBWSgVZgTvL";
 
-  public static final String avatarBucket = PropertyUtil.AVATAR_BUCKET_NAME;
+  public static final String avatarBucket = PropertyUtil.StringPropertyEnum.AVATAR_BUCKET_NAME
+      .getValue();
 
   private Auth auth = Auth.create(accessKey, secretKey);
 

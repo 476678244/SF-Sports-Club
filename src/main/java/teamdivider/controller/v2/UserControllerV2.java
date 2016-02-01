@@ -29,7 +29,6 @@ import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
 import teamdivider.entity.EntityUtil;
 import teamdivider.integration.QiniuIntegrationManager;
-import teamdivider.mail.EmailAccountUtil;
 import teamdivider.util.FileUtil;
 import teamdivider.util.PropertyUtil;
 
@@ -129,7 +128,8 @@ public class UserControllerV2 {
     if (user == null)
       return user("all");
     new QiniuIntegrationManager()
-        .deleteFile(PropertyUtil.AVATAR_BASE_LINK + user.getAvatar());
+        .deleteFile(PropertyUtil.StringPropertyEnum.AVATAR_BASE_LINK.getValue()
+            + user.getAvatar());
     this.userDAO.deleteUser(user.getUserId());
     return user("all");
   }
@@ -160,7 +160,7 @@ public class UserControllerV2 {
   @RequestMapping("/uploadHeadPicure")
   public UserVO uploadHeadPicure(@RequestParam MultipartFile file,
       @RequestParam(value = "username") String username) throws IOException {
-    String baseLink = PropertyUtil.AVATAR_BASE_LINK;
+    String baseLink = PropertyUtil.StringPropertyEnum.AVATAR_BASE_LINK.getValue();
     String standardAvatarName = username + new Date().getTime() + ".jpg";
     // update avatar
     String newAvatarPath = baseLink + standardAvatarName;
@@ -177,8 +177,8 @@ public class UserControllerV2 {
     imageToSquare(tempImagePath);
     // upload generated jpg image to Qiniu cloud
     new QiniuIntegrationManager().uploadFileToQiniu(new File(tempImagePath),
-        standardAvatarName,
-        formerAvatarPath.replaceAll(PropertyUtil.AVATAR_BASE_LINK, ""));
+        standardAvatarName, formerAvatarPath.replaceAll(
+            PropertyUtil.StringPropertyEnum.AVATAR_BASE_LINK.getValue(), ""));
     this.userDAO.saveUser(user);
     new File(tempImagePath).delete();
     return new UserVO(user);

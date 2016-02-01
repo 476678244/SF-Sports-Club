@@ -26,12 +26,13 @@ public class SendInviteEmailsTask extends AbstractEventSpecificEmailTask {
     ActivityEvent event = ContextUtil.ACTIVITY_TYPE_DAO
         .getActivityEventByTypeOrdinal(activityType, ordinal);
     List<User> users = new ArrayList<User>();
-    users.addAll(ContextUtil.ACTIVITY_TYPE_DAO.getActivityTypeByName(
-        activityType).getSubscribers());
+    users.addAll(ContextUtil.ACTIVITY_TYPE_DAO
+        .getActivityTypeByName(activityType).getSubscribers());
     for (User user : users) {
       try {
-        MailUtil.sendInviteEmail(user, PropertyUtil.getInstance().BASE_LINK,
-            activityType, ordinal, event, ContextUtil.MAIL_SERVICE);
+        MailUtil.sendInviteEmail(user,
+            PropertyUtil.StringPropertyEnum.BASE_LINK.getValue(), activityType,
+            ordinal, event, ContextUtil.MAIL_SERVICE);
         result.put(event.getName() + " To: " + user.getUsername(),
             new SendEmailResult(true, event.getName()));
         Thread.sleep(1000 * 1);
