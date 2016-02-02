@@ -3,6 +3,6 @@
   <span class='member-continous-times' ng-if="member.continousTimes>=3">{{ member.continousTimes }} Times!</span>
   <span class="member-name">{{ member.fullname }}</span>
   <span class="member-icons" ng-if="hasCar">
-    <i class="icon-car" tooltips tooltip-title="Contact: {{ member.username }}" tooltip-content="Passengers: {{ member.passengers }}" ng-click="click();"></i>
+    <i class="icon-car" tooltips tooltip-title="Contact: {{ member.username }}" tooltip-content="Passengers: {{ member.passengers }}" ng-click="click(member.username, member.passengers);"></i>
   </span>
 </span>

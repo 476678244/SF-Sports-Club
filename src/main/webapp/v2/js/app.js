@@ -138,27 +138,42 @@
           username: UserInfo.getUser().username
         }
         var enabled = true;
-        $scope.click = function() {
+        $scope.click = function(driver, passengers) {
           // just support clicking for one time
           if (!enabled) {
             return ;
-          } 
-          // confirm at first
-          var warningMsg = 'You are jumping in or out of this car.' + 
-            ' Do you need to send email notification to driver and passengers?';
-          sfDialog.confirm(warningMsg).then(function(confirmation){
-            enabled = false;
-            if (confirmation) {
-              params.notification = true;
-            }
-            ActivityManager.isUserInCar(isUserInCarParams).then(function(inCar) {
-              if (!inCar) {
+          }
+          sfDialog.bycar(driver, passengers).then(function(addMe){
+            // confirm at first
+            var warningMsg = 'Send email notification to driver and passengers?';
+            sfDialog.confirm(warningMsg).then(function(confirmation){
+              enabled = false;
+              if (confirmation) {
+                params.notification = true;
+              }
+              if (addMe) {
                 byHisCar();
               } else {
                 notByHisCar();
               }
             });
           });
+          // confirm at first
+          // var warningMsg = 'You are jumping in or out of this car.' + 
+          //   ' Do you need to send email notification to driver and passengers?';
+          // sfDialog.confirm(warningMsg).then(function(confirmation){
+          //   enabled = false;
+          //   if (confirmation) {
+          //     params.notification = true;
+          //   }
+          //   ActivityManager.isUserInCar(isUserInCarParams).then(function(inCar) {
+          //     if (!inCar) {
+          //       byHisCar();
+          //     } else {
+          //       notByHisCar();
+          //     }
+          //   });
+          // });
         };
         var byHisCar = function() {
           ActivityManager.byHisCar(params).then(function(resp) {
@@ -308,6 +323,12 @@
               $scope.confirm($scope.input);
             };
           }]
+        });
+      },
+      bycar: function (driver, passengers) {
+        return ngDialog.openConfirm({
+          template : './tmpl/dialogs/bycar.html',
+          data : { driver : driver, passengers : passengers}
         });
       }
     };

@@ -187,10 +187,10 @@
           // check if username in detail.carPassengers
           if (detail.carPassengers[member.username]) {
             _.each(detail.carPassengers[member.username], function(fullname) {
-              member.passengers += fullname + "~";
+              member.passengers += fullname + " & ";
             });
           } else {
-            member.passengers = "No passengers now, click car icon to join!";
+            member.passengers = "No passengers currently!";
           }
         });
       }
