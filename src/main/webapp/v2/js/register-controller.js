@@ -28,8 +28,9 @@
         $scope.fullname,
         "avatar/" + $scope.email + ".jpg",
         types
-      ).then(function(resp){
-        $location.path('/');
+      ).then(function(user){
+         UserInfo.setUser(user);
+        // $location.path('/');
       });
     };
   });

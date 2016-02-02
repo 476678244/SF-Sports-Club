@@ -6,10 +6,10 @@ sfSport.controller('LoginController', function($scope, $http, $location, UserInf
     $location.url('/register');
   }
   $scope.login = function(){
-	if (registerButtonClicked) {
-		registerButtonClicked = false;
-		return;
-	}
+    if (registerButtonClicked) {
+      registerButtonClicked = false;
+      return;
+    }
     var msg = 'Sorry, you are not our member.\nClick "REGISTER" to join.';
     $scope.message = '';
     if ($scope.email) {
