@@ -3,7 +3,11 @@
  */
 package teamdivider.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
+
+import com.mongodb.BasicDBObject;
 
 import teamdivider.bean.eo.SequenceId;
 import teamdivider.bean.eo.mapping.EventMember;
@@ -34,10 +38,9 @@ public class EventMemberDAO extends AbstractDAO<EventMember> {
   }
 
   public void resolveMemberCountToContext(long eventId) {
-    Long count = this.getBasicDAO().createQuery().filter("eventId", eventId)
-        .countAll();
-    ContextUtil.getContext().putEventMemberCount(eventId,
-        Integer.valueOf(count.toString()));
+    List<?> userIds = this.getBasicDAO().getCollection().distinct("userId",
+        new BasicDBObject("eventId", eventId));
+    ContextUtil.getContext().putEventMemberCount(eventId, userIds.size());
   }
 
   public boolean hasMember(long eventId, long userId) {
