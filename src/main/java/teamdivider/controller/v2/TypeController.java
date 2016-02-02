@@ -150,7 +150,12 @@ public class TypeController {
     Event event = this.eventDAO.getEventByEventId(eventId, true);
     User user = this.userDAO.findByEmail(username);
     if (event.getDrivers().contains(user)) {
-      return new EventVO(event);
+      return new EventVO(event) {
+        @Override
+        public String getResult() {
+          return "Please cancel driving at first!";
+        }
+      };
     }
     this.eventDAO.removeUserInEvent(eventId, user.getUserId());
     return new EventVO(this.eventDAO.getEventByEventId(eventId, true));
