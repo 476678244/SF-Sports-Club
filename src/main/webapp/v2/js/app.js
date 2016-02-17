@@ -180,7 +180,9 @@
             if (resp.result === 'success') {
               $route.reload();
             } else {
-              sfDialog.alert(resp.result);
+              sfDialog.alert(resp.result).then(function(){
+                $route.reload();
+              });
             }
           });
         };
@@ -189,7 +191,9 @@
             if (resp.result === 'success') {
               $route.reload();
             } else {
-              sfDialog.alert(resp.result);
+              sfDialog.alert(resp.result).then(function(){
+                $route.reload();
+              });
             }
           });
         }
