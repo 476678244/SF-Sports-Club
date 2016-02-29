@@ -424,6 +424,17 @@
         return events;
       }),
       // param: {activity, ordinal}, enableCache
+      getContinousTimes: generate('/teamdivider/v2/activityEvent/continousTimes', function(resp, params){
+        var activity
+          , evt = {};
+        try {
+          evt = resp;
+        }
+        catch (ignore) {}
+        return evt;
+      }),
+
+      // param: {activity, ordinal}, enableCache
       getEventDetail: generate('/teamdivider/v2/activityEvent', function(resp, params){
         var activity
           , evt = {};
