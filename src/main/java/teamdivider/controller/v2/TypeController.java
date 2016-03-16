@@ -30,7 +30,6 @@ import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
 import teamdivider.entity.EntityUtil;
 import teamdivider.mail.MailUtil;
-import teamdivider.util.ContextUtil;
 
 @RestController
 @RequestMapping("/v2")
@@ -159,16 +158,15 @@ public class TypeController {
     return new TypeVO(type);
   }
 
-  @SuppressWarnings("deprecation")
   @RequestMapping("/addActivityEvent")
   public EventVO addActivityEvent(
       @RequestParam("activityType") String activityType,
-      @RequestParam("name") String name, @RequestParam("time") String time,
+      @RequestParam("name") String name, @RequestParam("time") Date time,
       @RequestParam("description") String description,
       @RequestParam("goTime") Date goTime) {
     Type type = this.typeDAO.getTypeByName(activityType, true);
     Event event = Event.builder().name(name).description(description)
-        .startTime(new Date(time)).goTime(goTime).typeId(type.getTypeId())
+        .startTime(time).goTime(goTime).typeId(type.getTypeId())
         .build();
     if (type.hasEvent(event) != null) {
       return new EventVO(type.hasEvent(event));
