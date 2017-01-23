@@ -50,7 +50,7 @@ public class PropertyUtil {
 
   public enum StringPropertyEnum {
     BASE_LINK("BASE_LINK", "http://127.0.0.1:8080"), AVATAR_BASE_LINK(
-        "AVATAR_BASE_LINK ",
+        "AVATAR_BASE_LINK",
         "http://7xjao2.com1.z0.glb.clouddn.com/"), AVATAR_BUCKET_NAME(
             "AVATAR_BUCKET_NAME", "sacavatardev");
 

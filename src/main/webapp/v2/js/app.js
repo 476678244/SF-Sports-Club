@@ -27,7 +27,10 @@
     }).when('/register', {
   	  templateUrl : './tmpl/register.html',
   	  controller  : 'RegisterController'
-  	});
+  	}).when('/metrics/:type/:username', {
+      templateUrl : './tmpl/metrics.html',
+      controller  : 'MetricsController'
+    });
   }]);
   sfSport.config(function(ngQuickDateDefaultsProvider) {
     // Configure with icons from font-awesome
@@ -125,7 +128,12 @@
         ordinal: '=ordinal'
       },
       templateUrl: './tmpl/member-element.html',
-      controller: function($scope, $element, $route, UserInfo, ActivityManager, sfDialog){
+      controller: function($scope, $element, $route, UserInfo, ActivityManager, sfDialog, $location){
+
+        $scope.viewMetrics = function (username) {
+          $location.path('/metrics/' + $scope.type + '/' + username)
+        }
+
         var params = {
           type: $scope.type,
           ordinal: $scope.ordinal,
@@ -138,34 +146,51 @@
           username: UserInfo.getUser().username
         }
         var enabled = true;
-        $scope.click = function() {
+        $scope.click = function(driver, passengers) {
           // just support clicking for one time
           if (!enabled) {
             return ;
-          } 
-          // confirm at first
-          var warningMsg = 'You are jumping in or out of this car.' + 
-            ' Do you need to send email notification to driver and passengers?';
-          sfDialog.confirm(warningMsg).then(function(confirmation){
-            enabled = false;
-            if (confirmation) {
-              params.notification = true;
-            }
-            ActivityManager.isUserInCar(isUserInCarParams).then(function(inCar) {
-              if (!inCar) {
+          }
+          sfDialog.bycar(driver, passengers).then(function(addMe){
+            // confirm at first
+            var warningMsg = 'Send email notification to driver and passengers?';
+            sfDialog.confirm(warningMsg).then(function(confirmation){
+              enabled = false;
+              if (confirmation) {
+                params.notification = true;
+              }
+              if (addMe) {
                 byHisCar();
               } else {
                 notByHisCar();
               }
             });
           });
+          // confirm at first
+          // var warningMsg = 'You are jumping in or out of this car.' + 
+          //   ' Do you need to send email notification to driver and passengers?';
+          // sfDialog.confirm(warningMsg).then(function(confirmation){
+          //   enabled = false;
+          //   if (confirmation) {
+          //     params.notification = true;
+          //   }
+          //   ActivityManager.isUserInCar(isUserInCarParams).then(function(inCar) {
+          //     if (!inCar) {
+          //       byHisCar();
+          //     } else {
+          //       notByHisCar();
+          //     }
+          //   });
+          // });
         };
         var byHisCar = function() {
           ActivityManager.byHisCar(params).then(function(resp) {
             if (resp.result === 'success') {
               $route.reload();
             } else {
-              sfDialog.alert(resp.result);
+              sfDialog.alert(resp.result).then(function(){
+                $route.reload();
+              });
             }
           });
         };
@@ -174,7 +199,9 @@
             if (resp.result === 'success') {
               $route.reload();
             } else {
-              sfDialog.alert(resp.result);
+              sfDialog.alert(resp.result).then(function(){
+                $route.reload();
+              });
             }
           });
         }
@@ -309,6 +336,12 @@
             };
           }]
         });
+      },
+      bycar: function (driver, passengers) {
+        return ngDialog.openConfirm({
+          template : './tmpl/dialogs/bycar.html',
+          data : { driver : driver, passengers : passengers}
+        });
       }
     };
   }]);
@@ -398,6 +431,17 @@
         catch (ignore) {}
         return events;
       }),
+      // param: {activity, ordinal}, enableCache
+      getContinousTimes: generate('/teamdivider/v2/activityEvent/continousTimes', function(resp, params){
+        var activity
+          , evt = {};
+        try {
+          evt = resp;
+        }
+        catch (ignore) {}
+        return evt;
+      }),
+
       // param: {activity, ordinal}, enableCache
       getEventDetail: generate('/teamdivider/v2/activityEvent', function(resp, params){
         var activity

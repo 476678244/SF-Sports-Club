@@ -3,12 +3,10 @@
  */
 package teamdivider.bean.vo;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -123,8 +121,8 @@ public class EventVO {
     return Long.valueOf(this.eventId).intValue();
   }
 
-  public String getTime() {
-    return this.startTime.toString();
+  public Date getTime() {
+    return this.startTime;
   }
 
   public String getName() {
@@ -203,44 +201,7 @@ public class EventVO {
    * times user continously joined
    */
   public Map<String, Integer> getContinousTimes() {
-    Type type = ContextUtil.getContext().getType(typeId);
-    if (type == null) return Collections.emptyMap();
-    Map<String, Integer> continousTimes = new HashMap<String, Integer>();
-    Set<Event> events = type.getEvents();
-    List<Event> eventList = new ArrayList<Event>(events);
-    EntityUtil.sortEventByOrdinalDescNew(eventList);
-    // only support latest event
-    if (type.getLatestEvent() == null)
-      return Collections.emptyMap();
-    if (type.getLatestEvent().getEventId() != this.eventId)
-      return Collections.emptyMap();
-    Set<User> continousUsers = new HashSet<User>();
-    int times = 1;
-    for (Event event : eventList) {
-      if (times == 1) {
-        // first time, add all latestEvent joiners
-        continousUsers.addAll(event.getMembers());
-      } else {
-        // each time, remove unjoining users
-        Iterator<User> it = continousUsers.iterator();
-        while (it.hasNext()) {
-          User toCheckUser = it.next();
-          if (!event.getMembers().contains(toCheckUser)) {
-            it.remove();
-          }
-        }
-      }
-      // every round, update time record
-      for (User continousUser : continousUsers) {
-        continousTimes.put(continousUser.getEmail(), times);
-      }
-      // if no users to check anymore, return
-      if (continousUsers.isEmpty()) {
-        return continousTimes;
-      }
-      times++;
-    }
-    return continousTimes;
+    return Collections.emptyMap();
   }
 
   public Map<String, Set<String>> getCarPassengers() {

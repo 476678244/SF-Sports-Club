@@ -2,7 +2,9 @@ package teamdivider.controller.v2;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,11 +17,14 @@ import teamdivider.dao.EventDAO;
 import teamdivider.dao.TypeDAO;
 import teamdivider.dao.UserDAO;
 import teamdivider.mail.MailUtil;
+import teamdivider.mail.EmailInvitesTracker;
 
 @RestController
 @RequestMapping("/v2")
 public class EmailControllerV2 {
 
+  private static final Logger log = Logger.getLogger(EmailControllerV2.class);
+  
   @Autowired
   private UserDAO userDAO;
 
@@ -39,11 +44,27 @@ public class EmailControllerV2 {
     }
     Event event = this.eventDAO.getEventByEventId(eventId);
     Type type = this.typeDAO.getTypeByName(activityType, true);
-    for (User subscriber : type.getSubscribers()) {
-      MailUtil.sendMail(subscriber.getEmail(), Collections.emptySet(),
-          "邀请您参加！", event.getDescription(), activityType, eventId);     
+    // after validation, apply for approval
+    if (EmailInvitesTracker.getApproval(event.getEventId())) {
+      for (User subscriber : type.getSubscribers()) {
+        MailUtil.sendMail(subscriber.getEmail(), Collections.emptySet(),
+            "邀请您参加！", event.getDescription(), activityType, eventId);     
+      }
+    } else {
+      log.warn("EmailInvitesTracker.getApproval failed for event:" + event.getName());
     }
     return "Successfully scheduled Invite email task!";
+  }
+  
+  @RequestMapping("/status")
+  public Map<Long, Date> status() {
+    return EmailInvitesTracker.status();
+  }
+  
+  @RequestMapping("/clearTrackStatus")
+  public Map<Long, Date> clearTrackStatus() {
+    EmailInvitesTracker.clear();
+    return EmailInvitesTracker.status();
   }
 
   @RequestMapping("/email/notifySubscribers")

@@ -4,9 +4,14 @@
 package teamdivider.controller.v2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,6 +97,51 @@ public class TypeController {
     Event event = this.eventDAO.getEventByEventId(eventId, true);
     return new EventVO(event);
   }
+  
+  @RequestMapping("/activityEvent/continousTimes")
+  public Map<String, Integer> continousTimes(
+      @RequestParam("activityType") String activityType,
+      @RequestParam("eventId") long eventId) {
+    Type type = this.typeDAO.getTypeByName(activityType, true);
+    if (type == null) return Collections.emptyMap();
+    Map<String, Integer> continousTimes = new HashMap<String, Integer>();
+    Set<Event> events = type.getEvents();
+    List<Event> eventList = new ArrayList<Event>(events);
+    EntityUtil.sortEventByOrdinalDescNew(eventList);
+    // only support latest event
+    if (type.getLatestEvent() == null)
+      return Collections.emptyMap();
+    if (type.getLatestEvent().getEventId() != eventId)
+      return Collections.emptyMap();
+    Set<User> continousUsers = new HashSet<User>();
+    int times = 1;
+    for (Event event : eventList) {
+      this.eventDAO.resolveEventMembers(event);
+      if (times == 1) {
+        // first time, add all latestEvent joiners
+        continousUsers.addAll(event.getMembers());
+      } else {
+        // each time, remove unjoining users
+        Iterator<User> it = continousUsers.iterator();
+        while (it.hasNext()) {
+          User toCheckUser = it.next();
+          if (!event.getMembers().contains(toCheckUser)) {
+            it.remove();
+          }
+        }
+      }
+      // every round, update time record
+      for (User continousUser : continousUsers) {
+        continousTimes.put(continousUser.getEmail(), times);
+      }
+      // if no users to check anymore, return
+      if (continousUsers.isEmpty()) {
+        return continousTimes;
+      }
+      times++;
+    }
+    return continousTimes;
+  }
 
   @RequestMapping("/addActivityType")
   public TypeVO addActivityType(@RequestParam("name") String name,
@@ -108,16 +158,15 @@ public class TypeController {
     return new TypeVO(type);
   }
 
-  @SuppressWarnings("deprecation")
   @RequestMapping("/addActivityEvent")
   public EventVO addActivityEvent(
       @RequestParam("activityType") String activityType,
-      @RequestParam("name") String name, @RequestParam("time") String time,
+      @RequestParam("name") String name, @RequestParam("time") Date time,
       @RequestParam("description") String description,
       @RequestParam("goTime") Date goTime) {
     Type type = this.typeDAO.getTypeByName(activityType, true);
     Event event = Event.builder().name(name).description(description)
-        .startTime(new Date(time)).goTime(goTime).typeId(type.getTypeId())
+        .startTime(time).goTime(goTime).typeId(type.getTypeId())
         .build();
     if (type.hasEvent(event) != null) {
       return new EventVO(type.hasEvent(event));

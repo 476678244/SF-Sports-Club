@@ -108,7 +108,7 @@ public class MigrationController {
           log.warn("can`t convert string to data of:" + activityEvent.getTime());
         }
         EventVO eventVO = this.typeController.addActivityEvent(
-            typeVO.getName(), activityEvent.getName(), time,
+            typeVO.getName(), activityEvent.getName(), new Date(time),
             activityEvent.getDescription(), activityEvent.getGoTime());
         log.info("created event (" + eventVO.getName() + "/"
             + eventVO.getEventId() + ") for type:" + typeVO.getName());

@@ -9,7 +9,7 @@
       addr = 'http://127.0.0.1:8080';
       break;
     case 'production_as_remote':
-      addr = 'http://115.28.51.176:8080';
+      addr = 'http://114.115.222.201:8080';
       break;
     default:
       addr = '';

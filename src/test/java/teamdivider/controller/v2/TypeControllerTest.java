@@ -4,7 +4,6 @@
 package teamdivider.controller.v2;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.After;
@@ -81,7 +80,7 @@ public class TypeControllerTest {
   @Test
   public void testA1AddEvent() throws ParseException {
     this.controller.addActivityEvent(soccer.getName(), "event1",
-        new Date(new Date().getTime() + 1000 * 100).toString(), "event1",
+        new Date(), "event1",
         new Date());
     event1 = this.typeDAO.getTypeByTypeId(soccer.getTypeId(), true).getEvents()
         .iterator().next();

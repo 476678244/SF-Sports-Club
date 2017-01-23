@@ -404,16 +404,16 @@ label[for="having-car-checkbox"] {
   white-space: nowrap;
 }
 @media(max-width: 500px) {
-  .member-inline-list .member-avatar {
-    display: none;
-  }
-  .member-inline-list .member-continous-times {
-    display: none;
-  }
-  .member-inline-list .member-item {
-    width: auto;
-    line-height: 1.6;
-  }
+  /*.member-inline-list .member-avatar {*/
+    /*display: none;*/
+  /*}*/
+  /*.member-inline-list .member-continous-times {*/
+    /*display: none;*/
+  /*}*/
+  /*.member-inline-list .member-item {*/
+    /*width: auto;*/
+    /*line-height: 1.6;*/
+  /*}*/
 }
 .soccer-field {
   background: url('../img/soccer/field.svg') no-repeat;

@@ -1,0 +1,17 @@
+<section class="page-with-sidebar metrics-page">
+  <ng-include src="'./tmpl/side-nav.html'"></ng-include>
+  <div class="metrics-panel">
+    <div class="introduction">
+      <span class="member-item">
+        <span class="member-avatar"><img ng-src="{{ avatarMetrics }}" fallback-src="./img/avatar/default.svg"></span>
+        <span class="member-name">{{ fullnameMetrics }}</span>
+      </span>
+    </div>
+    <div class="metrics">
+      <div class="organizer">organizer: {{isOrganizer}}</div>
+      <div class="continuous-times">Continue Times Recently: {{continuousTimes}}</div>
+      <div class="total-times">Total Times:{{totalTimes}}</div>
+      <div class="active-level">Active Level: {{activeLevel}}</div>
+    </div>
+  </div>
+</section>

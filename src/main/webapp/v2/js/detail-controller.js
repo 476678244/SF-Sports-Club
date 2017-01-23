@@ -107,7 +107,12 @@
           });
         });
         $scope.detail = detail;
-        assignContinousTimesToMembers($scope.detail);
+        ActivityManager.getContinousTimes({
+          activityType : $scope.activity,
+          eventId: $scope.ordinal
+        }).then(function(map){
+          assignContinousTimesToMembers(map);
+        }); 
         assignPassengersToMembers($scope.detail);
         });
     };
@@ -166,14 +171,19 @@
         });
       });
       $scope.detail = detail;
-      assignContinousTimesToMembers($scope.detail);
+      ActivityManager.getContinousTimes({
+        activityType : $scope.activity,
+        eventId: $scope.ordinal
+      }).then(function(map){
+        assignContinousTimesToMembers(map);
+      }); 
       assignPassengersToMembers($scope.detail);
     });
 
-    var assignContinousTimesToMembers = function (detail) {
-      if (detail.continousTimes) {
-        _.each(detail.members, function(member) {
-          member.continousTimes = detail.continousTimes[member.username];
+    var assignContinousTimesToMembers = function (map) {
+      if (map) {
+        _.each($scope.detail.members, function(member) {
+          member.continousTimes = map[member.username];
         });
       }
     };
@@ -187,10 +197,10 @@
           // check if username in detail.carPassengers
           if (detail.carPassengers[member.username]) {
             _.each(detail.carPassengers[member.username], function(fullname) {
-              member.passengers += fullname + "~";
+              member.passengers += fullname + " & ";
             });
           } else {
-            member.passengers = "No passengers now, click car icon to join!";
+            member.passengers = "No passengers currently!";
           }
         });
       }
