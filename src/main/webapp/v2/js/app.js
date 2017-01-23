@@ -27,7 +27,10 @@
     }).when('/register', {
   	  templateUrl : './tmpl/register.html',
   	  controller  : 'RegisterController'
-  	});
+  	}).when('/metrics/:type/:username', {
+      templateUrl : './tmpl/metrics.html',
+      controller  : 'MetricsController'
+    });
   }]);
   sfSport.config(function(ngQuickDateDefaultsProvider) {
     // Configure with icons from font-awesome
@@ -125,7 +128,12 @@
         ordinal: '=ordinal'
       },
       templateUrl: './tmpl/member-element.html',
-      controller: function($scope, $element, $route, UserInfo, ActivityManager, sfDialog){
+      controller: function($scope, $element, $route, UserInfo, ActivityManager, sfDialog, $location){
+
+        $scope.viewMetrics = function (username) {
+          $location.path('/metrics/' + $scope.type + '/' + username)
+        }
+
         var params = {
           type: $scope.type,
           ordinal: $scope.ordinal,
