@@ -18,8 +18,9 @@
     $scope.continuousTimes = 5;
     $scope.totalTimes = 29;
     $scope.activeLevel = 'High';
+    $scope.role = 'Club Member';
 
-    $scope.activity = $routeParams.sport;
+    $scope.activity = $routeParams.type;
     $scope.username = $routeParams.username;
 
     // login check

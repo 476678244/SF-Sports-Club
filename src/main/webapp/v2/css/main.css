@@ -532,3 +532,14 @@ label[for="having-car-checkbox"] {
 .create-form .quickdate.ng-valid-required a {
   /*border-color: #0B5;*/
 }
+/* metrics page */
+.metrics-items {
+  margin-top: 1em;
+}
+.introduction {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.metrics-wrapper {
+  padding: 0 3em;
+}
