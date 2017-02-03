@@ -254,4 +254,11 @@ public class TypeDAO extends AbstractDAO<Type> {
         .filter("typeId", typeId).filter("userId", userId).asList().isEmpty();
   }
 
+  public long maxEventIdInType(String typeName) {
+    Type type = this.getTypeByName(typeName, true);
+    return type.getEvents().stream().max((a, b) -> {
+      return a.getEventId() > b.getEventId() ? 1 : -1;
+    }).get().getEventId();
+  }
+
 }

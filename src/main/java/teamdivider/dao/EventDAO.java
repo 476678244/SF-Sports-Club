@@ -104,6 +104,10 @@ public class EventDAO extends AbstractDAO<Event> {
     return users;
   }
 
+  public boolean isMember(long eventId, User user) {
+    return this.getEventMembers(eventId).contains(user);
+  }
+
   private Set<User> getEventDrivers(long eventId) {
     Query<EventDriver> query = this.eventDriverDAO.getBasicDAO().createQuery();
     query.filter("eventId", eventId);
@@ -247,4 +251,5 @@ public class EventDAO extends AbstractDAO<Event> {
     }
     return passengers;
   }
+
 }

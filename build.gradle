@@ -38,6 +38,8 @@ dependencies {
     compile "net.coobird:thumbnailator:0.4.8"
     compile 'com.qiniu:qiniu-java-sdk:7.0.+'
     compile 'org.springframework.data:spring-data-mongodb:1.2.1.RELEASE'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.12'
 }
 
 war {

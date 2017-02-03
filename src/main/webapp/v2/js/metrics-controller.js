@@ -15,9 +15,6 @@
   ) {
     UserInfo.checkLogin();
 
-    $scope.continuousTimes = 5;
-    $scope.totalTimes = 29;
-    $scope.activeLevel = 'High';
     $scope.role = 'Club Member';
 
     $scope.activity = $routeParams.type;
@@ -39,17 +36,15 @@
       $scope.fullnameMetrics = user.fullname;
     });
 
-    $scope.isOrganizer = function(username){
-      var ret = false;
-      try {
-        username = username || UserInfo.getUser().username;
-        ret = !!_.find($scope.organizers, function(organizer){
-          return organizer.username === username;
-        });
+    ActivityManager.getMetrics({activityType: $scope.activity, username : $scope.username}).then(function(metrics) {
+      $scope.continuousTimes = metrics.continuousTimes;
+      $scope.totalTimes = metrics.totalTimes;
+      if (metrics.organizer) {
+        $scope.role = 'Club Organizer';
       }
-      catch (ignore) {}
-      return ret;
-    };
+
+    });
+
   });
 })();
 

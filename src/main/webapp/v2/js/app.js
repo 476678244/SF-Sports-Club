@@ -653,6 +653,16 @@
           });
         });
       },
+      getMetrics: function (params) {
+        return $q(function(resolve, reject){
+          $http.get('/teamdivider/v2/metrics', { params: params }).success(function(resp){
+            var metrics = resp;
+            resolve(metrics);
+          }).error(function(){
+            reject();
+          });
+        });
+      },
       byHisCar: function (params) {
         return $q(function(resolve, reject){
           $http.get('/teamdivider/v2/byHisCar', { params: params }).success(function(resp){
