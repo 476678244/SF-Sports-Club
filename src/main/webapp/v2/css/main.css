@@ -374,6 +374,7 @@ label[for="having-car-checkbox"] {
   overflow: hidden;
   border-radius: 60px;
   vertical-align: top;
+  margin-left: 2em;
 }
 .member-avatar img {
   width: 60px;
@@ -382,7 +383,6 @@ label[for="having-car-checkbox"] {
 }
 .member-continous-times {
   position: absolute;
-  left: 5.1em;
   bottom: 1.5em;
   color: gainsboro;
   font-size: smaller;
