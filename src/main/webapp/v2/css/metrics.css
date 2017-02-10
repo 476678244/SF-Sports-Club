@@ -1,0 +1,15 @@
+.metrics-page {
+  /*background-image: url('../img/metrics/bg.jpg');*/
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.metrics-page .metrics-card-wrapper {
+  background: floralwhite;
+  padding: 1.5em 1.5em 8em 1.5em;
+  border-radius: .3em;
+  margin-right: 10em;
+  margin-left: 4em;
+  box-shadow: 1px 1px 3px #888888;
+}

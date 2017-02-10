@@ -1,22 +1,20 @@
-<section class="page-with-sidebar metrics-page">
+<section class="page-with-sidebar metrics-page v-center-container" sf-window-height>
   <ng-include src="'./tmpl/side-nav.html'"></ng-include>
-  <div class="metrics-panel">
-    <div class="v-center-wrapper">
-      <div class="v-center-inner metrics-wrapper">
-        <div class="">
-          <legend>Personal Metrics </legend>
-          <div class="introduction">
-            <span class="member-item">
-              <span class="member-avatar"><img ng-src="{{ avatarMetrics }}" fallback-src="./img/avatar/default.svg"></span>
-              <span class="member-name">{{ fullnameMetrics }} | {{ role }}</span>
-            </span>
-          </div>
-          <div class="metrics-items">
-            <div class="continuous-times">Continue Times Recently: {{continuousTimes}}</div>
-            <div class="total-times">Total Times:{{totalTimes}}</div>
-          </div>
+  <div class="v-center-wrapper">
+    <div class="v-center-inner metrics-card-wrapper">
+      <div class="metrics-card">
+        <legend>Personal Metrics </legend>
+        <div class="introduction">
+          <span class="member-item">
+            <div class="member-avatar"><img ng-src="{{ avatarMetrics }}" fallback-src="./img/avatar/default.svg"></div>
+            <div class="member-name">{{ fullnameMetrics }}</div>
+            <div class="member-name">{{ role }}</div>
+          </span>
         </div>
-
+        <div class="metrics-items">
+          <div class="continuous-times">Continue Times Recently: {{continuousTimes}}</div>
+          <div class="total-times">Total Times:{{totalTimes}}</div>
+        </div>
       </div>
 
     </div>
