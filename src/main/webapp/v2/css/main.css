@@ -93,22 +93,21 @@ a.logout-btn:hover {
     font-size: 13px;
   }
   .page-with-sidebar {
-    padding-left: 40px;
+    padding-left: 60px;
   }
   .side-nav {
-    width: 40px;
+    width: 60px;
   }
   .side-nav .sidebar-avatar-link {
-    margin: 3px;
     border-width: 2px;
-    width: 30px;
-    height: 30px;
+    width: 45px;
+    height: 45px;
   }
   a.sports-nav-item {
-    font-size: 20px;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
+    font-size: 30px;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
   }
 }
 .pure-button-error {
@@ -374,7 +373,6 @@ label[for="having-car-checkbox"] {
   overflow: hidden;
   border-radius: 60px;
   vertical-align: top;
-  margin-left: 2em;
 }
 .member-avatar img {
   width: 60px;
@@ -402,6 +400,9 @@ label[for="having-car-checkbox"] {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.member-inline-list .member-avatar {
+  margin-left: 2em;
 }
 @media(max-width: 500px) {
   /*.member-inline-list .member-avatar {*/
