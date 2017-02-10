@@ -62,10 +62,9 @@ a.sports-select-item {
 a.sports-nav-item {
   display: block;
   text-decoration: none;
-  font-size: 40px;
+  font-size: 46px;
   width: 80px;
   height: 80px;
-  line-height: 80px;
   color: #666;
   text-align: center;
   transition: background-color .2s;
@@ -104,10 +103,9 @@ a.logout-btn:hover {
     height: 45px;
   }
   a.sports-nav-item {
-    font-size: 30px;
+    font-size: 35px;
     width: 60px;
     height: 60px;
-    line-height: 60px;
   }
 }
 .pure-button-error {
