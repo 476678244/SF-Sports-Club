@@ -171,6 +171,7 @@
         });
       });
       $scope.detail = detail;
+      document.title = detail.name;
       ActivityManager.getContinousTimes({
         activityType : $scope.activity,
         eventId: $scope.ordinal
