@@ -741,6 +741,7 @@
         }
       },
       checkLogin: function(){
+        document.title = 'SF Sports Club';
         var currentUrl = $location.url(),
             user = this.getUser();
         if (user && currentUrl === '/') {
