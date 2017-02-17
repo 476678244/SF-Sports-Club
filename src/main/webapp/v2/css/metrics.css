@@ -89,15 +89,18 @@
 
 .main-card .picture-block .picture {
   display: inline-block;
-}
-
-.main-card .picture-block .picture .picture-content {
   width: 5em;
+  height: 5em;
   border-radius: 10em;
   border-color: white;
   border-width: .1em;
   border-style: solid;
   box-shadow: 0 0 8em 1em cadetblue;
+  overflow: hidden;
+}
+
+.main-card .picture-block .picture .picture-content {
+  width: 100%;
 }
 
 .main-card .picture-block .name-content {
