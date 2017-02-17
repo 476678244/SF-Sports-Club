@@ -131,7 +131,8 @@
       controller: function($scope, $element, $route, UserInfo, ActivityManager, sfDialog, $location){
 
         $scope.viewMetrics = function (username) {
-          $location.path('/metrics/' + $scope.type + '/' + username)
+          //$location.path('/metrics/' + $scope.type + '/' + username)
+          window.location = 'metrics2.html';
         }
 
         var params = {
