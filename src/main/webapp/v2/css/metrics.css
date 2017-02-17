@@ -56,15 +56,26 @@
 }
 
 .main-card .picture-block {
-
+  padding-top: 1em;
+  text-align: center;
 }
 
 .main-card .picture-block .footballers-info {
   display: inline-block;
+  float: right;
+  font-size: .5em;
+  margin-right: 1em;
+  margin-top: 4em;
+  min-width: 5.1em;
 }
 
 .main-card .picture-block .team-info {
   display: inline-block;
+  float: left;
+  font-size: .5em;
+  margin-left: 1em;
+  margin-top: 4em;
+  min-width: 5.1em;
 }
 
 .main-card .picture-block .picture {
@@ -77,4 +88,19 @@
   border-color: white;
   border-width: .1em;
   border-style: solid;
+}
+
+.main-card .picture-block .name-content {
+  font-size: .8em;
+  margin-top: .2em;
+}
+
+.main-card .picture-block .club-content {
+  font-size: .5em;
+  margin-top: .2em;
+}
+
+.main-card .picture-block .address {
+  font-size: .4em;
+  font-style: italic;
 }
