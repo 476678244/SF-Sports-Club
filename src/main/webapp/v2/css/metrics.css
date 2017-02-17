@@ -18,12 +18,14 @@
 
 /*#272C4F*/
 .main-body {
-  background-color: #272C4F;
+  /*background-color: #272C4F;*/
   margin: 0em;
   color: white;
   font-size: 4em;
   font-family:  -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;;
   font-weight: 300;
+  background: radial-gradient(circle, cadetblue, #272C4F); /* 标准的语法（必须放在最后） */
+
 }
 
 .title-float {
@@ -61,12 +63,12 @@
 }
 
 .main-card {
-
 }
 
 .main-card .picture-block {
   padding-top: 1em;
   text-align: center;
+
 }
 
 .main-card .picture-block .footballers-info {
@@ -95,7 +97,7 @@
   border-color: white;
   border-width: .1em;
   border-style: solid;
-  box-shadow: 0 0 8em 1em cadetblue;
+  /*box-shadow: 0 0 8em 1em cadetblue;*/
   overflow: hidden;
 }
 
