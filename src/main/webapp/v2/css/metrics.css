@@ -21,13 +21,13 @@
   background-color: #272C4F;
   margin: 0em;
   color: white;
+  font-size: 2em;
 }
 
 .title-float {
   opacity: 0.7;
   background-color: #3C5276;
   /*height: 2em;*/
-  font-size: 2em;
   text-align: center;
   padding-top: 0.5em;
 }
@@ -49,4 +49,32 @@
   -moz-filter: blur(10px);
   -ms-filter: blur(10px);
   filter: blur(10px);
+}
+
+.main-card {
+
+}
+
+.main-card .picture-block {
+
+}
+
+.main-card .picture-block .footballers-info {
+  display: inline-block;
+}
+
+.main-card .picture-block .team-info {
+  display: inline-block;
+}
+
+.main-card .picture-block .picture {
+  display: inline-block;
+}
+
+.main-card .picture-block .picture .picture-content {
+  width: 5em;
+  border-radius: 10em;
+  border-color: white;
+  border-width: .1em;
+  border-style: solid;
 }
