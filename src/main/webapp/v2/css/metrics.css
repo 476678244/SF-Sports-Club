@@ -21,7 +21,9 @@
   background-color: #272C4F;
   margin: 0em;
   color: white;
-  font-size: 2em;
+  font-size: 2.5em;
+  font-family:  -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;;
+  font-weight: 300;
 }
 
 .title-float {
@@ -30,18 +32,25 @@
   /*height: 2em;*/
   text-align: center;
   padding-top: 0.5em;
+  padding-bottom: .3em;
+
+  border-bottom-width: .01em;
+  border-bottom-style: groove;
+  border-bottom-color: #333333;
 }
 
 .title-float .back-icon {
   vertical-align:sub;
   float: left;
   margin-left: 0.2em;
+  min-width: 1em;
 }
 
 .title-float .config-icon {
   float: right;
   vertical-align:sub;
   margin-right: 0.2em;
+  min-width: 1em;
 }
 
 .blur {
@@ -104,4 +113,18 @@
 .main-card .picture-block .address {
   font-size: .4em;
   font-style: italic;
+}
+
+.description-block {
+  margin-top: 2em;
+  font-size: .6em;
+}
+
+.description-block .win-information {
+
+}
+
+.description-block hr {
+  border-color: darkgrey;
+  border-top:0px;
 }
