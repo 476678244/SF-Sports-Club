@@ -11,7 +11,8 @@
     $location,
     UserInfo,
     ActivityManager,
-    $rootScope
+    $rootScope,
+    $window
   ) {
     UserInfo.checkLogin();
 
@@ -19,6 +20,10 @@
 
     $scope.activity = $routeParams.type;
     $scope.username = $routeParams.username;
+
+    $scope.backToLastPage = function () {
+      $window.history.back();
+    }
 
     // login check
     ActivityManager.getUser({username : UserInfo.getUser().username}).then(function(user) {
