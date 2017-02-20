@@ -21,7 +21,7 @@
   /*background-color: #272C4F;*/
   margin: 0em;
   color: white;
-  font-size: 2em;
+  font-size: 1.9em;
   font-family:  -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;;
   font-weight: 300;
   background: radial-gradient(circle at 50% 21%, #4D7AAA 1%, #262A4B 44%); /* 标准的语法（必须放在最后） */
@@ -124,7 +124,7 @@
 .description-block {
   margin-top: 2em;
   font-size: .6em;
-  min-height: 30em;
+  min-height: 23em;
 }
 
 .description-block hr {
