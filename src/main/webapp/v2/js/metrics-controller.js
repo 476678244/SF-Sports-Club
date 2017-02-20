@@ -15,7 +15,7 @@
   ) {
     UserInfo.checkLogin();
 
-    $scope.role = 'Club Member';
+    $scope.role = ' Player';
 
     $scope.activity = $routeParams.type;
     $scope.username = $routeParams.username;
@@ -40,9 +40,16 @@
       $scope.continuousTimes = metrics.continuousTimes;
       $scope.totalTimes = metrics.totalTimes;
       if (metrics.organizer) {
-        $scope.role = 'Club Organizer';
+        $scope.role = ' Organizer';
       }
-
+      var userScore = metrics.userScoreVO
+      $scope.scores = [{ "key": "attack", "score": userScore.attack },
+        { "key": "defend", "score": userScore.defend },
+        { "key": "skill", "score": userScore.skill },
+        { "key": "speed", "score": userScore.speed },
+        { "key": "stamina", "score": userScore.stamina },
+        { "key": "strength", "score": userScore.strength }]
+      var a = 0
     });
 
   });

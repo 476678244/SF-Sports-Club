@@ -12,18 +12,18 @@
     <div class="main-card">
       <div class="picture-block">
         <div class="team-info">
-          <div class="team-number">3</div>
+          <div class="team-number">{{ continuousTimes }}</div>
           <div class="team-content">Continuously</div>
         </div>
         <div class="picture">
-          <img src="http://7xjao2.com1.z0.glb.clouddn.com/xiao.han@sap.com1432782863869.jpg" class="picture-content">
+          <img src="{{ avatarMetrics }}" class="picture-content">
         </div>
         <div class="footballers-info">
-          <div class="footballers-number">25</div>
+          <div class="footballers-number">{{ totalTimes }}</div>
           <div class="footballers-content">Totally</div>
         </div>
-        <div class="name-content">Han Xiao</div>
-        <div class="club-content">Success Factors FC Player</div>
+        <div class="name-content">{{ fullnameMetrics }}</div>
+        <div class="club-content">Success Factors FC {{ role }}</div>
         <div class="address">
             <span>
               <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -33,54 +33,14 @@
       </div>
       <div class="description-block">
         <hr />
-        <div class="attack">
+        <div class="attack" ng-repeat="scoreItem in scores">
             <span class="score-icon-wrapper">
-              <i class="icon-attack"></i>
-              <span class="desc-icon">Attack</span>
+              <i class="icon-{{scoreItem.key}}"></i>
+              <span class="desc-icon">{{ scoreItem.key }}</span>
             </span>
-          <span class="score">89</span>
+          <span class="score">{{ scoreItem.score }}</span>
+          <hr />
         </div>
-        <hr />
-        <div class="defend">
-            <span class="score-icon-wrapper">
-              <i class="icon-defend"></i>
-              <span class="desc-icon">Defend</span>
-            </span>
-          <span class="score">55</span>
-        </div>
-        <hr />
-        <div class="skill">
-            <span class="score-icon-wrapper">
-              <i class="icon-skill"></i>
-              <span class="desc-icon">Skill</span>
-            </span>
-          <span class="score">93</span>
-        </div>
-        <hr />
-        <div class="stamina">
-            <span class="score-icon-wrapper">
-              <i class="icon-stamina"></i>
-              <span class="desc-icon">Stamina</span>
-            </span>
-          <span class="score">77</span>
-        </div>
-        <hr />
-        <div class="speed">
-            <span class="score-icon-wrapper">
-              <i class="icon-speed"></i>
-              <span class="desc-icon">Speed</span>
-            </span>
-          <span class="score">72</span>
-        </div>
-        <hr />
-        <div class="strength">
-          <div class="score-icon-wrapper">
-            <i class="icon-strength"></i>
-            <span class="desc-icon">Strength</span>
-          </div>
-          <div class="score">78</div>
-        </div>
-        <hr />
       </div>
     </div>
   </div>
