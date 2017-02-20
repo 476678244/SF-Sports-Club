@@ -1,0 +1,19 @@
+
+.icon-stamina:before { content: '\e800'; } /* '' */
+.icon-skill:before { content: '\e801'; } /* '' */
+.icon-strength:before { content: '\e802'; } /* '' */
+.icon-defend:before { content: '\e803'; } /* '' */
+.icon-attack:before { content: '\e804'; } /* '' */
+.icon-speed:before { content: '\e805'; } /* '' */
+.icon-badminton:before { content: '\e806'; } /* '' */
+.icon-basketball:before { content: '\e807'; } /* '' */
+.icon-bicycle:before { content: '\e808'; } /* '' */
+.icon-boardgame:before { content: '\e809'; } /* '' */
+.icon-car:before { content: '\e80a'; } /* '' */
+.icon-dance:before { content: '\e80b'; } /* '' */
+.icon-door:before { content: '\e80c'; } /* '' */
+.icon-soccer:before { content: '\e80d'; } /* '' */
+.icon-swimming:before { content: '\e80e'; } /* '' */
+.icon-tabletennis:before { content: '\e80f'; } /* '' */
+.icon-tennis:before { content: '\e810'; } /* '' */
+.icon-yoga:before { content: '\e811'; } /* '' */
