@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'sfsportsclub';
-  src: url('../font/sfsportsclub.eot?98516857');
-  src: url('../font/sfsportsclub.eot?98516857#iefix') format('embedded-opentype'),
-       url('../font/sfsportsclub.woff2?98516857') format('woff2'),
-       url('../font/sfsportsclub.woff?98516857') format('woff'),
-       url('../font/sfsportsclub.ttf?98516857') format('truetype'),
-       url('../font/sfsportsclub.svg?98516857#sfsportsclub') format('svg');
+  src: url('../font/sfsportsclub.eot?13310585');
+  src: url('../font/sfsportsclub.eot?13310585#iefix') format('embedded-opentype'),
+       url('../font/sfsportsclub.woff2?13310585') format('woff2'),
+       url('../font/sfsportsclub.woff?13310585') format('woff'),
+       url('../font/sfsportsclub.ttf?13310585') format('truetype'),
+       url('../font/sfsportsclub.svg?13310585#sfsportsclub') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'sfsportsclub';
-    src: url('../font/sfsportsclub.svg?98516857#sfsportsclub') format('svg');
+    src: url('../font/sfsportsclub.svg?13310585#sfsportsclub') format('svg');
   }
 }
 */
@@ -73,3 +73,4 @@
 .icon-tabletennis:before { content: '\e80f'; } /* '' */
 .icon-tennis:before { content: '\e810'; } /* '' */
 .icon-yoga:before { content: '\e811'; } /* '' */
+.icon-football:before { content: '\e812'; } /* '' */

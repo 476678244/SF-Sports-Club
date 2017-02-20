@@ -5,6 +5,9 @@
       <h1>
         <span class="inner">SF {{ activity | uppercase }} CLUB</span>
       </h1>
+      <h1>
+        <span class="inner" ng-if="showNote()">本栏目面向社会开放！</span>
+      </h1>
     </div>
     <div class="join-content">
       <div ng-if="latest.name">

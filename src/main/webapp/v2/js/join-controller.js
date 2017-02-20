@@ -129,5 +129,12 @@
         }
       });
     };
+
+    $scope.showNote = function () {
+      if ($scope.activity == "football") {
+        return true
+      }
+      return false
+    }
   });
 })();
