@@ -18,10 +18,10 @@
         Detail: {{ latest.description }}<br>
         <br>
       </div>
-      <button class="pure-button pure-button-primary" ng-click="viewLatest()" ng-if="latest.name">View Latest</button>
-      <button class="pure-button pure-button-primary" ng-click="toCreatePage()" ng-if="isOrganizer();">Create New</button>
-      <button class="pure-button pure-button-primary" ng-click="watch(true)" ng-if="!isWatcher();">{{ joinClubButton }}</button>
-      <button class="pure-button pure-button-error" ng-click="watch(false)" ng-if="!!isWatcher();">Quit Club</button>
+      <button class="pure-button pure-button-primary join-buttons" ng-click="viewLatest()" ng-if="latest.name">View Latest</button>
+      <button class="pure-button pure-button-primary join-buttons" ng-click="toCreatePage()" ng-if="isOrganizer();">Create New</button>
+      <button class="pure-button pure-button-primary join-buttons" ng-click="watch(true)" ng-if="!isWatcher();">{{ joinClubButton }}</button>
+      <button class="pure-button pure-button-error join-buttons" ng-click="watch(false)" ng-if="!!isWatcher();">Quit Club</button>
     </div>
     <div class="all-events" ng-if="allEvents">
       <h2>Club Events</h2>
