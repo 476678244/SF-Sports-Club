@@ -1,0 +1,13 @@
+.myInfo-button-group input {
+  margin-top: .4em;
+}
+
+.sports-selector div {
+  margin-top: .5em;
+  display: inline-block;
+}
+
+.myInfo-form-wrapper {
+  padding-left: 5.5em;
+  padding-right: 1em;
+}
