@@ -132,7 +132,17 @@
   border-top:0px;
 }
 
-.description-block .score-icon {
-  padding-left: .4em;
-  padding-right: .4em;
+.description-block .score-icon-wrapper {
+  padding-left: 1em;
+  padding-right: 2em;
+  display: inline-block;
+  min-width: 6em;
 }
+
+.description-block .score-icon-wrapper .desc-icon {
+  margin-left: 1em;
+}
+.description-block .score {
+  display: inline-block;
+}
+
