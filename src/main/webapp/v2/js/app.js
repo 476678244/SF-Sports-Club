@@ -28,7 +28,7 @@
   	  templateUrl : './tmpl/register.html',
   	  controller  : 'RegisterController'
   	}).when('/metrics/:type/:username', {
-      templateUrl : './tmpl/metrics.html',
+      templateUrl : './tmpl/metricsV2.html',
       controller  : 'MetricsController'
     });
   }]);
@@ -131,8 +131,8 @@
       controller: function($scope, $element, $route, UserInfo, ActivityManager, sfDialog, $location){
 
         $scope.viewMetrics = function (username) {
-          //$location.path('/metrics/' + $scope.type + '/' + username)
-          window.location = 'metrics2.html';
+          $location.path('/metrics/' + $scope.type + '/' + username)
+          //window.location = 'metrics2.html';
         }
 
         var params = {
