@@ -2,23 +2,23 @@ package teamdivider.controller.v2;
 
 import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import teamdivider.bean.eo.Event;
 import teamdivider.bean.eo.Type;
 import teamdivider.bean.eo.User;
 import teamdivider.bean.eo.UserScore;
+import teamdivider.bean.eo.mapping.TypeUserScore;
 import teamdivider.bean.vo.UserScoreVO;
 import teamdivider.dao.EventDAO;
 import teamdivider.dao.TypeDAO;
+import teamdivider.dao.TypeUserScoreDAO;
 import teamdivider.dao.UserDAO;
-import teamdivider.entity.Team;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,7 +42,10 @@ public class MetricsController {
 	@Autowired
 	private EventDAO eventDAO;
 
-	private static Map<String , UserScore> defaultUserScoreMap = Maps.newHashMap();
+	@Autowired
+	private TypeUserScoreDAO typeUserScoreDAO;
+
+	private static Map<String , UserScore> preConfigUserScoreMap = Maps.newHashMap();
 
 	@RequestMapping("/metrics")
 	public MetricsVO metrics(
@@ -69,7 +72,8 @@ public class MetricsController {
 				continuousTimesEffective = false;
 			}
 		}
-		return new MetricsVO(continuousTimes, isOrganizer, totalTimes, new UserScoreVO(findUserScore(username)));
+		return new MetricsVO(continuousTimes, isOrganizer, totalTimes,
+			new UserScoreVO(findUserScore(user.getUserId(), type.getTypeId())));
 	}
 
 	@Data
@@ -82,19 +86,29 @@ public class MetricsController {
 	}
 
 	static {
-		defaultUserScoreMap.put("zonghan.wu@sap.com",
+		preConfigUserScoreMap.put("zonghan.wu@sap.com",
 			UserScore.builder().attack(99).defend(99).skill(99).speed(99).stamina(99).strength(99)
 				.build());
-		defaultUserScoreMap.put("luoxg2001@yahoo.com",
+		preConfigUserScoreMap.put("luoxg2001@yahoo.com",
 			UserScore.builder().attack(99).defend(99).skill(99).speed(99).stamina(99).strength(99)
 				.build());
 	}
 
-	public UserScore findUserScore(String username) {
-		if (defaultUserScoreMap.containsKey(username)) {
-			return defaultUserScoreMap.get(username);
+	UserScore findUserScore(long userId, long typeId) {
+		UserScore result = this.typeUserScoreDAO.getUserScore(userId, typeId);
+		if (result != null) return result;
+		String username = this.userDAO.findByUserId(userId).getEmail();
+		if (preConfigUserScoreMap.containsKey(username)) {
+			return preConfigUserScoreMap.get(username);
 		}
 		return UserScore.builder().attack(77).defend(77).skill(77).speed(77).stamina(77).strength(77)
 			.build();
+	}
+
+	@RequestMapping(value = "/score", method = RequestMethod.POST)
+	public void updateScore(@RequestParam("username") String username, @RequestParam("type") String type) {
+		this.typeUserScoreDAO.upsert(TypeUserScore.builder().userId(
+			this.userDAO.findByEmail(username).getUserId()).typeId(
+				this.typeDAO.getTypeByName(type).getTypeId()).build());
 	}
 }
