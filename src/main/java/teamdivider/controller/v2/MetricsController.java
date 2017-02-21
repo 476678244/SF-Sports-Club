@@ -106,9 +106,15 @@ public class MetricsController {
 	}
 
 	@RequestMapping(value = "/score", method = RequestMethod.POST)
-	public void updateScore(@RequestParam("username") String username, @RequestParam("type") String type) {
-		this.typeUserScoreDAO.upsert(TypeUserScore.builder().userId(
-			this.userDAO.findByEmail(username).getUserId()).typeId(
-				this.typeDAO.getTypeByName(type).getTypeId()).build());
+	public void upsertScore(@RequestParam("username") String username,
+		@RequestParam("type") String type,
+		@RequestParam Map<String, Integer> scoreMap) {
+		UserScore score = UserScore.builder().attack(scoreMap.get("attack"))
+			.defend(scoreMap.get("defend")).skill(scoreMap.get("skill"))
+			.speed(scoreMap.get("speed")).stamina(scoreMap.get("stamina"))
+			.strength(scoreMap.get("strength")).build();
+		this.typeUserScoreDAO.upsert(
+			TypeUserScore.builder().userId(this.userDAO.findByEmail(username).getUserId())
+				.typeId(this.typeDAO.getTypeByName(type).getTypeId()).score(score).build());
 	}
 }
