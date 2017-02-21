@@ -16,6 +16,9 @@
   ) {
     UserInfo.checkLogin();
 
+    // fix jump to middle page issue
+    $window.scrollTo(0, 0);
+
     $scope.role = ' Player';
 
     $scope.activity = $routeParams.type;
