@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import teamdivider.bean.eo.mapping.UserScore;
+import teamdivider.bean.eo.UserScore;
 
 /**
  * Created by wuzonghan on 17/2/20.
@@ -14,8 +14,6 @@ import teamdivider.bean.eo.mapping.UserScore;
 @Builder
 @NoArgsConstructor
 public class UserScoreVO {
-
-	private long userId;
 	private int attack;
 	private int defend;
 	private int skill;
@@ -24,7 +22,6 @@ public class UserScoreVO {
 	private int strength;
 
 	public UserScoreVO(UserScore userScore) {
-		this.userId = userScore.getUserId();
 		this.attack = userScore.getAttack();
 		this.defend = userScore.getDefend();
 		this.skill = userScore.getSkill();

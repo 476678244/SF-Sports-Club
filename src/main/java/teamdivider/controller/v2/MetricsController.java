@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import teamdivider.bean.eo.Event;
 import teamdivider.bean.eo.Type;
 import teamdivider.bean.eo.User;
-import teamdivider.bean.eo.mapping.UserScore;
+import teamdivider.bean.eo.UserScore;
 import teamdivider.bean.vo.UserScoreVO;
 import teamdivider.dao.EventDAO;
 import teamdivider.dao.TypeDAO;

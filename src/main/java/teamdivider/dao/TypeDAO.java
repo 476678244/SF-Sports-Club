@@ -75,7 +75,7 @@ public class TypeDAO extends AbstractDAO<Type> {
   
   public Type resolveTypeMappings(Type type) {
     this.resolveTypeEvents(type).resolveTypeOrganizers(type)
-        .resolveTypeSubscribers(type).resolveTypeScores(type);
+        .resolveTypeSubscribers(type);
     return type;
   }
 
@@ -91,11 +91,6 @@ public class TypeDAO extends AbstractDAO<Type> {
 
   public TypeDAO resolveTypeSubscribers(Type type) {
     type.setSubscribers(this.getTypeSubscribers(type.getTypeId()));
-    return this;
-  }
-  
-  public TypeDAO resolveTypeScores(Type type) {
-    type.setScores(this.getUserScore(type.getTypeId()));
     return this;
   }
   
@@ -141,28 +136,13 @@ public class TypeDAO extends AbstractDAO<Type> {
     if (typeSubscribers == null) {
       return Collections.emptySet();
     }
-    Set<User> users = new HashSet<User>(typeSubscribers.size());
+    Set<User> users = new HashSet<>(typeSubscribers.size());
     for (TypeSubscriber mapping : typeSubscribers) {
       ContextUtil.getContext().setUser(mapping.getUserId(), mapping.getUser());
       users.add(mapping.getUser());
     }
     return users;
   }
-  
-  private Map<Long, Integer> getUserScore(long typeId) {
-    Query<TypeUserScore> query = this.typeUserScoreDAO.getBasicDAO()
-        .createQuery();
-    query.filter("typeId", typeId);
-    List<TypeUserScore> queryResults = this.typeUserScoreDAO.getBasicDAO().find(query).asList();
-    if (queryResults == null) {
-      return Collections.emptyMap();
-    }
-    Map<Long, Integer> userScore = new HashMap<Long, Integer>();
-    for (TypeUserScore mapping : queryResults) {
-      userScore.put(mapping.getUserId(), mapping.getScore());
-    }
-    return userScore;
-  } 
 
   @Override
   protected Class<Type> getClazz() {

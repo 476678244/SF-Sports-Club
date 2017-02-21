@@ -78,8 +78,7 @@ public class TypeController {
       @RequestParam(value = "members", defaultValue = "true") boolean members) {
     List<TypeVO> types = new ArrayList<TypeVO>(1);
     Type type = this.typeDAO.getTypeByName(typeName);
-    this.typeDAO.resolveTypeEvents(type).resolveTypeOrganizers(type)
-        .resolveTypeScores(type);
+    this.typeDAO.resolveTypeEvents(type).resolveTypeOrganizers(type);
     if (members) {
       this.typeDAO.resolveTypeSubscribers(type);
     }
@@ -104,7 +103,7 @@ public class TypeController {
       @RequestParam("eventId") long eventId) {
     Type type = this.typeDAO.getTypeByName(activityType, true);
     if (type == null) return Collections.emptyMap();
-    Map<String, Integer> continousTimes = new HashMap<String, Integer>();
+    Map<String, Integer> continuousTimes = new HashMap<String, Integer>();
     Set<Event> events = type.getEvents();
     List<Event> eventList = new ArrayList<Event>(events);
     EntityUtil.sortEventByOrdinalDescNew(eventList);
@@ -113,16 +112,16 @@ public class TypeController {
       return Collections.emptyMap();
     if (type.getLatestEvent().getEventId() != eventId)
       return Collections.emptyMap();
-    Set<User> continousUsers = new HashSet<User>();
+    Set<User> continuousUsers = new HashSet<User>();
     int times = 1;
     for (Event event : eventList) {
       this.eventDAO.resolveEventMembers(event);
       if (times == 1) {
         // first time, add all latestEvent joiners
-        continousUsers.addAll(event.getMembers());
+        continuousUsers.addAll(event.getMembers());
       } else {
-        // each time, remove unjoining users
-        Iterator<User> it = continousUsers.iterator();
+        // each time, remove un-joining users
+        Iterator<User> it = continuousUsers.iterator();
         while (it.hasNext()) {
           User toCheckUser = it.next();
           if (!event.getMembers().contains(toCheckUser)) {
@@ -131,16 +130,16 @@ public class TypeController {
         }
       }
       // every round, update time record
-      for (User continousUser : continousUsers) {
-        continousTimes.put(continousUser.getEmail(), times);
+      for (User continousUser : continuousUsers) {
+        continuousTimes.put(continousUser.getEmail(), times);
       }
       // if no users to check anymore, return
-      if (continousUsers.isEmpty()) {
-        return continousTimes;
+      if (continuousUsers.isEmpty()) {
+        return continuousTimes;
       }
       times++;
     }
-    return continousTimes;
+    return continuousTimes;
   }
 
   @RequestMapping("/addActivityType")
