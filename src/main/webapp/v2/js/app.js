@@ -1,6 +1,7 @@
 (function(){
   'use strict';
-  var sfSport = angular.module('sfSport', ['ngRoute', 'ngQuickDate', 'ngDialog', 'ngFileUpload', '720kb.tooltips']);
+  var sfSport = angular.module('sfSport', ['ngRoute', 'ngQuickDate', 'ngDialog',
+    'ngFileUpload', '720kb.tooltips', 'xeditable']);
   window.sfSport = sfSport;
   // Route
   sfSport.config(['$routeProvider', function($routeProvider){
@@ -789,7 +790,7 @@
   });
 
   // Bootstrap
-  sfSport.run(function($rootScope, ActivityManager, $routeParams, UserInfo){
+  sfSport.run(function($rootScope, ActivityManager, $routeParams, UserInfo, editableOptions){
     ActivityManager.getActivityTypes(null, true).then(function(data){
       $rootScope.sports = _.map(data, function(sportName){
         return { name : sportName, id : sportName.replace(/\s/g, '') };
@@ -798,6 +799,7 @@
     $rootScope.logout = function(){
       UserInfo.clearUser();
     };
+    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
   });
 
 })();
