@@ -1,13 +1,14 @@
 package teamdivider.controller.v2;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
+import com.mongodb.util.JSON;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import teamdivider.bean.eo.Event;
 import teamdivider.bean.eo.Type;
 import teamdivider.bean.eo.User;
@@ -19,6 +20,8 @@ import teamdivider.dao.TypeDAO;
 import teamdivider.dao.TypeUserScoreDAO;
 import teamdivider.dao.UserDAO;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -105,10 +108,9 @@ public class MetricsController {
 			.build();
 	}
 
-	@RequestMapping(value = "/score", method = RequestMethod.POST)
-	public void upsertScore(@RequestParam("username") String username,
+	void upsertScore(@RequestParam("username") String username,
 		@RequestParam("type") String type,
-		@RequestParam Map<String, Integer> scoreMap) {
+		@RequestBody Map<String, Integer> scoreMap) {
 		UserScore score = UserScore.builder().attack(scoreMap.get("attack"))
 			.defend(scoreMap.get("defend")).skill(scoreMap.get("skill"))
 			.speed(scoreMap.get("speed")).stamina(scoreMap.get("stamina"))
@@ -116,5 +118,14 @@ public class MetricsController {
 		this.typeUserScoreDAO.upsert(
 			TypeUserScore.builder().userId(this.userDAO.findByEmail(username).getUserId())
 				.typeId(this.typeDAO.getTypeByName(type).getTypeId()).score(score).build());
+	}
+
+	@RequestMapping(value = "/score", method = RequestMethod.POST)
+	public void postScore(@RequestParam("username") String username,
+		@RequestParam("type") String type,
+		@RequestParam("scoreMap") String scoreMap) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Integer> map = mapper.readValue(scoreMap, new TypeReference<Map<String, Integer>>(){});
+		this.upsertScore(username, type, map);
 	}
 }

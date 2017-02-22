@@ -36,7 +36,7 @@ public class TypeUserScoreDAO extends AbstractDAO<TypeUserScore> {
       return ;
     }
     existMapping.setScore(mapping.getScore());
-    this.getBasicDAO().save(mapping);
+    this.getBasicDAO().save(existMapping);
   }
 
   public UserScore getUserScore(long userId, long typeId) {

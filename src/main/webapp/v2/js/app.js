@@ -665,6 +665,19 @@
           });
         });
       },
+      upsertScore: function (username, type, scoreMap) {
+        return $q(function(resolve, reject){
+          $http.post('/teamdivider/v2/score', {
+            username: username,
+            type: type,
+            scoreMap: scoreMap
+          }).success(function(resp){
+            resolve(resp);
+          }).error(function(){
+            reject();
+          });
+        });
+      },
       byHisCar: function (params) {
         return $q(function(resolve, reject){
           $http.get('/teamdivider/v2/byHisCar', { params: params }).success(function(resp){

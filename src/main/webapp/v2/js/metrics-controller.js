@@ -85,8 +85,19 @@
     }
 
     $scope.finishEditing = function () {
-      $scope.editing = false;
+      $scope.scores.forEach(function (e) {
+        $scope.scoreMap[e.key] = e.value
+      })
+      ActivityManager.upsertScore($scope.username, $scope.activity, JSON.stringify($scope.scoreMap))
+        .then(function (resp) {
+          $scope.editing = false;
+          $route.reload();
+      })
     }
+
+    // default value
+    $scope.scoreMap = {"attack":77,"defend":77,"skill":77,"speed":77,"stamina":77,"strength":77}
+
   });
 })();
 
