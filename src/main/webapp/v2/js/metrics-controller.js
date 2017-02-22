@@ -1,19 +1,17 @@
 /**
  * Created by wuzonghan on 17/1/23.
  */
-(function(){
+(function () {
   'use strict';
   var sfSport = window.sfSport;
-  sfSport.controller('MetricsController', function (
-    $scope,
-    $routeParams,
-    $route,
-    $location,
-    UserInfo,
-    ActivityManager,
-    $rootScope,
-    $window
-  ) {
+  sfSport.controller('MetricsController', function ($scope,
+                                                    $routeParams,
+                                                    $route,
+                                                    $location,
+                                                    UserInfo,
+                                                    ActivityManager,
+                                                    $rootScope,
+                                                    $window) {
     UserInfo.checkLogin();
 
     $scope.role = ' Player';
@@ -26,37 +24,66 @@
     }
 
     // login check
-    ActivityManager.getUser({username : UserInfo.getUser().username}).then(function(user) {
+    ActivityManager.getUser({ username: UserInfo.getUser().username }).then(function (user) {
       UserInfo.setUser(user);
       $scope.avatar = UserInfo.getUser().avatar;
-      ActivityManager.getJoiningTypes({username : user.username}).then(function(joiningTypes) {
-        $rootScope.joiningTypes = _.map(joiningTypes, function(sportName){
-          return { name : sportName, id : sportName.replace(/\s/g, '') };
+      ActivityManager.getJoiningTypes({ username: user.username }).then(function (joiningTypes) {
+        $rootScope.joiningTypes = _.map(joiningTypes, function (sportName) {
+          return { name: sportName, id: sportName.replace(/\s/g, '') };
         });
       });
     });
 
-    ActivityManager.getUser({username : $scope.username}).then(function(user) {
+    ActivityManager.getUser({ username: $scope.username }).then(function (user) {
       $scope.avatarMetrics = user.avatar;
       $scope.fullnameMetrics = user.fullname;
     });
 
-    ActivityManager.getMetrics({activityType: $scope.activity, username : $scope.username}).then(function(metrics) {
+    ActivityManager.getMetrics({ activityType: $scope.activity, username: $scope.username }).then(function (metrics) {
       $scope.continuousTimes = metrics.continuousTimes;
       $scope.totalTimes = metrics.totalTimes;
       if (metrics.organizer) {
         $scope.role = ' Organizer';
       }
       var userScore = metrics.userScoreVO
-      $scope.scores = [{ "key": "attack", "score": userScore.attack },
-        { "key": "defend", "score": userScore.defend },
-        { "key": "skill", "score": userScore.skill },
-        { "key": "speed", "score": userScore.speed },
-        { "key": "stamina", "score": userScore.stamina },
-        { "key": "strength", "score": userScore.strength }]
+      $scope.scores = [
+        {
+          "key": "attack", "score": userScore.attack
+        },
+        {
+          "key": "defend", "score": userScore.defend
+        },
+        {
+          "key": "skill", "score": userScore.skill
+        },
+        {
+          "key": "speed", "score": userScore.speed
+        },
+        {
+          "key": "stamina", "score": userScore.stamina
+        },
+        {
+          "key": "strength", "score": userScore.strength
+        }
+      ]
       var a = 0
     });
 
+    $scope.editing = false;
+
+    $scope.startEditing = function () {
+      $scope.editing = true;
+      $scope.scores.forEach(function (e) {
+        e.value = e.score
+        e.options = {
+          floor: 0,ceil: 100,step: 1,minLimit: 30,maxLimit: 99
+        }
+      })
+    }
+
+    $scope.finishEditing = function () {
+      $scope.editing = false;
+    }
   });
 })();
 

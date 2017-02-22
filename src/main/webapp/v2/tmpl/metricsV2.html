@@ -1,12 +1,13 @@
 <section class="main-body">
   <div>
     <div class="title-float">
-        <span class="back-icon">
-          <i class="fa fa-angle-left" aria-hidden="true" ng-click="backToLastPage()"></i>
-        </span>
+      <span class="back-icon">
+        <i class="fa fa-angle-left" aria-hidden="true" ng-click="backToLastPage()"></i>
+      </span>
       <span class="config-icon">
-          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-        </span>
+        <i class="fa fa-pencil-square-o" aria-hidden="true" ng-click="startEditing()" ng-if="!editing"></i>
+        <i class="fa fa-check" aria-hidden="true" ng-click="finishEditing()" ng-if="editing"></i>
+      </span>
       Metrics
     </div>
     <div class="main-card">
@@ -34,11 +35,13 @@
       <div class="description-block">
         <hr />
         <div class="attack" ng-repeat="scoreItem in scores">
-            <span class="score-icon-wrapper">
-              <i class="icon-{{scoreItem.key}}"></i>
-              <span class="desc-icon">{{ scoreItem.key }}</span>
-            </span>
+          <span class="score-icon-wrapper">
+            <i class="icon-{{scoreItem.key}}"></i>
+            <span class="desc-icon">{{ scoreItem.key }}</span>
+          </span>
           <span class="score">{{ scoreItem.score }}</span>
+          <rzslider rz-slider-model="scoreItem.value"
+                    rz-slider-options="scoreItem.options" ng-if="editing"></rzslider>
           <hr />
         </div>
       </div>

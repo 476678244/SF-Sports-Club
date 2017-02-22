@@ -1,6 +1,7 @@
 (function(){
   'use strict';
-  var sfSport = angular.module('sfSport', ['ngRoute', 'ngQuickDate', 'ngDialog', 'ngFileUpload', '720kb.tooltips']);
+  var sfSport = angular.module('sfSport', ['ngRoute', 'ngQuickDate', 'ngDialog', 'ngFileUpload',
+    '720kb.tooltips', 'rzModule']);
   window.sfSport = sfSport;
   // Route
   sfSport.config(['$routeProvider', function($routeProvider){
