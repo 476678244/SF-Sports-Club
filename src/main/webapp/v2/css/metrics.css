@@ -150,3 +150,7 @@
   width: 80%;
   margin-left: 3em;
 }
+
+.description-block hr {
+  width: 98%;
+}
