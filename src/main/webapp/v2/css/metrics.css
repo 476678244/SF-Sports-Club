@@ -52,7 +52,7 @@
 .title-float .config-icon {
   float: right;
   vertical-align:sub;
-  margin-right: 0.2em;
+  margin-right: 0.4em;
   min-width: 1em;
 }
 
@@ -146,3 +146,7 @@
   display: inline-block;
 }
 
+.description-block .rzslider {
+  width: 80%;
+  margin-left: 3em;
+}
