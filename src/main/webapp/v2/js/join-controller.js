@@ -8,9 +8,16 @@
     $location,
     UserInfo,
     ActivityManager,
-    $rootScope
+    $rootScope,
+    $window
   ) {
     UserInfo.checkLogin();
+
+    if ($window.outerWidth < 500) {
+      $scope.activityImg = "cr7"
+    } else {
+      $scope.activityImg = $routeParams.sport;
+    }
 
     $scope.activity = $routeParams.sport;
     $scope.showAll = $routeParams.allEvents;
