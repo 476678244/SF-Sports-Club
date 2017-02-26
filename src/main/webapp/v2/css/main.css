@@ -20,6 +20,15 @@ a {
   width: 80px;
   background: #333;
 }
+.side-tab {
+  padding-left: .5em;
+  font-size: 2em;
+  position: fixed;
+}
+/*.side-nav .hide-side-nav-icon {
+  font-size: 4em;
+  padding-left: .25em;
+}*/
 @keyframes sidebar-avatar-blink {
     0%   { background-color: #333; }
     50%  { background-color: #555; }

@@ -12,8 +12,9 @@
     $window
   ) {
     UserInfo.checkLogin();
+    enhance$scopeWithSideBar($scope)
 
-    if ($window.outerWidth < 500 && $routeParams.sport == 'football') {
+    if ($window.outerWidth <= 500 && $routeParams.sport == 'football') {
       $scope.activityImg = "cr7"
     } else {
       $scope.activityImg = $routeParams.sport;

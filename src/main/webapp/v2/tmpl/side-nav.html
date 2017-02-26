@@ -1,10 +1,16 @@
-<nav class="side-nav" sf-window-height="min">
+<nav class="side-nav" sf-window-height="min" ng-if="sideNav">
   <sidebar-avatar avatar="avatar"></sidebar-avatar>
   <a ng-repeat="item in joiningTypes" class="sports-nav-item"
     ng-class="{hl:item.id===activity}"
     href="#/join/{{ item.id }}/">
     <i class="icon-{{ item.id }}"></i>
   </a>
+  <a href="javascript:void(0);"
+     class="sports-nav-item"
+     ng-click="hideSideNav()">
+    <i class="fa fa-angle-double-left hide-side-nav-icon" aria-hidden="true"></i>
+  </a>
+
   <a href="javascript:void(0);"
     class="sports-nav-item logout-btn"
     ng-click="logout();"
@@ -13,4 +19,7 @@
     tooltip-side="right">
     <i class="icon-door"></i>
   </a>
-</nav> 
+</nav>
+<nav class="side-tab" ng-if="!sideNav" ng-click="showSideNav()">
+  <i class="fa fa-tags" aria-hidden="true"></i>
+</nav>

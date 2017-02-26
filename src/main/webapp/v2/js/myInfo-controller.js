@@ -13,6 +13,7 @@
     Upload
   ) {
     UserInfo.checkLogin();
+    enhance$scopeWithSideBar($scope)
 
     ActivityManager.getUser({username : UserInfo.getUser().username}).then(function(user) {
       UserInfo.setUser(user);

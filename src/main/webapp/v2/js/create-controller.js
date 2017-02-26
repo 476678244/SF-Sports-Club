@@ -11,6 +11,8 @@
   ) {
     UserInfo.checkLogin();
 
+    enhance$scopeWithSideBar($scope)
+
     $scope.avatar = UserInfo.getUser().avatar;
     $scope.activity = $routeParams.sport;
 

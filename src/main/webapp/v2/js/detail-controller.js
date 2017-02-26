@@ -15,6 +15,8 @@
   ) {
     UserInfo.checkLogin();
 
+    enhance$scopeWithSideBar($scope)
+
     $scope.avatar = UserInfo.getUser().avatar;
     $scope.timestamp = Date.now();
 
