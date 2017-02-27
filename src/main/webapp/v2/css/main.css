@@ -13,7 +13,7 @@ a {
 .page-with-sidebar {
   padding-left: 80px;
 }
-.side-nav {
+.side-nav-list {
   position: fixed;
   top: 0;
   left: 0;
@@ -25,7 +25,7 @@ a {
   font-size: 2em;
   position: fixed;
 }
-/*.side-nav .hide-side-nav-icon {
+/*.side-nav-list .hide-side-nav-list-icon {
   font-size: 4em;
   padding-left: .25em;
 }*/
@@ -34,14 +34,14 @@ a {
     50%  { background-color: #555; }
     100% { background-color: #333; }
 }
-.side-nav .sidebar-avatar-ctnr {
+.side-nav-list .sidebar-avatar-ctnr {
   display: block;
   overflow: hidden;
 }
-.side-nav .sidebar-avatar-ctnr.blink {
+.side-nav-list .sidebar-avatar-ctnr.blink {
   animation: sidebar-avatar-blink .7s 4;
 }
-.side-nav .sidebar-avatar-link {
+.side-nav-list .sidebar-avatar-link {
   display: block;
   margin: 7px;
   width: 60px;
@@ -51,10 +51,10 @@ a {
   transition: border-color .2s;
   border: 3px solid #333;
 }
-.side-nav .sidebar-avatar-link:hover {
+.side-nav-list .sidebar-avatar-link:hover {
   border-color: #555;
 }
-.side-nav .sidebar-avatar-img {
+.side-nav-list .sidebar-avatar-img {
   width: 100%;
 }
 a.sports-select-item {
@@ -102,10 +102,10 @@ a.logout-btn:hover {
   .page-with-sidebar {
     padding-left: 60px;
   }
-  .side-nav {
+  .side-nav-list {
     width: 60px;
   }
-  .side-nav .sidebar-avatar-link {
+  .side-nav-list .sidebar-avatar-link {
     border-width: 2px;
     width: 45px;
     height: 45px;

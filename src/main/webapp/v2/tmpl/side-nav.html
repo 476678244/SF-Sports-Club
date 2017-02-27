@@ -1,4 +1,4 @@
-<nav class="side-nav" sf-window-height="min" ng-if="sideNav">
+<div class="side-nav-list" sf-window-height="min" ng-if="sideNav">
   <sidebar-avatar avatar="avatar"></sidebar-avatar>
   <a ng-repeat="item in joiningTypes" class="sports-nav-item"
     ng-class="{hl:item.id===activity}"
@@ -19,7 +19,7 @@
     tooltip-side="right">
     <i class="icon-door"></i>
   </a>
-</nav>
-<nav class="side-tab" ng-if="!sideNav" ng-click="showSideNav()">
+</div>
+<div class="side-tab" ng-if="!sideNav" ng-click="showSideNav()">
   <i class="fa fa-tags" aria-hidden="true"></i>
-</nav>
+</div>
