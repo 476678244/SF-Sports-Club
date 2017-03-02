@@ -8,10 +8,26 @@
 }
 
 .myInfo-form-wrapper {
-  padding-left: 1em;
-  padding-right: 1em;
+/*  padding-left: 1em;
+  padding-right: 1em;*/
 }
 
 .change-avatar {
   text-align: center;
+}
+
+.myinfo-form {
+  background: rgba(255,255,255,0.95);
+  padding: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  border-radius: 4px;
+}
+.myinfo-form legend {
+  color: #F44;
+  font-size: 1.2em;
+}
+
+.myInfo-center-wrapper .parallax-container {
+  height: 10em;
 }

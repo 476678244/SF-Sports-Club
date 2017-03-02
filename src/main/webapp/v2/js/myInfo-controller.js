@@ -14,6 +14,9 @@
   ) {
     UserInfo.checkLogin();
     enhance$scopeWithSideBar($scope)
+    $(document).ready(function(){
+      $('.parallax').parallax();
+    });
 
     ActivityManager.getUser({username : UserInfo.getUser().username}).then(function(user) {
       UserInfo.setUser(user);
