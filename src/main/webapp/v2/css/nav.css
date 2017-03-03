@@ -1,0 +1,20 @@
+a.button-collapse.top-nav {
+  position: absolute;
+  text-align: center;
+  height: 48px;
+  width: 48px;
+  float: none;
+  font-size: 36px;
+  z-index: 2;
+  color: #fff;
+}
+
+.side-nav-icon-container {
+  position: fixed;
+  left: 1em;
+  top: .1em;
+}
+
+.top-nav .brand-logo {
+  font-size: 2em;
+}

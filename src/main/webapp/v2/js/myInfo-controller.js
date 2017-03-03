@@ -17,6 +17,7 @@
     $(document).ready(function(){
       $('.parallax').parallax();
     });
+    $(".button-collapse").sideNav();
 
     ActivityManager.getUser({username : UserInfo.getUser().username}).then(function(user) {
       UserInfo.setUser(user);

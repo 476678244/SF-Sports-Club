@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="./css/metrics.css">
   <link rel="stylesheet" href="./css/join.css">
   <link rel="stylesheet" href="./css/myinfo.css">
+  <link rel="stylesheet" href="./css/nav.css">
   <!--http://fontawesome.io/icons/-->
   <link rel="stylesheet" href="./bower_components/font-awesome/css/font-awesome.min.css"/>
 </head>
@@ -32,7 +33,24 @@
     <!--for wechat share picture-->
     <img src="./img/login/bg.jpg" width='700'>
   </div>
-  <div ng-view class="main-ctnr"></div>
+  <ul id="slide-out" class="side-nav">
+    <li><div class="userView">
+      <div class="background">
+        <img src="images/office.jpg">
+      </div>
+      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+      <a href="#!name"><span class="white-text name">John Doe</span></a>
+      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+  </ul>
+  <div ng-view class="main-ctnr">
+
+  </div>
   <script type="text/javascript" src="./bower_components/zepto/zepto.min.js"></script>
   <script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
   <script type="text/javascript" src="./bower_components/angular-route/angular-route.min.js"></script>
