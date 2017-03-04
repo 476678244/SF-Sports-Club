@@ -1,17 +1,8 @@
 <section class="">
-  <nav class="top-nav">
-    <div class="container">
-      <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Personal Profile</a>
-      </div>
-    </div>
-  </nav>
+  <ng-include src="'./tmpl/navbar.html'"></ng-include>
+  <ng-include src="'./tmpl/side-nav-v2.html'"></ng-include>
 
-  <div class="container side-nav-icon-container">
-    <a href="#" data-activates="slide-out" class="button-collapse top-nav"><i class="material-icons">menu</i></a>
-  </div>
-
-  <div class="v-center-wrapper myInfo-center-wrapper">
+  <div class="myInfo-center-wrapper">
     <div class="v-center-inner myInfo-form-wrapper">
       <form class="myinfo-form my-info-form pure-form pure-form-stacked" ng-controller="MyInfoController" ng-submit="updateUser();">
         <fieldset>

@@ -13,6 +13,8 @@
   ) {
     UserInfo.checkLogin();
     enhance$scopeWithSideBar($scope)
+    // Destroy sideNav
+    $('.button-collapse').sideNav('destroy');
 
     if ($window.outerWidth <= 500 && $routeParams.sport == 'football') {
       $scope.activityImg = "cr7"
@@ -33,6 +35,7 @@
         $rootScope.joiningTypes = _.map(joiningTypes, function(sportName){
           return { name : sportName, id : sportName.replace(/\s/g, '') };
         });
+        $(".button-collapse").sideNav()
       });
     });
 

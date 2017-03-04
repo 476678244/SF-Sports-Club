@@ -18,3 +18,11 @@ a.button-collapse.top-nav {
 .top-nav .brand-logo {
   font-size: 2em;
 }
+
+.top-nav .fa-user {
+  font-size: 2em;
+  margin-top: .6em;
+  margin-right: .6em;
+  float: right;
+  margin-bottom: -.6em;
+}

@@ -1,0 +1,13 @@
+<ul id="slide-out" class="side-nav">
+  <li ng-repeat="item in joiningTypes">
+    <a href="#/join/{{ item.id }}/">
+      <i class="icon-{{ item.id }}"></i>
+      {{ item.id}}
+    </a>
+  </li>
+</ul>
+<div class="container side-nav-icon-container">
+  <a href="#" data-activates="slide-out" class="button-collapse top-nav">
+    <i class="material-icons">menu</i>
+  </a>
+</div>

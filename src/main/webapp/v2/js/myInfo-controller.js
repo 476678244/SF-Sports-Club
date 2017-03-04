@@ -14,10 +14,6 @@
   ) {
     UserInfo.checkLogin();
     enhance$scopeWithSideBar($scope)
-    $(document).ready(function(){
-      $('.parallax').parallax();
-    });
-    $(".button-collapse").sideNav();
 
     ActivityManager.getUser({username : UserInfo.getUser().username}).then(function(user) {
       UserInfo.setUser(user);
@@ -30,6 +26,7 @@
       $rootScope.joiningTypes = _.map(joiningTypes, function(sportName){
         return { name : sportName, id : sportName.replace(/\s/g, '') };
       });
+      $(".button-collapse").sideNav()
     });
 
     $scope.subscribeTypeSet = {};
