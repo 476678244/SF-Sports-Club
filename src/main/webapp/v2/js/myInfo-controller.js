@@ -31,6 +31,7 @@
 
     $scope.subscribeTypeSet = {};
     $scope.uploadMessage = "";
+    $scope.title = 'Personal Profile';
 
     for (var type in UserInfo.getUser().subscribedTypes) {
       $scope.subscribeTypeSet[UserInfo.getUser().subscribedTypes[type]] = true;  

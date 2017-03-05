@@ -15,6 +15,7 @@
 
     $scope.avatar = UserInfo.getUser().avatar;
     $scope.activity = $routeParams.sport;
+    $scope.title = 'Create Event';
 
     ActivityManager.getJoiningTypes({username : UserInfo.getUser().username}).then(function(joiningTypes) {
       $rootScope.joiningTypes = _.map(joiningTypes, function(sportName){

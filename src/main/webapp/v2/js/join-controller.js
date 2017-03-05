@@ -24,6 +24,8 @@
 
     $scope.activity = $routeParams.sport;
     $scope.showAll = $routeParams.allEvents;
+    $scope.title = $scope.activity.toUpperCase();
+
     if (!$scope.showAll) {
       $scope.showAll = false;
     }

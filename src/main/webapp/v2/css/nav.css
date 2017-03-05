@@ -21,6 +21,14 @@ a.button-collapse.top-nav {
   margin-bottom: -.6em;
 }
 
+.top-nav .fa-sign-out {
+  font-size: 2em;
+  margin-top: .6em;
+  margin-right: .6em;
+  float: right;
+  margin-bottom: -.6em;
+}
+
 #slide-out {
   width: 70%;
 }

@@ -19,6 +19,7 @@
 
     $scope.avatar = UserInfo.getUser().avatar;
     $scope.timestamp = Date.now();
+    $scope.title = 'Event Detail';
 
     ActivityManager.getJoiningTypes({username : UserInfo.getUser().username}).then(function(joiningTypes) {
       $rootScope.joiningTypes = _.map(joiningTypes, function(sportName){

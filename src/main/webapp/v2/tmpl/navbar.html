@@ -1,11 +1,16 @@
 <nav class="top-nav">
   <div class="container">
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo">Personal Profile</a>
+      <a href="#" class="brand-logo">{{ title }}</a>
     </div>
   </div>
-  <a href="#/myInfo"><i class="fa fa-user" aria-hidden="true"></i></a>
-  <div class="">
+  <a href="#/myInfo" ng-if="title != 'Personal Profile'">
+    <i class="fa fa-user" aria-hidden="true"></i>
+  </a>
+  <a href="javascript:void(0);" ng-click="logout();" ng-if="title == 'Personal Profile'">
+    <i class="fa fa-sign-out" aria-hidden="true"></i>
+  </a>
+  <div>
     <a href="#" data-activates="slide-out" class="button-collapse">
       <i class="material-icons">menu</i>
     </a>
