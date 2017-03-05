@@ -7,14 +7,21 @@
     $route,
     $location,
     UserInfo,
-    ActivityManager
+    ActivityManager,
+    $rootScope
   ) {
     UserInfo.checkLogin();
-
     enhance$scopeWithSideBar($scope)
 
     $scope.avatar = UserInfo.getUser().avatar;
     $scope.activity = $routeParams.sport;
+
+    ActivityManager.getJoiningTypes({username : UserInfo.getUser().username}).then(function(joiningTypes) {
+      $rootScope.joiningTypes = _.map(joiningTypes, function(sportName){
+        return { name : sportName, id : sportName.replace(/\s/g, '') };
+      });
+      $(".button-collapse").sideNav()
+    });
 
     var capitalize = function (word) {
       return word.substring(0,1).toUpperCase() + word.substring(1).toLowerCase();

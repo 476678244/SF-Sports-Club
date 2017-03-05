@@ -24,6 +24,7 @@
       $rootScope.joiningTypes = _.map(joiningTypes, function(sportName){
         return { name : sportName, id : sportName.replace(/\s/g, '') };
       });
+      $(".button-collapse").sideNav()
     });
 
     var isUserInGroup = function (username, group) {

@@ -9,12 +9,6 @@ a.button-collapse.top-nav {
   color: #fff;
 }
 
-.side-nav-icon-container {
-  position: fixed;
-  left: 1em;
-  top: .1em;
-}
-
 .top-nav .brand-logo {
   font-size: 2em;
 }
@@ -25,4 +19,8 @@ a.button-collapse.top-nav {
   margin-right: .6em;
   float: right;
   margin-bottom: -.6em;
+}
+
+#slide-out {
+  width: 70%;
 }
