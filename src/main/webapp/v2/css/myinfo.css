@@ -31,3 +31,18 @@
 .myInfo-center-wrapper .parallax-container {
   height: 10em;
 }
+
+.myinfo-page .avatar-background {
+  background-color: #dbdbdb;
+}
+.my-info-form .my-avatar-img-ctnr {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 50px;
+  margin-bottom: 0.5em;
+}
+.my-info-form .my-avatar-img-ctnr img {
+  width: 100%;
+}

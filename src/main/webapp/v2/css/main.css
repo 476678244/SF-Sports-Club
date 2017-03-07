@@ -190,25 +190,7 @@ a.logout-btn:hover {
 .register-form a.pure-input-1 {
   box-sizing: border-box;
 }
-.my-info-form .my-avatar-img-ctnr {
-  width: 100px;
-  height: 100px;
-  margin: auto;
-  overflow: hidden;
-  border-radius: 50px;
-  margin-bottom: 0.5em;
-  margin-top: 1.5em;
-}
-.my-info-form .my-avatar-img-ctnr img {
-  width: 100%;
-}
-.my-info-form .gutter {
-  height: 1em;
-}
-.my-info-form input[name="email"][disabled] {
-  background: #FFF;
-  color: #000;
-}
+
 /* Join Page */
 .join-banner {
   width: 100%;

@@ -1,53 +1,52 @@
-<section class="">
+<section class="myinfo-page">
   <ng-include src="'./tmpl/navbar.html'"></ng-include>
   <ng-include src="'./tmpl/side-nav-v2.html'"></ng-include>
 
-  <div class="myInfo-center-wrapper">
-    <div class="v-center-inner myInfo-form-wrapper">
-      <form class="myinfo-form my-info-form pure-form pure-form-stacked" ng-controller="MyInfoController" ng-submit="updateUser();">
-        <fieldset>
-          <div class="pure-g">
-            <div class="pure-u-1 pure-u-sm-1-3">
-              <div class="my-avatar-img-ctnr">
-                <img class="my-avatar-img pure-u-1"
-                  ng-src="{{ avatar }}" fallback-src="./img/avatar/default.svg">
-              </div>
-              <div class="pure-u-1 change-avatar" ngf-select ng-model="files">
-                <a ng-if="canEdit();" class="waves-effect waves-light btn blue"><i class="material-icons right">perm_identity</i>Change Avatar</a>
-              </div>
-              <p>{{ uploadMessage }}</p>
-            </div>
-            <div class="pure-u-1 pure-u-sm-1-24 gutter"></div>
-            <div class="pure-u-1 pure-u-sm-5-8">
-              <label for="user-email">Email</label>
-              <input id="user-email" ng-model="email" name="email"
-                class="pure-input-1" type="text" disabled>
-              <label for="user-fullname">Full Name</label>
-              <input id="user-fullname" required ng-model="fullname" name="fullname"
-                class="pure-input-1" type="text">
-              <label>Joining Clubs:</label>
-              <div class="sports-selector">
-                <div ng-repeat="item in sports">
-                  <a ng-class="{ selected: subscribeTypeSet.hasOwnProperty(item.id), 'sports-select-item': true }"
-                      ng-click="clickType(item.id);"
-                      href="javascript:void(0);">
-                    <i class="icon-{{ item.id }}"></i>
-                  </a>
-                </div>
-              </div>
-              <br>
-              <div class="myInfo-button-group" >
-                <a ng-if="!canEdit();" type="button" class="waves-effect waves-light btn" ng-click="toEdit();">Edit</a>
-                <button ng-if="canEdit();" class="btn waves-effect waves-light" type="submit" name="action" ng-disabled="createForm.$invalid">Update
-                  <i class="material-icons right">send</i>
-                </button>
-                <button ng-if="canEdit();" type="submit" class="btn waves-effect waves-light red" ng-click="toView();">Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-      </form>
+  <div class="row">
+    <div class="my-info-form avatar-background">
+      <div class="my-avatar-img-ctnr">
+        <img class="my-avatar-img"
+             ng-src="{{ avatar }}" fallback-src="./img/avatar/default.svg">
+      </div>
+      <div class="pure-u-1 change-avatar" ngf-select ng-model="files">
+        <a ng-if="canEdit();" class="waves-effect waves-light btn blue"><i class="material-icons right">perm_identity</i>Change Avatar</a>
+      </div>
+      <p>{{ uploadMessage }}</p>
     </div>
+    <form class="col s12 my-info-form" ng-submit="updateUser();">
+      <div class="row">
+        <div class="input-field col s12">
+          <label for="user-email">Email</label>
+          <input disabled id="user-email" ng-model="email" name="email"
+                 class="validate" type="text">
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <label for="user-fullname">Full Name</label>
+          <input id="user-fullname" required ng-model="fullname" name="fullname"
+                 class="validate" type="text" value="{{ fullname }}">
+        </div>
+      </div>
+      <label>Joining Clubs:</label>
+      <div class="sports-selector">
+        <div ng-repeat="item in sports">
+          <a ng-class="{ selected: subscribeTypeSet.hasOwnProperty(item.id), 'sports-select-item': true }"
+             ng-click="clickType(item.id);"
+             href="javascript:void(0);">
+            <i class="icon-{{ item.id }}"></i>
+          </a>
+        </div>
+      </div>
+      <br>
+      <div class="myInfo-button-group" >
+        <a ng-if="!canEdit();" type="button" class="waves-effect waves-light btn" ng-click="toEdit();">Edit</a>
+        <button ng-if="canEdit();" class="btn waves-effect waves-light" type="submit" name="action" ng-disabled="createForm.$invalid">Update
+          <i class="material-icons right">send</i>
+        </button>
+        <button ng-if="canEdit();" type="submit" class="btn waves-effect waves-light red" ng-click="toView();">Cancel
+        </button>
+      </div>
+    </form>
   </div>
 </section>

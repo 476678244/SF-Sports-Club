@@ -20,6 +20,9 @@
       $scope.email = UserInfo.getUser().username;
       $scope.avatar = UserInfo.getUser().avatar;
       $scope.fullname = UserInfo.getUser().fullname;
+      $(document).ready(function() {
+        Materialize.updateTextFields();
+      });
     });
 
     ActivityManager.getJoiningTypes({username : UserInfo.getUser().username}).then(function(joiningTypes) {
