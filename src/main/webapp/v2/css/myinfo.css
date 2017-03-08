@@ -33,16 +33,29 @@
 }
 
 .myinfo-page .avatar-background {
-  background-color: #dbdbdb;
+  height: 17em;
+  background-position: 0em;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-filter: blur(25px);
+  -moz-filter: blur(25px);
+  -o-filter: blur(25px);
+  -ms-filter: blur(25px);
+  filter: blur(25px);
+  overflow: hidden;
 }
-.my-info-form .my-avatar-img-ctnr {
+.my-avatar-img-ctnr {
   width: 100px;
   height: 100px;
   margin: auto;
   overflow: hidden;
   border-radius: 50px;
-  margin-bottom: 0.5em;
 }
-.my-info-form .my-avatar-img-ctnr img {
+.my-avatar-img-ctnr img {
   width: 100%;
+}
+.my-avatar-img-relative-to-background {
+  position: relative;
+  top: -14em;
+  margin-bottom: -10em;
 }

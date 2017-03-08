@@ -3,16 +3,20 @@
   <ng-include src="'./tmpl/side-nav-v2.html'"></ng-include>
 
   <div class="row">
-    <div class="my-info-form avatar-background">
-      <div class="my-avatar-img-ctnr">
-        <img class="my-avatar-img"
-             ng-src="{{ avatar }}" fallback-src="./img/avatar/default.svg">
-      </div>
-      <div class="pure-u-1 change-avatar" ngf-select ng-model="files">
-        <a ng-if="canEdit();" class="waves-effect waves-light btn blue"><i class="material-icons right">perm_identity</i>Change Avatar</a>
-      </div>
-      <p>{{ uploadMessage }}</p>
+    <div class="my-info-form avatar-background" ng-style="{'background-image':'url(' + avatar + ')'}">
     </div>
+  </div>
+  <div class="row my-avatar-img-relative-to-background">
+    <div class="my-avatar-img-ctnr">
+      <img class="my-avatar-img"
+           ng-src="{{ avatar }}" fallback-src="./img/avatar/default.svg">
+    </div>
+    <div class="pure-u-1 change-avatar" ngf-select ng-model="files">
+      <a ng-if="canEdit();" class="waves-effect waves-light btn blue"><i class="material-icons right">perm_identity</i>Change Avatar</a>
+    </div>
+    <p>{{ uploadMessage }}</p>
+  </div>
+  <div class="row">
     <form class="col s12 my-info-form" ng-submit="updateUser();">
       <div class="row">
         <div class="input-field col s12">
