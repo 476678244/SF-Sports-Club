@@ -22,6 +22,7 @@
       $scope.fullname = UserInfo.getUser().fullname;
       $(document).ready(function() {
         Materialize.updateTextFields();
+        $(".button-collapse").sideNav()
       });
     });
 
@@ -29,7 +30,6 @@
       $rootScope.joiningTypes = _.map(joiningTypes, function(sportName){
         return { name : sportName, id : sportName.replace(/\s/g, '') };
       });
-      $(".button-collapse").sideNav()
     });
 
     $scope.subscribeTypeSet = {};
