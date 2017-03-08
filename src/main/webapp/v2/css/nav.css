@@ -32,3 +32,9 @@ a.button-collapse.top-nav {
 #slide-out {
   width: 70%;
 }
+
+@media only screen and (min-width: 993px) {
+  nav a.button-collapse {
+    display: inherit;
+  }
+}
