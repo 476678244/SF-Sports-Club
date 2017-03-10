@@ -98,6 +98,7 @@
     // default value
     $scope.scoreMap = {"attack":77,"defend":77,"skill":77,"speed":77,"stamina":77,"strength":77}
 
+    enableIconRotate()
   });
 })();
 

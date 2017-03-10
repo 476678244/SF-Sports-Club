@@ -532,3 +532,15 @@ label[for="having-car-checkbox"] {
 .metrics-wrapper {
   padding: 0 3em;
 }
+
+.rotate{
+  -moz-transition: all .2s linear;
+  -webkit-transition: all .2s linear;
+  transition: all .2s linear;
+}
+
+.rotate.icon-to-opposite{
+  -moz-transform:rotate(360deg);
+  -webkit-transform:rotate(360deg);
+  transform:rotate(360deg);
+}

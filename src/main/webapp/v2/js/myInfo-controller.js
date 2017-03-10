@@ -14,7 +14,7 @@
   ) {
     UserInfo.checkLogin();
     enhance$scopeWithSideBar($scope)
-
+    enableIconRotate()
     ActivityManager.getUser({username : UserInfo.getUser().username}).then(function(user) {
       UserInfo.setUser(user);
       $scope.email = UserInfo.getUser().username;

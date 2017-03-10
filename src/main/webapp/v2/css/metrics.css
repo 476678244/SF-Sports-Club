@@ -36,7 +36,8 @@
   text-align: center;
   padding-top: 0.5em;
   padding-bottom: .3em;
-
+  padding-left: 1em;
+  padding-right: 1em;
   border-bottom-width: .01em;
   border-bottom-style: groove;
   border-bottom-color: #333333;

@@ -6,3 +6,11 @@ function enhance$scopeWithSideBar($scope) {
     $(".button-collapse").sideNav()
   });
 }
+
+function enableIconRotate() {
+  $(document).ready(function () {
+    $(".rotate").click(function(){
+      $(this).toggleClass("icon-to-opposite")
+    })
+  })
+}
