@@ -15,6 +15,9 @@
     enhance$scopeWithSideBar($scope)
     // Destroy sideNav
     $('.button-collapse').sideNav('destroy');
+    $(document).ready(function(){
+      $('.parallax').parallax();
+    });
 
     if ($window.outerWidth <= 500 && $routeParams.sport == 'football') {
       $scope.activityImg = "cr7"

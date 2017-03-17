@@ -2,5 +2,119 @@
   margin-top: .2em;
   margin-bottom: .2em;
   height: 3em;
-  width: 10em;
+}
+.join-content .join-buttons.create-event-button {
+  width: 18.2em;
+}
+/* Join Page */
+.join-banner {
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  display: table;
+}
+.join-banner h1 {
+  margin: 0;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+.join-banner h1 .inner {
+  display: inline-block;
+  height: 2em;
+  line-height: 2em;
+  text-align: center;
+  color: #FFF;
+  /*border: 3px solid #FFF;*/
+  /*border-width: 3px 0 3px 0;*/
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+.join-banner h1 .inner:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #FFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+.join-banner h1 .inner:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #FFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+.join-content {
+  margin: 2em;
+  text-align: center;
+  color: #FFF;
+  font-size: 1.2em;
+}
+
+.parallax-container {
+  height: 25em;
+}
+
+.all-subscribers {
+  margin: 2em;
+}
+.all-subscribers .detail-section,
+.all-organizers .detail-section {
+  text-align: center;
+}
+.all-events {
+  margin: 2em;
+}
+.all-organizers h2,
+.all-subscribers h2,
+.all-events h2,
+.all-join-buttons h2{
+  border-bottom: 3px double #bbb;
+  padding: .3em;
+  margin-left: .3em;
+  margin-right: .3em;
+  text-align: center;
+}
+.pure-event {
+  margin-bottom: 1em;
+}
+.event-item-wrapper {
+  margin-bottom: .6em;
+}
+a.event-item {
+  display: block;
+  border-radius: 5px;
+  color: #777;
+  text-align: center;
+  text-decoration: none;
+  padding: .5em;
+  background: #EEE;
+  margin: 0 .5em;
+  transition: background-color .2s;
+}
+a.event-item:hover {
+  background: antiquewhite;
+  color: #B54;
+}
+.event-item .event-name {
+  display: block;
+  font-size: 1.2em;
+}
+.event-item .event-time {
+  display: block;
+  font-size: .9em;
+}
+.event-item .event-joiner-size{
+  display: block;
+  font-size: .9em;
+}
+.event-item .event-more {
+  font-size: 1.5em;
+  font-family: monospace;
 }
