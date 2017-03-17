@@ -26,12 +26,8 @@
     }
 
     $scope.activity = $routeParams.sport;
-    $scope.showAll = $routeParams.allEvents;
     $scope.title = $scope.activity.toUpperCase();
 
-    if (!$scope.showAll) {
-      $scope.showAll = false;
-    }
     $scope.joinClubButton = "Loading...";
     ActivityManager.getUser({username : UserInfo.getUser().username}).then(function(user) {
       UserInfo.setUser(user);
@@ -44,15 +40,26 @@
       });
     });
 
-    ActivityManager.getActivityType({activityType: $scope.activity, allEvents: $scope.showAll}).then(function(types){
+    ActivityManager.getActivityType({activityType: $scope.activity, allEvents: true}).then(function(types){
       if (types.length > 0) {
-        $scope.allEvents = types[0].events;
+        $scope.allEventsBackup = types[0].events
+        $scope.partialEventsBackup = getPartialEvents(types[0].events)
+        // default
+        $scope.allEvents = $scope.partialEventsBackup;
         $scope.latest = types[0].latestEvent;
         $scope.organizers = types[0].organizers;
         $scope.subscribers = types[0].subscribers;
       }
       $scope.joinClubButton = "Join Club";
     });
+
+    function getPartialEvents(allEvents) {
+      if (allEvents.length >= 5) {
+        return allEvents.slice(0, 4)
+      } else {
+        return allEvents
+      }
+    }
 
     $scope.isOrganizer = function(username){
       var ret = false;
@@ -134,23 +141,19 @@
       });
     };
 
-    $scope.changeType = function(type) {
-      ActivityManager.getActivityType({activityType: type, allEvents: $scope.showAll}).then(function(types){
-        if (types.length > 0) {
-          $scope.allEvents = types[0].events;
-          $scope.latest = types[0].latestEvent;
-          $scope.organizers = types[0].organizers;
-          $scope.subscribers = types[0].subscribers;
-          $scope.activity = type;
-        }
-      });
-    };
-
     $scope.showNote = function () {
       if ($scope.activity == "football") {
         return true
       }
       return false
+    }
+
+    $scope.showAllEvents = function () {
+      $scope.allEvents = $scope.allEventsBackup;
+    }
+
+    $scope.hideAllEvents = function () {
+      $scope.allEvents = $scope.partialEventsBackup;
     }
   });
 })();

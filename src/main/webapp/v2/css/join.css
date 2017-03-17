@@ -61,14 +61,13 @@
   height: 25em;
 }
 
-.all-subscribers {
-  margin: 2em;
-}
 .all-subscribers .detail-section,
 .all-organizers .detail-section {
   text-align: center;
 }
-.all-events {
+.all-events,
+.all-join-buttons,
+.all-subscribers{
   margin: 2em;
 }
 .all-organizers h2,
