@@ -50,6 +50,12 @@
                 <span class="card-title">{{ evt.name }}</span>
                 <p>{{ evt.time | sfdate : "MMM.dd, h:mma"}}</p>
                 <p>{{ evt.totalMembers }} members!</p>
+                <div ng-if="eventMembersInfoReady" >
+                  <!--<div ng-repeat="m in eventMembersInfo(evt.eventId)" class="small-avatar-wrapper">-->
+                    <!--<img src="{{m.avatar}}">-->
+                  <!--</div>-->
+                  <sf-member-element member="member" ng-repeat="member in eventMembersInfo(evt.eventId)" type="activity"></sf-member-element>
+                </div>
               </div>
             </a>
           </div>

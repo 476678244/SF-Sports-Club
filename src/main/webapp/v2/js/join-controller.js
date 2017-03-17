@@ -51,6 +51,20 @@
         $scope.subscribers = types[0].subscribers;
       }
       $scope.joinClubButton = "Join Club";
+      $scope.countResp = 0
+      $scope.partialEventsBackup.forEach(function (event) {
+        var eventRef = event
+        ActivityManager.getEventDetail({
+          activityType : $scope.activity,
+          eventId: event.eventId
+        }).then(function(detail){
+          eventRef.members = detail.members
+          $scope.countResp ++
+          if ($scope.countResp == $scope.partialEventsBackup.length) {
+            $scope.eventMembersInfoReady = true
+          }
+        })
+      })
     });
 
     function getPartialEvents(allEvents) {
@@ -154,6 +168,16 @@
 
     $scope.hideAllEvents = function () {
       $scope.allEvents = $scope.partialEventsBackup;
+    }
+    
+    $scope.eventMembersInfo = function (eventId) {
+      var eventRef;
+      $scope.partialEventsBackup.forEach(function (e) {
+        if (e.eventId == eventId) {
+          eventRef = e;
+        }
+      })
+      return eventRef.members;
     }
   });
 })();
